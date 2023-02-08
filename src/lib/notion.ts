@@ -9,7 +9,7 @@ const database = await notion.databases.query({
     filter: {
         or: [
             {
-                property: '公開',
+                property: 'isPublished',
                 checkbox: {
                     equals: true,
                 },
@@ -18,12 +18,12 @@ const database = await notion.databases.query({
     },
     sorts: [
         {
-            property: 'リリース日',
+            property: 'publishedAt',
             direction: 'descending',
         },
     ]
 });
 
-console.log(database.results[1]['properties']['公開リンク']);
+console.log(database.results[1]);
 
 export default database;
