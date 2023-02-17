@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root{
+    /* からーず */
+    --white: #F5F7FA;
+    --black: #2B2E3D;
+    --pink: #E8B0B7;
+    --yellow: #FEDD59;
+    --blue: #A1D0EC;
+    --ui-bg: #FDF1E1;
+    --kmsn-bg: #5EBFEB;
+    
+    /* ふぉんと */
+    --heading-font: "Kaisei Decol";
+    --body-font: "Kiwi Maru";
+    
+}
+
+body {
+    scroll-behavior: smooth;
+    background-color: var(--white);
+    color: var(--black);
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Material Icons"), url("/fonts/MaterialIconsRound-Regular.otf");
+}
+
+@font-face {
+    font-display: swap;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Kiwi Maru";
+    src: url("/fonts/KiwiMaru-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-display: swap;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Kaisei Decol";
+    src: url("/fonts/KaiseiDecol-Medium.ttf") format("truetype");
+}
