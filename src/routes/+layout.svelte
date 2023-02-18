@@ -1,8 +1,8 @@
 <script>
-import "../app.css";
 import Footer from "$lib/components/uiGroup/Element/fotoer.svelte";
 import Header from "$lib/components/uiGroup/Element/header.svelte";
-	import LeftMenu from "../lib/components/uiGroup/Element/leftMenu.svelte";
+import "../app.css";
+import LeftMenu from "../lib/components/uiGroup/Element/leftMenu.svelte";
 </script>
 
 <Header/>
