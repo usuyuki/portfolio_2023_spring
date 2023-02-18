@@ -4,6 +4,8 @@
   - src/lib/utils/*
 📄pages:
   - src/routes/*
+  - src/app.html
+  - src/error.html
 🕵test:
   - tests/*
 🗺config:
@@ -15,6 +17,7 @@
   - .npmrc
   - .prettierignore
   - .prettierrc
+  - playwright-ct.config.ts
   - playwright.config.ts
   - postcss.config.cjs
   - svelte.config.js
@@ -44,5 +47,6 @@
   - src/routes/**/+page.server.ts
   - src/libs/server/*
   - src/hooks.server.js
+  - src/service-worker.js
 📱➡:
   - src/hooks.client.js
