@@ -1,1 +1,1 @@
-import database from '../lib/notion';
+import database from '../lib/utils/notion';

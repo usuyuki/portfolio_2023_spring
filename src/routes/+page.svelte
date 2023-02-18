@@ -1,2 +1,8 @@
-<h1 class="text-3xl text-primary text-center">Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+    import NormalButton from "$lib/components/uiParts/Button/normalButton.svelte";
+</script>
+<h2 class="text-center">こんばんわに！</h2>
+
+
+<p class="h2 text-center font-serif text-2xl">うすゆきについて</p>
+<NormalButton title="もっと知る！" url="/about" bgColorVariable="blue" textColorVariable="black"/>
