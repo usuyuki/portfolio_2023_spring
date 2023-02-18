@@ -5,7 +5,9 @@
         "kmsn",
         "Maru",
         "notionhq",
+        "npmrc",
+        "postcss",
         "truetype",
-        "kmsn"
+        "vite"
     ]
 }
