@@ -1,7 +1,7 @@
 <script>
   import "../app.css";
-	import CircleMenu from "../lib/components/menu/circleMenu.svelte";
+	import LeftMenu from "../lib/components/uiGroup/Element/leftMenu.svelte";
 </script>
 
 <slot />
-<CircleMenu></CircleMenu>
+<LeftMenu/>

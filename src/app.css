@@ -47,3 +47,8 @@ body {
     font-family: "Kaisei Decol";
     src: url("/fonts/KaiseiDecol-Medium.ttf") format("truetype");
 }
+
+
+.tategaki{
+    writing-mode: vertical-rl;
+}
