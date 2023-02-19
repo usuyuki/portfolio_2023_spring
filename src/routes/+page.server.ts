@@ -9,7 +9,7 @@ export const load = (async () => {
 	const response = await notion.databases.query({
 		database_id: 'b8ec3c117d1b4677947153bbe44bd42d'
 	});
-	let data: { [key: string]: string } = {};
+	const data: { [key: string]: string } = {};
 
 	response.results.forEach((row: any) => {
 		data[row.properties.key.title[0].plain_text] = row.properties.value.rich_text[0].plain_text;
