@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import NormalButton from '$lib/components/uiParts/Button/normalButton.svelte';
-	export let data;
+	export let data: { [key: string]: string };
 	console.log(data.log);
 </script>
 
