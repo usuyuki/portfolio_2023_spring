@@ -1,4 +1,4 @@
-name: 単体テスト 
+name: 結合(コンポーネント)テスト 
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   frontend_lint:
-    name: frontend unit test
+    name: frontend combination test
     runs-on: ubuntu-latest
 
     steps:
@@ -41,6 +41,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-        
+
+      - name: install playwright browsers
+        run: npx playwright install --with-deps
+
       - name: lint
-        run: pnpm test:unit
+        run: pnpm test:c
