@@ -42,10 +42,10 @@
 🖼layout:
   - src/routes/**/+layout.svelte
   - src/app.css
-🐟➡:
+🐟serverScript:
   - src/routes/**/+page.server.ts
-  - src/libs/server/*
+  - src/lib/server/*
   - src/hooks.server.js
   - src/service-worker.js
-📱➡:
+📱clientScript:
   - src/hooks.client.js

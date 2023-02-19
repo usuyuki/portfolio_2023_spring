@@ -7,6 +7,9 @@ const config: UserConfig = {
 		include: ['tests/unit/**/*.{test,spec}.{js,ts}'],
 		globals: true,
 		environment: 'jsdom'
+	},
+	build: {
+		target: 'esnext'
 	}
 };
 

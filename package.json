@@ -13,7 +13,8 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"test:u": "vitest run",
 		"test:c": "playwright test -c playwright-ct.config.ts",
-		"test:i": "playwright test -c playwright.config.ts"
+		"test:i": "playwright test -c playwright.config.ts",
+		"2": "pnpm format && pnpm lint & pnpm check & pnpm test:u & pnpm test:c & pnpm test:i"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.30.0",
@@ -37,11 +38,11 @@
 		"tslib": "^2.5.0",
 		"typescript": "^4.9.5",
 		"vite": "^4.1.2",
-		"vitest": "^0.25.8"
+		"vitest": "^0.25.8",
+		"@playwright/experimental-ct-svelte": "^1.30.0"
 	},
 	"type": "module",
 	"dependencies": {
-		"@notionhq/client": "^2.2.3",
-		"@playwright/experimental-ct-svelte": "^1.30.0"
+		"@notionhq/client": "^2.2.3"
 	}
 }

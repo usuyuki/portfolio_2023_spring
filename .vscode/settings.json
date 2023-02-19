@@ -6,6 +6,9 @@
 		"source.organizeImports": true, //保存時に import を整理する
 		"source.fixAll.eslint": true // 保村時に ESLint で修正する
 	},
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
 	"[markdown]": {
 		"files.trimTrailingWhitespace": false // Markdown ファイルの末尾の空白を取り除く
 	},
