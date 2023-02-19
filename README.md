@@ -23,23 +23,30 @@ pnpm dev
 ```
 
 ### テスト
+テストはソフトウェアのテスト技法に基づき
+- 単体テスト：Vitest
+- 結合(コンポーネント)テスト：Playwright
+- 統合(E2E)テスト：Playwright
+
+で行っている
+
 
 単体テスト
 
 ```
-pnpm test:unit
+pnpm test:u
 ```
 
-コンポーネントテスト
+結合テスト
 
 ```
-pnpm test:ct
+pnpm test:c
 ```
 
-E2E テスト
+統合テスト
 
 ```
-pnpm test:e2e
+pnpm test:i
 ```
 
 ### Lint
