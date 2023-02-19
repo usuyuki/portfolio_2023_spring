@@ -39,6 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@notionhq/client": "^2.2.3"
+		"@notionhq/client": "^2.2.3",
+		"@playwright/experimental-ct-svelte": "^1.30.0"
 	}
 }
