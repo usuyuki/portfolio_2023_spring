@@ -1,0 +1,51 @@
+🗃components:
+  - src/lib/components/*
+⚒utils:
+  - src/lib/utils/*
+📄pages:
+  - src/routes/*
+  - src/app.html
+  - src/error.html
+🕵test:
+  - tests/*
+🗺config:
+  - .env.example
+  - .eslintignore
+  - .eslintrc.cjs
+  - .gitattributes
+  - .gitignore
+  - .npmrc
+  - .prettierignore
+  - .prettierrc
+  - playwright-ct.config.ts
+  - playwright.config.ts
+  - postcss.config.cjs
+  - svelte.config.js
+  - tailwind.config.cjs
+  - tsconfig.json
+  - vite.config.ts
+🎁package:
+  - package.json
+  - pnpm-lock.yaml
+👗static:
+  - static/*
+🐙github:
+  - .github/*
+📄docs:
+  - README.md
+  - LICENSE
+
+# 細かい分類
+✈ci:
+  - .github/workflows/*
+  - .github/labeler.yml
+🖼layout:
+  - src/routes/**/+layout.svelte
+  - src/app.css
+🐟➡:
+  - src/routes/**/+page.server.ts
+  - src/libs/server/*
+  - src/hooks.server.js
+  - src/service-worker.js
+📱➡:
+  - src/hooks.client.js
