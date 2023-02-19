@@ -1,4 +1,4 @@
-name: 単体テスト 
+name: 単体テスト (vitest) 
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   frontend_lint:
-    name: frontend unit test
+    name: unit test
     runs-on: ubuntu-latest
 
     steps:

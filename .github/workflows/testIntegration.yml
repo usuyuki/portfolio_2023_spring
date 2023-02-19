@@ -1,4 +1,4 @@
-name: 統合(E2E)テスト 
+name: 統合(E2E)テスト (playwright)
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   frontend_lint:
-    name: frontend integration test
+    name: integration test
     runs-on: ubuntu-latest
 
     steps:

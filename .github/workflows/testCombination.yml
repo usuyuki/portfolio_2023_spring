@@ -1,4 +1,4 @@
-name: 結合(コンポーネント)テスト 
+name: 結合(コンポーネント)テスト (playwright)
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   frontend_lint:
-    name: frontend combination test
+    name: combination test
     runs-on: ubuntu-latest
 
     steps:

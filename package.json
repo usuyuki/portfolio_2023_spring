@@ -13,7 +13,7 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"test:u": "vitest run",
 		"test:c": "playwright test -c playwright-ct.config.ts",
-		"test:i": "playwright test"
+		"test:i": "playwright test -c playwright.config.ts"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.30.0",
