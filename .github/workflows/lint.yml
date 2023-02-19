@@ -1,0 +1,29 @@
+name: 凛としたLint 
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  frontend_lint:
+    name: frontend lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: cache node_modules
+        id: cache_node
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: pnpm install
+        if: steps.cache_node.outputs.cache-hit != 'true'
+        run: pnpm install
+
+      - name: lint
+        run: pnpm lint
