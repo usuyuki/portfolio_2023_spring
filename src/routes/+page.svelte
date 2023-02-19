@@ -1,6 +1,7 @@
 <script lang="ts">
 	import NormalButton from '$lib/components/uiParts/Button/normalButton.svelte';
-	export let data: { [key: string]: string };
+	import type { PageData } from './$types';
+	export let data: PageData;
 	console.log(data.log);
 </script>
 
