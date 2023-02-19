@@ -35,7 +35,6 @@
   - README.md
   - LICENSE
 
-
 # 細かい分類
 ✈ci:
   - .github/workflows/*

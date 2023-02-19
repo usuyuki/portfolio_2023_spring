@@ -1,9 +1,9 @@
 ---
 name: リファクタリング要望
 about: ここリファクタリングしたいのissue
-title: "[🛠️Refactor]:"
-labels: "🛠️refactor"
-assignees: ""
+title: '[🛠️Refactor]:'
+labels: '🛠️refactor'
+assignees: ''
 ---
 
 # 🛠️ 概要
