@@ -2,6 +2,9 @@
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
+<svelte:head>
+    <title>Works</title> 
+</svelte:head>
 
 <div class="flex justify-center flex-wrap">
 	{#each data.data as works}

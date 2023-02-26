@@ -1,5 +1,8 @@
+<svelte:head>
+    <title>Home</title> 
+</svelte:head>
 <script lang="ts">
-	import NormalButton from '$lib/components/uiParts/Button/normalButton.svelte';
+	import NormalButton from '$lib/components/Button/normalButton.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 	console.log(data.info.log);
