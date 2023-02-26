@@ -26,7 +26,7 @@
 		<a href={article.link} target="_blank" rel="noopener noreferrer">
 			<div class="flex flex-col justify-center items-center mx-4 my-2">
 				<h2 class="text-xl">{article.title}</h2>
-				<img src={article.thumbnail} alt={article.name} class="w-24 h-24" />
+				<img src={article.thumbnail} alt={article.title} class="w-24 h-24" />
 			</div>
 		</a>
 	{/each}

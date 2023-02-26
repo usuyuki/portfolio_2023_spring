@@ -1,7 +1,7 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
 import { NOTION_API_KEY } from '$env/static/private';
 import type { worksProgrammingType } from '$lib/types/worksProgramming';
-import { APIErrorCode, Client } from '@notionhq/client';
+import { APIErrorCode, Client, GetPageResponse } from '@notionhq/client';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -14,26 +14,15 @@ export const load = (async (params: any) => {
 		auth: NOTION_API_KEY
 	});
 	try {
-		const response = await notion.pages.retrieve({
-			page_id: params.params.id,
-			filter: {
-				and: [
-					{
-						property: 'isPublished',
-						checkbox: {
-							equals: true
-						}
-					}
-				]
-			}
-		});
+		const response = (await notion.pages.retrieve({
+			page_id: params.params.id
+		})) as GetPageResponse;
 
 		// publishしてない記事を弾く
 		if (!response.properties.isPublished.checkbox) {
 			throw error(403);
 			//処理はtry catchのcatchで続く
 		}
-
 		const data: dataType = {
 			data: {
 				background: response.properties.background.rich_text[0].plain_text,

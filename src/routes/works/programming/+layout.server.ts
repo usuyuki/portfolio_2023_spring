@@ -2,7 +2,7 @@
 import { NOTION_API_KEY } from '$env/static/private';
 import type { worksProgrammingShortType } from '$lib/types/worksProgramming';
 import { Client } from '@notionhq/client';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
 // id:データになっている
 type dataType = {
@@ -45,4 +45,4 @@ export const load = (async () => {
 		};
 	});
 	return data;
-}) satisfies PageServerLoad;
+}) satisfies LayoutServerLoad;
