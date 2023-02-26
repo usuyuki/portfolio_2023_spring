@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	export let data: PageData;
-	console.log(data.environment);
+	console.log(data.data);
 </script>
-<h2 class="text-3xl text-center mx-4">言語</h2>
+{#each Object.entries(data.data) as [title,techStacks]}
+<h2 class="text-3xl text-center mx-4">{title}</h2>
 <div class="flex justify-center items-center flex-wrap">
-	{#each data.data['language'] as techStack}
+	{#each techStacks as techStack}
 <div class="techStackPercent m-4 flex justify-center items-center w-60 h-60 rounded-full" style={"--power:"+techStack.power+"%"}>
 	<h2 class="text-2xl techStackName">{techStack.name}</h2>
 </div>
@@ -14,6 +15,7 @@
 		</div>
 	{/each}
 </div>
+	{/each}
 
 <style>
 /* 結果となる%変数 */

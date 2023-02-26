@@ -1,5 +1,4 @@
 import { NOTION_API_KEY } from '$env/static/private';
-import type { techStackGenre } from '$lib/types/techStackGenre';
 import { Client } from '@notionhq/client';
 import type { PageServerLoad } from './$types';
 type techStack ={
@@ -10,7 +9,7 @@ type techStack ={
 
 type dataType = {
 	data: {
-		[key in techStackGenre]:techStack[]
+		[key:string]:techStack[]
 	};
 };
 
@@ -29,21 +28,19 @@ export const load = (async () => {
 		]
 	});
 
-	const data: dataType = { data: {
-		language:[],
-		framework:[],
-		CMS:[],
-		software:[],
-		environment:[],
-	} };
+	const data: dataType = { data: {}};
 	response.results.forEach((row: any) => {
-		const genre:techStackGenre =  row.properties.genre.select.name;
+		const genre:string =  row.properties.genre.select.name;
 		const techArray:techStack ={
 			name: row.properties.name.title[0].plain_text,
 			content: row.properties.content.rich_text[0].plain_text,
 			power: row.properties.power.number,
 		}
+		if(genre in data.data){
 			data.data[genre].push(techArray);
+		}else{
+			data.data[genre]=[techArray];
+		}
 	});
 	return data;
 }) satisfies PageServerLoad;
