@@ -6,49 +6,39 @@
 <h2 class="text-3xl text-center mx-4">言語</h2>
 <div class="flex justify-center items-center flex-wrap">
 	{#each data.data['language'] as techStack}
-	<div class="flex jusity-center ">
-
-<div class="techStackBox">
-	<svg class="relative">
-  <circle class="techStackPercent" style={"stroke-dashoffset: calc(440 - (440 *"+techStack.power+" / 100));"} cx="75" cy="75" r="70" stroke-width="3"/>
-  </svg>
+<div class="techStackPercent m-4 flex justify-center items-center w-60 h-60 rounded-full" style={"--power:"+techStack.power+"%"}>
 	<h2 class="text-2xl techStackName">{techStack.name}</h2>
 </div>
 		<div class="flex flex-col jusify-center items-center px-4 py-2 md:w-1/4 w-1/2">
 			<p class="">{techStack.content}</p>
 		</div>
-	</div>
 	{/each}
 </div>
 
 <style>
-.techStackBox {
-	position: relative;
+/* 結果となる%変数 */
+@property --power{
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
 }
-.techStackName {
-	position: absolute;
-	top: 50%;
-	right: 50%;
-	transform: translate(-50%, -50%);
-}
-
-svg {
-  transform: rotate(-90deg);
-width:100%;
-}
-.techStackPercent {
-	
-	fill:rgba(0,0,0,0);
-	stroke: var(--blue);
-  animation: circleAnim 1s forwards;
+/* アニメーション用で動的に変わる%変数 */
+@property --percent{
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
 }
 @keyframes circleAnim {
   0% {
-    stroke-dasharray: 0 440;
+		--percent:0%;
   }
   99.9%,
   to {
-    stroke-dasharray: 440 440;
+    --percent:var(--power);
   }
+}
+.techStackPercent {
+  animation: circleAnim 1s forwards;
+	  background-image: conic-gradient(var(--blue) 0%,var(--blue) var(--percent), gray calc(var(--percent) * 1.01) 100%);
 }
 </style>
