@@ -1,7 +1,9 @@
+<svelte:head>
+    <title>技術スタック</title> 
+</svelte:head>
 <script lang="ts">
 	import type { PageData } from './$types';
 	export let data: PageData;
-	console.log(data.data);
 </script>
 {#each Object.entries(data.data) as [title,techStacks]}
 <h2 class="text-3xl text-center mx-4">{title}</h2>
