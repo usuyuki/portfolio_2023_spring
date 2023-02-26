@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageData } from '../$types';
 	export let data: PageData;
 	console.log(data);
 </script>
@@ -10,7 +10,7 @@
 
 <div class="flex justify-center flex-wrap">
 	{#each Object.entries(data.data) as [id,work]}
-	<a href="/works/{id}">
+	<a href="/works/programming/{id}"data-sveltekit-preload-data="hover">
 	<div class="mx-4 my-2">
 			<h2 class="text-2xl">{work.name}</h2>
 			<p class="text-xl">{work.summary}</p>

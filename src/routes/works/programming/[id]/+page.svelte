@@ -9,5 +9,5 @@
 <h1>{data.data.name}</h1>
 <p>{data.data.background}</p>
 {#each data.data.gallery as image }
-	<img src={image} alt={data.data.name} />
+	<img src={image} alt={data.data.name} loading="lazy"/>
 {/each}

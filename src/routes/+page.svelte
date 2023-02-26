@@ -1,6 +1,6 @@
 <svelte:head>
     <title>うすゆきどっとねっと</title> 
-		  <meta name="description" content="うすゆきのポートフォリオです" />
+		<meta name="description" content="うすゆきのポートフォリオです" />
 </svelte:head>
 <script lang="ts">
 	import NormalButton from '$lib/components/Button/normalButton.svelte';
@@ -13,6 +13,7 @@
 
 <p class="h2 text-center font-serif text-2xl">うすゆきについて</p>
 <NormalButton title="もっと知る！" url="/about" bgColorVariable="blue" textColorVariable="black" />
+<NormalButton title="もっと知る?" url="/works/programming" bgColorVariable="blue" textColorVariable="black" />
 
 
 <div class="flex justify-center items-center flex-wrap">
