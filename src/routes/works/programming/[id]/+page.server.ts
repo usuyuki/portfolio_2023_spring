@@ -1,7 +1,7 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
 import { NOTION_API_KEY } from '$env/static/private';
 import type { worksProgrammingType } from '$lib/types/worksProgramming';
-import { APIErrorCode, Client, GetPageResponse } from '@notionhq/client';
+import { APIErrorCode, Client } from '@notionhq/client';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -14,10 +14,10 @@ export const load = (async (params: any) => {
 		auth: NOTION_API_KEY
 	});
 	try {
+		/** @todo NotionSDKのretrieveの型が壊れているっぽいので、後ろ全部静的解析で壊さないためにanyにキャストする(TSのメリット潰してるからやめたい) */
 		const response = (await notion.pages.retrieve({
 			page_id: params.params.id
-		})) as GetPageResponse;
-
+		})) as any;
 		// publishしてない記事を弾く
 		if (!response.properties.isPublished.checkbox) {
 			throw error(403);
