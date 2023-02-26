@@ -7,6 +7,7 @@ type techStack ={
 			power: number;
 }
 
+// ジャンルごとに ジャンル:データ　となるようにしている
 type dataType = {
 	data: {
 		[key:string]:techStack[]

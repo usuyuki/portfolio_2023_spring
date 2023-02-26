@@ -1,5 +1,6 @@
 <svelte:head>
-    <title>Home</title> 
+    <title>うすゆきどっとねっと</title> 
+		  <meta name="description" content="うすゆきのポートフォリオです" />
 </svelte:head>
 <script lang="ts">
 	import NormalButton from '$lib/components/Button/normalButton.svelte';

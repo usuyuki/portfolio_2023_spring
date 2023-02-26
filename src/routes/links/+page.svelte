@@ -1,5 +1,6 @@
 <svelte:head>
     <title>リンク集</title> 
+		<meta name="description" content="リンク集です" />
 </svelte:head>
 <script lang="ts">
 	import type { PageData } from './$types';

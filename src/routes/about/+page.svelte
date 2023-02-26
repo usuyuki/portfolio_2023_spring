@@ -1,5 +1,6 @@
 <svelte:head>
     <title>あばうと</title> 
+		<meta name="description" content="付加情報" />
 </svelte:head>
 <script lang="ts">
 	import type { PageData } from './$types';

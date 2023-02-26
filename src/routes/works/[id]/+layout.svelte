@@ -1,13 +1,11 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	export let data: PageData;
-	console.log(data);
 </script>
-<svelte:head>
-    <title>Works</title> 
-		<meta name="description" content="ぷろぐらみんぐでつくったもの" />
-</svelte:head>
 
+<slot />
+
+<aside>
 <div class="flex justify-center flex-wrap">
 	{#each Object.entries(data.data) as [id,work]}
 	<a href="/works/{id}">
@@ -18,3 +16,5 @@
 	</a>	
 	{/each}
 </div>
+
+</aside>
