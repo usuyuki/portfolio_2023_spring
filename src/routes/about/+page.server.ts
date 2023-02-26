@@ -15,7 +15,7 @@ export const load = (async () => {
 	});
 
 	const response = await notion.databases.query({
-		database_id: '74fe901686ac47a1835e3dfdb76ecc60',
+		database_id: '74fe901686ac47a1835e3dfdb76ecc60'
 	});
 
 	const data: dataType = { data: [] };
@@ -23,7 +23,7 @@ export const load = (async () => {
 	response.results.forEach((row: any) => {
 		data.data.push({
 			name: row.properties.name.title[0].plain_text,
-			content: row.properties.content.rich_text[0].plain_text,
+			content: row.properties.content.rich_text[0].plain_text
 		});
 	});
 	return data;

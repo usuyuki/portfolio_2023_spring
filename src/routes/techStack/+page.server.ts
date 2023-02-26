@@ -1,16 +1,16 @@
 import { NOTION_API_KEY } from '$env/static/private';
 import { Client } from '@notionhq/client';
 import type { PageServerLoad } from './$types';
-type techStack ={
-			name: string;
-			content: string;
-			power: number;
-}
+type techStack = {
+	name: string;
+	content: string;
+	power: number;
+};
 
-// ジャンルごとに ジャンル:データ　となるようにしている
+// ジャンルごとに ジャンル:データ となるようにしている
 type dataType = {
 	data: {
-		[key:string]:techStack[]
+		[key: string]: techStack[];
 	};
 };
 
@@ -29,18 +29,18 @@ export const load = (async () => {
 		]
 	});
 
-	const data: dataType = { data: {}};
+	const data: dataType = { data: {} };
 	response.results.forEach((row: any) => {
-		const genre:string =  row.properties.genre.select.name;
-		const techArray:techStack ={
+		const genre: string = row.properties.genre.select.name;
+		const techArray: techStack = {
 			name: row.properties.name.title[0].plain_text,
 			content: row.properties.content.rich_text[0].plain_text,
-			power: row.properties.power.number,
-		}
-		if(genre in data.data){
+			power: row.properties.power.number
+		};
+		if (genre in data.data) {
 			data.data[genre].push(techArray);
-		}else{
-			data.data[genre]=[techArray];
+		} else {
+			data.data[genre] = [techArray];
 		}
 	});
 	return data;

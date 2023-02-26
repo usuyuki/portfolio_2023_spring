@@ -5,8 +5,8 @@ import { Client } from '@notionhq/client';
 import type { PageServerLoad } from './$types';
 
 type dataType = {
-	info: {[key: string]: string},
-	blog:blogContent[],
+	info: { [key: string]: string };
+	blog: blogContent[];
 };
 
 export const load = (async () => {
@@ -19,10 +19,11 @@ export const load = (async () => {
 	const data: dataType = { info: {}, blog: [] };
 
 	response.results.forEach((row: any) => {
-		data.info[row.properties.key.title[0].plain_text] = row.properties.value.rich_text[0].plain_text;
+		data.info[row.properties.key.title[0].plain_text] =
+			row.properties.value.rich_text[0].plain_text;
 	});
-	
+
 	data.blog = await getBlogData();
-	
+
 	return data;
 }) satisfies PageServerLoad;

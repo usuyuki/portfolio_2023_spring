@@ -1,13 +1,13 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
 import { NOTION_API_KEY } from '$env/static/private';
-import type { worksProgrammingType } from '$lib/types/worksProgramming';
+import type { worksProgrammingShortType } from '$lib/types/worksProgramming';
 import { Client } from '@notionhq/client';
 import type { PageServerLoad } from './$types';
 
 // id:データになっている
 type dataType = {
 	data: {
-		[key:string]:worksProgrammingType
+		[key: string]: worksProgrammingShortType;
 	};
 };
 export const load = (async () => {
@@ -38,11 +38,11 @@ export const load = (async () => {
 	const data: dataType = { data: {} };
 
 	response.results.forEach((row: any) => {
-			data.data[row.id]={
+		data.data[row.id] = {
 			name: row.properties.name.title[0].plain_text,
 			summary: row.properties.summary.rich_text[0].plain_text,
 			publishedAt: row.properties.publishedAt.date.start.replace(/-/g, '/')
-			};
+		};
 	});
 	return data;
 }) satisfies PageServerLoad;
