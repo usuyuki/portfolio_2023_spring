@@ -1,6 +1,6 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
 import { NOTION_API_KEY } from '$env/static/private';
-import { worksProgrammingType } from '$lib/types/worksProgramming';
+import type { worksProgrammingType } from '$lib/types/worksProgramming';
 import { APIErrorCode, Client } from '@notionhq/client';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -43,6 +43,7 @@ export const load = (async (params: any) => {
 				thumbnail: response.properties.thumbnail.files[0].file.url,
 				gitHub: response.properties.gitHub.url,
 				link: response.properties.link.url,
+				summary: response.properties.summary.rich_text[0].plain_text,
 				whatToOffer: response.properties.whatToOffer.rich_text[0].plain_text,
 				genre: {
 					name: response.properties.genre.select.name,

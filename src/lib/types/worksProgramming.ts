@@ -3,7 +3,7 @@ export type worksProgrammingShortType = {
 	summary: string;
 	publishedAt: string;
 };
-export type worksProgrammingXXXType = {
+export type worksProgrammingType = {
 	background: string;
 	tech: {
 		name: string;
@@ -12,6 +12,7 @@ export type worksProgrammingXXXType = {
 	thumbnail: string;
 	gitHub: string;
 	link: string;
+	summary: string;
 	whatToOffer: string;
 	genre: {
 		name: string;
