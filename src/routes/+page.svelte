@@ -10,17 +10,25 @@
 	<meta name="description" content="うすゆきのポートフォリオです" />
 </svelte:head>
 
-<h2 class="text-center">{data.info.greeting}</h2>
+<h2 class="text-center my-40 mx-4">{data.info.greeting}</h2>
 
-<p class="h2 text-center font-serif text-2xl">うすゆきについて</p>
+
+<!-- うすゆきについて -->
+<p class="h2 text-center font-serif text-2xl mb-12">うすゆきについて</p>
 <NormalButton title="もっと知る！" url="/about" bgColorVariable="blue" textColorVariable="black" />
+
+<!-- かきもの -->
+<div class="flex">
+<div class="w-full md:w-1/2">
+<p class="h2 text-center font-serif text-2xl mt-20 mb-2">かきもの</p>
 <NormalButton
-	title="もっと知る?"
+	title="もっとよむ?"
 	url="/works/programming"
-	bgColorVariable="blue"
+	bgColorVariable="yellow"
 	textColorVariable="black"
 />
-
+</div>
+<div class="w-full md:w-1/2">
 <div class="flex justify-center items-center flex-wrap">
 	{#each data.blog as article}
 		<a href={article.link} target="_blank" rel="noopener noreferrer">
@@ -31,3 +39,24 @@
 		</a>
 	{/each}
 </div>
+</div>
+</div>
+
+<!-- つくったもの -->
+<div class="flex">
+<div class="w-full md:w-1/2">
+</div>
+<div class="w-full md:w-1/2">
+<p class="h2 text-center font-serif text-2xl mt-20 mb-2">つくったもの</p>
+<NormalButton
+	title="もっとよむ?"
+	url="/works/programming"
+	bgColorVariable="pink"
+	textColorVariable="black"
+/>
+</div>
+</div>
+
+<!-- ここすき -->
+<p class="h2 text-center font-serif text-2xl mt-20 mb-2">ORETOKU</p>
+<NormalButton title="スキを集めています" url="/about" bgColorVariable="black" textColorVariable="white" />

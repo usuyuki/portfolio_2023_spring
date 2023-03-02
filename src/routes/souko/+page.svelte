@@ -10,4 +10,7 @@
 <div class="flex">
 	<p class="text-2xl text-black">あああ</p>
 	<p class="text-2xl text-white">あああ</p>
+	<p class="text-2xl text-pink">あああ</p>
+	<p class="text-2xl text-yellow">あああ</p>
+	<p class="text-2xl text-blue">あああ</p>
 </div>
