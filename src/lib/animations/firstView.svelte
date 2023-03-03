@@ -13,9 +13,40 @@
 		<span>と</span>
 	</p>
 	<div class="rhombus" />
+	<div class="ripples" />
 </div>
 
 <style>
+	/* 広がる波紋 */
+	.ripples {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		position: absolute;
+		top: 40vh;
+		left: 50vw;
+		opacity: 0;
+		border: 1px solid var(--blue);
+		animation: ripples 0.5s;
+		animation-delay: 1.1s;
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+	}
+	@keyframes ripples {
+		0% {
+			transform: scale(0);
+			opacity: 1;
+		}
+		99% {
+			transform: scale(200);
+		}
+		/* 戻さないとサイトのwidthがぶっ壊れ倒す */
+		100% {
+			opacity: 0;
+			transform: scale(0);
+		}
+	}
+
 	/* 文字を取り巻く図形 */
 
 	/* ひし形 */
@@ -203,6 +234,7 @@
 
 	/* ラッパー自体のAnimation */
 	.animation-wrapper {
+		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		position: absolute;
@@ -229,7 +261,6 @@
 		100% {
 			height: 0;
 			visibility: hidden;
-			--overflow-rule: 'scroll';
 		}
 	}
 </style>
