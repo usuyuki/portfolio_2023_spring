@@ -4,6 +4,7 @@ test.describe('ボタンの表示テスト', () => {
 	test('normalButton.svelte', async ({ mount }) => {
 		const component = await mount(Button);
 		const paragraph = component.locator('p');
+		console.log(await paragraph.textContent());
 		await expect(await paragraph.textContent()).toBe('ボタン名');
 	});
 });
