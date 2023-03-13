@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FirstView from '$lib/animations/firstView.svelte';
-	import NormalButton from '$lib/components/Button/normalButton.svelte';
+	import NormalButton from '$lib/components/atom/button/NormalButton.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 	console.log(data.info.log);

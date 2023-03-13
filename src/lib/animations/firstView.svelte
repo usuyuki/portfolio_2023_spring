@@ -14,20 +14,23 @@
 	</p>
 	<div class="rhombus" />
 	<div class="ripples" />
+	<div class="ripples-dotted" />
 </div>
 
 <style>
 	/* 広がる波紋 */
 	.ripples {
-		width: 20px;
-		height: 20px;
+		width: 5vw;
+		aspect-ratio: 1/1;
 		border-radius: 50%;
 		position: absolute;
 		top: 40vh;
 		left: 50vw;
+		z-index: 3;
 		opacity: 0;
+		background-color: var(--white);
 		border: 1px solid var(--blue);
-		animation: ripples 0.5s;
+		animation: ripples 2s;
 		animation-delay: 1.1s;
 		animation-iteration-count: 1;
 		animation-fill-mode: forwards;
@@ -38,7 +41,7 @@
 			opacity: 1;
 		}
 		99% {
-			transform: scale(200);
+			transform: scale(30);
 		}
 		/* 戻さないとサイトのwidthがぶっ壊れ倒す */
 		100% {
@@ -47,6 +50,31 @@
 		}
 	}
 
+	.ripples-dotted {
+		width: 5vw;
+		aspect-ratio: 1/1;
+		border-radius: 50%;
+		position: absolute;
+		top: 40vh;
+		left: 50vw;
+		z-index: 3;
+		opacity: 0;
+		border: 1px dotted var(--yellow);
+		animation: ripples-dotted 1s;
+		animation-delay: 2s;
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+	}
+	@keyframes ripples-dotted {
+		0% {
+			transform: scale(30);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(0);
+			opacity: 0;
+		}
+	}
 	/* 文字を取り巻く図形 */
 
 	/* ひし形 */
