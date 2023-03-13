@@ -43,6 +43,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@notionhq/client": "^2.2.3"
+		"@notionhq/client": "^2.2.3",
+		"@tryghost/content-api": "^1.11.6"
 	}
 }
