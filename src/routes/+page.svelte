@@ -27,7 +27,7 @@
 		<p class="h2 text-center font-serif text-2xl mt-20 mb-2">かきもの</p>
 		<NormalButton
 			title="もっとよむ?"
-			url="/works/programming"
+			url="https://blog.usuyuki.net"
 			bgColorVariable="yellow"
 			textColorVariable="black"
 		/>
@@ -60,11 +60,10 @@
 	</div>
 </div>
 
-<!-- ここすき -->
 <p class="h2 text-center font-serif text-2xl mt-20 mb-2">ORETOKU</p>
 <NormalButton
 	title="スキを集めています"
-	url="/about"
+	url="/oretoku"
 	bgColorVariable="black"
 	textColorVariable="white"
 />

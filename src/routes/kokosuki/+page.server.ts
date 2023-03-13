@@ -15,7 +15,7 @@ export const load = (async () => {
 	});
 
 	const response = await notion.databases.query({
-		database_id: '74fe901686ac47a1835e3dfdb76ecc60',
+		database_id: '7d8c09c593ed4e0fb025044dab034a42',
 		filter: {
 			or: [
 				{

@@ -1,12 +1,11 @@
 <script lang="ts">
-	import NormalButton from '$lib/components/atom/button/NormalButton.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
 <svelte:head>
-	<title>あばうと</title>
-	<meta name="description" content="うすゆきについて" />
+	<title>ここすき</title>
+	<meta name="description" content="ここすきポイントについてです" />
 </svelte:head>
 
 <div class="flex justify-center items-center flex-col">
@@ -18,9 +17,3 @@
 		</div>
 	{/each}
 </div>
-<NormalButton
-	title="うすゆきのここすき"
-	url="/kokosuki"
-	bgColorVariable="pink"
-	textColorVariable="black"
-/>
