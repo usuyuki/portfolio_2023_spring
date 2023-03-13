@@ -1,9 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { imagetools } from '@zerodevx/svelte-img/vite';
 import type { UserConfig } from 'vite';
 
 const config: UserConfig = {
-	plugins: [sveltekit(), imagetools()],
+	plugins: [sveltekit()],
 	test: {
 		include: ['tests/unit/**/*.{test,spec}.{js,ts}'],
 		globals: true,

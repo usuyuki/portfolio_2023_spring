@@ -1,8 +1,8 @@
 <script>
+	import Footer from '$lib/components/molecule/footer/Footer.svelte';
+	import Header from '$lib/components/molecule/header/Header.svelte';
+	import LeftMenu from '$lib/components/molecule/menu/LeftMenu.svelte';
 	import '../app.css';
-	import Footer from './footer.svelte';
-	import Header from './header.svelte';
-	import LeftMenu from './leftMenu.svelte';
 </script>
 
 <Header />

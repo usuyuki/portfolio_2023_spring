@@ -1,17 +1,14 @@
-import type { PlaywrightTestConfig } from '@playwright/experimental-ct-svelte';
+import { defineConfig } from '@playwright/experimental-ct-svelte';
 import { resolve } from 'node:path';
-
-const config: PlaywrightTestConfig = {
+export default defineConfig({
 	testDir: 'tests/combination',
 	use: {
 		ctViteConfig: {
 			resolve: {
 				alias: {
-					$lib: resolve('src/lib')
+					'$lib/': resolve('src/lib/')
 				}
 			}
 		}
 	}
-};
-
-export default config;
+});

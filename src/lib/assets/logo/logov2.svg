@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1000"
+   height="1000"
+   viewBox="0 0 264.58333 264.58334"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="logoNoWhite.svg"
+   inkscape:export-filename="C:\Users\fuguf\ビットマップ.png"
+   inkscape:export-xdpi="67.199997"
+   inkscape:export-ydpi="67.199997"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.5"
+     inkscape:cx="-315"
+     inkscape:cy="1069"
+     inkscape:window-width="3840"
+     inkscape:window-height="2054"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g9474"
+     units="px" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="star"
+       style="fill:#fedd59;fill-opacity:1;stroke:#a1d0ec;stroke-width:45.751;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;stop-color:#000000"
+       id="path3825"
+       inkscape:flatsided="true"
+       sodipodi:sides="4"
+       sodipodi:cx="223.22435"
+       sodipodi:cy="302.14206"
+       sodipodi:r1="533.49768"
+       sodipodi:r2="462.02252"
+       sodipodi:arg1="0.50997206"
+       sodipodi:arg2="1.2953702"
+       inkscape:rounded="0.2"
+       inkscape:randomized="0.006"
+       d="M 687.31257,562.62278 C 612.91142,693.84823 92.790982,838.84324 -39.802364,766.26055 -172.39571,693.67785 -313.37974,174.32357 -239.83102,42.576668 -166.2823,-89.170236 349.2059,-235.25737 480.87536,-161.61415 612.54481,-87.970928 761.71373,431.39734 687.31257,562.62278 Z"
+       transform="matrix(0.26111106,0,0,0.26110313,73.944973,53.406907)"
+       inkscape:transform-center-y="-2.8022366e-06" />
+    <g
+       id="g9474"
+       transform="translate(-7.1589628,-0.59658023)"
+       style="stroke:#a1d0ec;stroke-opacity:1">
+      <path
+         style="fill:#000000;stroke:#2b2e3d;stroke-width:10.9447;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:0"
+         d="m 92.407554,119.45971 c 0,0 -19.984834,-63.513026 29.339196,-62.76499 49.62927,0.752665 35.9491,1.755711 66.30751,4.762904 25.95722,2.571227 8.37256,57.112136 8.37256,57.112136"
+         id="path1043"
+         sodipodi:nodetypes="cssc"
+         inkscape:export-filename="C:\Users\fuguf\Downloads\logov2.png"
+         inkscape:export-xdpi="67.199997"
+         inkscape:export-ydpi="67.199997" />
+      <rect
+         style="fill:#2b2e3d;fill-opacity:1;stroke:#2b2e3d;stroke-width:12.1124;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;stop-color:#000000"
+         id="rect1945"
+         height="19.619839"
+         x="76.846519"
+         y="125.13247"
+         transform="rotate(9.6029886)"
+         width="23.900999" />
+      <ellipse
+         style="fill:#a1d0ec;fill-opacity:1;stroke:none;stroke-width:18.2902;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers;stop-color:#000000"
+         id="path11486"
+         cx="150.64479"
+         cy="92.489052"
+         rx="9.9980621"
+         ry="8.6676912" />
+      <ellipse
+         style="fill:#2b2e3d;fill-opacity:1;stroke:none;stroke-width:1.00629;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke fill markers;stop-color:#000000"
+         id="path850"
+         cx="144.7571"
+         cy="156.87828"
+         rx="80.849869"
+         ry="63.306503" />
+    </g>
+  </g>
+</svg>

@@ -1,5 +1,7 @@
 🗃components:
   - src/lib/components/*
+🧩types:
+  - frontend/src/lib/types/*
 ⚒utils:
   - src/lib/utils/*
 📄pages:

@@ -1,28 +1,40 @@
 import { NOTION_API_KEY } from '$env/static/private';
-import type { blogContent } from '$lib/types/blogContent';
 import { Client } from '@notionhq/client';
 import type { PageServerLoad } from './$types';
 
 type dataType = {
-	info: { [key: string]: string };
-	blog: blogContent[];
+	data: {
+		name: string;
+		content: string;
+	}[];
 };
 
 export const load = (async () => {
 	const notion = new Client({
 		auth: NOTION_API_KEY
 	});
+
 	const response = await notion.databases.query({
-		database_id: 'b8ec3c117d1b4677947153bbe44bd42d'
+		database_id: '7d8c09c593ed4e0fb025044dab034a42',
+		filter: {
+			or: [
+				{
+					property: 'isPublished',
+					checkbox: {
+						equals: true
+					}
+				}
+			]
+		}
 	});
-	const data: dataType = { info: {}, blog: [] };
+
+	const data: dataType = { data: [] };
 
 	response.results.forEach((row: any) => {
-		data.info[row.properties.key.title[0].plain_text] =
-			row.properties.value.rich_text[0].plain_text;
+		data.data.push({
+			name: row.properties.name.title[0].plain_text,
+			content: row.properties.content.rich_text[0].plain_text
+		});
 	});
-
-	// data.blog = await getBlogData();
-
 	return data;
 }) satisfies PageServerLoad;
