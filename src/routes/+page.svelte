@@ -1,9 +1,13 @@
 <script lang="ts">
 	import FirstView from '$lib/animations/firstView.svelte';
+	import usuyukiIcon from '$lib/assets/icon/usuyukiIcon.jpg';
 	import NormalButton from '$lib/components/atom/button/NormalButton.svelte';
+	import { portfolioVersionLogger } from '$lib/utils/console/portfolioVersionLogger';
+	import { tuyotuyoConsole } from '$lib/utils/console/tuyotuyoConsole';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	console.log(data.info.log);
+	portfolioVersionLogger();
+	tuyotuyoConsole(data.info.log);
 </script>
 
 <svelte:head>
@@ -13,6 +17,15 @@
 
 <div class="relativ">
 	<FirstView />
+</div>
+
+<div class="flex justify-center flex-col items-center">
+	<img
+		alt="うすゆきアイコン"
+		class="w-40 h-40 rounded-full hover:shadow-xl duration-300"
+		src={usuyukiIcon}
+	/>
+	<h2 class="text-2xl ">うすゆきです</h2>
 </div>
 
 <h2 class="text-center my-40 mx-4">{data.info.greeting}</h2>
