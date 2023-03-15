@@ -9,6 +9,6 @@ export const snsLinkProvider = () => {
 		'margin-top:4px;background: black; color: white;padding: 0.25rem 0.25rem;',
 		'',
 		'margin-top:4px;background: #7e44c4; color: white;padding: 0.25rem 0.25rem;',
-		'margin-top:4px;background: black; color: white;padding: 0.25rem 0.25rem;',
+		'margin-top:4px;background: black; color: white;padding: 0.25rem 0.25rem;'
 	);
 };

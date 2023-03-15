@@ -24,3 +24,9 @@
 	bgColorVariable="pink"
 	textColorVariable="black"
 />
+<NormalButton
+	title="技術スタック"
+	url="/techStack"
+	bgColorVariable="blue"
+	textColorVariable="black"
+/>

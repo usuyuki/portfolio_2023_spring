@@ -25,6 +25,17 @@ npx playwright install
 pnpm dev
 ```
 
+Cloudflare Workers込の開発環境
+```
+wrangler dev
+```
+
+kv作る
+```
+wrangler kv:namespace create "kv" --preview
+wrangler kv:namespace create "kv"
+```
+
 ### テスト
 テストはソフトウェアのテスト技法に基づき
 - 単体テスト：Vitest
