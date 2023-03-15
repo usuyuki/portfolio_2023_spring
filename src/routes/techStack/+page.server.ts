@@ -21,6 +21,16 @@ export const load = (async () => {
 
 	const response = await notion.databases.query({
 		database_id: 'b0f7969c8fc245928e4c2abaa8a2f578',
+		filter: {
+			or: [
+				{
+					property: 'isPublished',
+					checkbox: {
+						equals: true
+					}
+				}
+			]
+		},
 		sorts: [
 			{
 				property: 'updatedAt',
