@@ -29,12 +29,23 @@ Cloudflare Workers込の開発環境
 ```
 wrangler dev
 ```
-
+### Cloudflare関連
 kv作る
 ```
 wrangler kv:namespace create "kv" --preview
 wrangler kv:namespace create "kv"
 ```
+
+本番のログをtailする
+```
+wrangler pages deployment tail
+```
+
+本番push
+```
+wrangler publish
+```
+
 
 ### テスト
 テストはソフトウェアのテスト技法に基づき
