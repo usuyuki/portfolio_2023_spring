@@ -1,0 +1,14 @@
+name = "<your-service-name>"
+account_id = "<your-account-id>"
+
+main = ".cloudflare/worker.js"
+site.bucket = ".cloudflare/public"
+
+build.command = "npm run build"
+
+compatibility_date = "2021-11-12"
+workers_dev = true
+
+kv_namespaces = [
+  { binding = "KV", id = "", preview_id = "" }
+]
