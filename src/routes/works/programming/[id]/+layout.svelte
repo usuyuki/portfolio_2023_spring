@@ -6,72 +6,80 @@
 </script>
 
 <slot />
-
-<p class="text-center mt-12 mb-4 text-2xl font-serif">他につくったもの！</p>
-<aside
-	class="overflow-hidden border-2 border-pink border-dotted rounded-xl shadow-xl"
-	use:emblaCarouselSvelte={{
-		options: {
-			loop: false,
-			dragFree: true,
-			containScroll: 'trimSnaps',
-			align: 'center',
-			startIndex: 1
-		},
-		plugins: [Autoplay()]
-	}}
->
-	<div class="flex">
-		<div class="embla-slide relative">
-			<div class="mb-32 mt-4" />
-			<div class="absolute inset-x-0 bottom-2">
-				<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-l-lg" />
-				<p class="text-xl text-center inset-x-0 absolute bottom-24 text-gray-200">
-					次回作にご期待ください!
-				</p>
-			</div>
-		</div>
-		{#each Object.entries(data.data) as [id, work]}
+<div class="relative border-2 border-pink border-dashed	 rounded-xl shadow-xl mt-40 mb-4">
+	<div class="flex justify-center absolute inset-x-0 -top-6">
+		<h4 class="text-center text-2xl font-serif bg-white px-4 rounded">他につくったもの！</h4>
+	</div>
+	<aside
+		class="overflow-hidden mt-6"
+		use:emblaCarouselSvelte={{
+			options: {
+				loop: false,
+				dragFree: true,
+				containScroll: 'trimSnaps',
+				align: 'center',
+				startIndex: 1
+			},
+			plugins: [Autoplay()]
+		}}
+	>
+		<div class="flex">
 			<div class="embla-slide relative">
-				<div class="mb-32 mt-4">
-					<a class="block" href="/works/programming/{id}">
-						<div class="mx-4 my-2">
-							<img
-								loading="lazy"
-								alt="サムネイル"
-								src={work.thumbnail}
-								class="mx-auto aspect-video w-2/3 md:w-1/2 object-cover rounded-xl"
-							/>
-							<div class="flex justify-center items-center pt-2">
-								<img loading="lazy" src={work.logo} class="w-12 h-12 " alt="logo" />
-								<h2 class="text-xl md:text-2xl">{work.name}</h2>
-							</div>
-							<p class="text-lg text-center mt-4">{work.summary}</p>
-						</div>
-					</a>
-				</div>
+				<div class="mb-32 mt-4" />
 				<div class="absolute inset-x-0 bottom-2">
-					<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16" />
-					<div
-						class="mx-auto w-12 h-12 bg-yellow rounded-2xl absolute inset-x-0 bottom-12 shadow-xl"
-					/>
-					<p class="text-center text-xl absolute inset-x-0 bottom-4">
-						{work.publishedAt}
+					<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-l-lg" />
+					<p class="text-xl text-center inset-x-0 absolute bottom-24 text-gray-200">
+						次回作にご期待ください!
 					</p>
 				</div>
 			</div>
-		{/each}
-		<div class="embla-slide relative">
-			<div class="mb-32 mt-4" />
-			<div class="absolute inset-x-0 bottom-2">
-				<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-r-lg" />
-				<p class="text-xl text-center inset-x-0 absolute bottom-24 text-gray-200">
-					最後までご覧いただきありがとうございました！
-				</p>
+			{#each Object.entries(data.data) as [id, work]}
+				<div class="embla-slide relative">
+					<div class="mb-32 mt-4">
+						<a class="block" href="/works/programming/{id}">
+							<div class="mx-4 my-2">
+								<img
+									loading="lazy"
+									alt="サムネイル"
+									src={work.thumbnail}
+									class="mx-auto aspect-video w-2/3 md:w-1/2 object-cover rounded-xl"
+								/>
+								<div class="flex justify-center items-center pt-2">
+									<img
+										loading="lazy"
+										src={work.logo}
+										class="w-12 h-12 "
+										alt="logo"
+									/>
+									<h2 class="text-xl md:text-2xl">{work.name}</h2>
+								</div>
+								<p class="text-lg text-center mt-4">{work.summary}</p>
+							</div>
+						</a>
+					</div>
+					<div class="absolute inset-x-0 bottom-2">
+						<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16" />
+						<div
+							class="mx-auto w-12 h-12 bg-yellow rounded-2xl absolute inset-x-0 bottom-12 shadow-xl"
+						/>
+						<p class="text-center text-xl absolute inset-x-0 bottom-4">
+							{work.publishedAt}
+						</p>
+					</div>
+				</div>
+			{/each}
+			<div class="embla-slide relative">
+				<div class="mb-32 mt-4" />
+				<div class="absolute inset-x-0 bottom-2">
+					<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-r-lg" />
+					<p class="text-xl text-center inset-x-0 absolute bottom-24 text-gray-200">
+						最後までご覧いただきありがとうございました！
+					</p>
+				</div>
 			</div>
 		</div>
-	</div>
-</aside>
+	</aside>
+</div>
 
 <style>
 	/* sp */

@@ -11,14 +11,21 @@
 	<meta name="description" content={data.data.summary} />
 </svelte:head>
 <h1 class="text-3xl text-center font-serif">{data.data.name}</h1>
+
 <div class="flex justify-center md:block">
-	<div class="md:flex justify-center flex-wrap items-stretch my-6">
+	<div class="md:flex justify-center flex-wrap items-stretch mt-2 mb-6">
 		<WordWithEmoji emoji="🚀" emojiMean="ローンチ日" content={data.data.publishedAt} />
 		<WordWithEmoji emoji="🧍" emojiMean="誰のために作った？" content={data.data.toWhom} />
 		<WordWithEmoji emoji="🍽" emojiMean="目的" content={data.data.whatToOffer} />
 	</div>
 </div>
-<div class="flex justify-center flex-wrap items-stretch my-6">
+
+<div class="flex justify-center items-center flex-row mb-4 mt-8">
+	<PossibleLinkButton title="GitHub🐙" link={data.data.gitHub} />
+	<PossibleLinkButton title="サイト🔗" link={data.data.link} />
+</div>
+
+<div class="flex justify-center flex-wrap items-stretch mt-16 mb-6">
 	<SentenceFrame
 		className="w-full mb-6"
 		title="ひとことで"
@@ -39,15 +46,13 @@
 	/>
 </div>
 
-<div class="flex justify-center items-center flex-row mb-4">
-	<PossibleLinkButton title="GitHub🐙" link={data.data.gitHub} />
-	<PossibleLinkButton title="サイト🔗" link={data.data.link} />
-</div>
-
-<h2 class="text-2xl text-center font-serif">ギャラリー</h2>
-
-<div class="flex flex-wrap justify-center">
-	{#each data.data.gallery as image}
-		<img src={image} alt={data.data.name} class="md:w-1/2 p-2 rounded-xl" loading="lazy" />
-	{/each}
+<div class="relative border-2 border-double border-black rounded-xl m-4 mt-20">
+	<div class="flex justify-center absolute inset-x-0 -top-6">
+		<h2 class="text-2xl text-center font-serif bg-white px-4 rounded-2xl">ギャラリー</h2>
+	</div>
+	<div class="flex flex-wrap justify-center p-4 ">
+		{#each data.data.gallery as image}
+			<img src={image} alt={data.data.name} class="md:w-1/2 p-2 rounded-xl" loading="lazy" />
+		{/each}
+	</div>
 </div>
