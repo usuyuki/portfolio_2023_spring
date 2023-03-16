@@ -52,6 +52,7 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           workingDirectory: .
           command: publish --config wrangler-ci.toml --project-name=usuyuki-portfolio-v6
-          env:
-            CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          env: |
+            CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
             CF_KV_NAMESPACES: ${{ secrets.CF_KV_NAMESPACES }}
+            # 参考:https://developers.cloudflare.com/workers/wrangler/ci-cd/
