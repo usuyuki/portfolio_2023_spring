@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PossibleLinkButton from '$lib/components/atom/button/PossibleLinkButton.svelte';
 	import SentenceFrame from '$lib/components/atom/text/sentence/SentenceFrame.svelte';
 	import WordWithEmoji from '$lib/components/atom/text/word/WordWithEmoji.svelte';
 	import type { PageData } from './$types';
@@ -10,26 +11,28 @@
 	<meta name="description" content={data.data.summary} />
 </svelte:head>
 <h1 class="text-3xl text-center font-serif">{data.data.name}</h1>
-<div class="flex justify-center flex-wrap items-stretch my-6">
-	<WordWithEmoji emoji="🚀" content={data.data.publishedAt} />
-	<WordWithEmoji emoji="🧍" content={data.data.toWhom} />
-	<WordWithEmoji emoji="🍽" content={data.data.whatToOffer} />
+<div class="flex justify-center md:block">
+	<div class="md:flex justify-center flex-wrap items-stretch my-6">
+		<WordWithEmoji emoji="🚀" emojiMean="ローンチ日" content={data.data.publishedAt} />
+		<WordWithEmoji emoji="🧍" emojiMean="誰のために作った？" content={data.data.toWhom} />
+		<WordWithEmoji emoji="🍽" emojiMean="目的" content={data.data.whatToOffer} />
+	</div>
 </div>
 <div class="flex justify-center flex-wrap items-stretch my-6">
 	<SentenceFrame
-		className="w-full"
+		className="w-full mb-6"
 		title="ひとことで"
 		content={data.data.summary}
 		borderColor="pink"
 	/>
 	<SentenceFrame
-		className="md:w-1/2"
+		className="md:w-1/2 w-full mb-6"
 		title="背景"
 		content={data.data.background}
 		borderColor="yellow"
 	/>
 	<SentenceFrame
-		className="md:w-1/2"
+		className="md:w-1/2 w-full mb-6"
 		title="こだわり"
 		content={data.data.kodawari}
 		borderColor="blue"
@@ -37,22 +40,8 @@
 </div>
 
 <div class="flex justify-center items-center flex-row mb-4">
-	<p>
-		<a
-			href={data.data.gitHub}
-			target="_blank"
-			rel="noopener noreferrer"
-			class="text-xl mx-2 my-4 rounded-2xl border-2 border-dotted p-2">GitHub🐙</a
-		>
-	</p>
-	<p>
-		<a
-			href={data.data.link}
-			target="_blank"
-			rel="noopener noreferrer"
-			class="text-xl mx-2 my-4 rounded-2xl border-2 border-dotted p-2">サイト🔗</a
-		>
-	</p>
+	<PossibleLinkButton title="GitHub🐙" link={data.data.gitHub} />
+	<PossibleLinkButton title="サイト🔗" link="" />
 </div>
 
 <h2 class="text-2xl text-center font-serif">ギャラリー</h2>

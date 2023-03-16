@@ -14,6 +14,9 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.54.1
   '@typescript-eslint/parser': ^5.54.1
   autoprefixer: ^10.4.14
+  embla-carousel: ^7.1.0
+  embla-carousel-autoplay: ^7.1.0
+  embla-carousel-svelte: ^7.1.0
   eslint: ^8.36.0
   eslint-config-prettier: ^8.7.0
   eslint-plugin-svelte3: ^4.0.0
@@ -33,6 +36,9 @@ dependencies:
   '@notionhq/client': 2.2.3
   '@sveltejs/adapter-cloudflare': 2.2.0_@sveltejs+kit@1.11.0
   '@tryghost/content-api': 1.11.6
+  embla-carousel: 7.1.0
+  embla-carousel-autoplay: 7.1.0_embla-carousel@7.1.0
+  embla-carousel-svelte: 7.1.0_svelte@3.56.0
 
 devDependencies:
   '@playwright/experimental-ct-svelte': 1.31.2_svelte@3.56.0
@@ -1142,6 +1148,27 @@ packages:
   /electron-to-chromium/1.4.330:
     resolution: {integrity: sha512-PqyefhybrVdjAJ45HaPLtuVaehiSw7C3ya0aad+rvmV53IVyXmYRk3pwIOb2TxTDTnmgQdn46NjMMaysx79/6Q==}
     dev: true
+
+  /embla-carousel-autoplay/7.1.0_embla-carousel@7.1.0:
+    resolution: {integrity: sha512-nYfgSGn3ek44OzwO0t/Ptuxq4PNPD5l7Y9X7JjLYI/DN1uGjqxz9L73YYqR6YCRDnTYJ88s9fep48dzBnSG4vQ==}
+    peerDependencies:
+      embla-carousel: 7.1.0
+    dependencies:
+      embla-carousel: 7.1.0
+    dev: false
+
+  /embla-carousel-svelte/7.1.0_svelte@3.56.0:
+    resolution: {integrity: sha512-OrMARLa7ltV0+cXovSDw3jjbRmDKD81ZN9qjOFPmvlTTou5WVOYXXI+C+zrFJXWLP2eFlmAmBOTp2GwnExWi1A==}
+    peerDependencies:
+      svelte: ^3.49.0
+    dependencies:
+      embla-carousel: 7.1.0
+      svelte: 3.56.0
+    dev: false
+
+  /embla-carousel/7.1.0:
+    resolution: {integrity: sha512-Bh8Pa8NWzgugLkf8sAGexQlBCNDFaej5BXiKgQdRJ1mUC9NWBrw9Z23YVPVGkguWoz5LMjZXXFVGCobl3UPt/Q==}
+    dev: false
 
   /entities/4.4.0:
     resolution: {integrity: sha512-oYp7156SP8LkeGD0GF85ad1X9Ai79WtRsZ2gxJqtBuzH+98YUV6jkHEKlZkMbcrjJjIVJNIDP/3WL9wQkoPbWA==}
