@@ -4,7 +4,7 @@ account_id = "override"
 main = ".cloudflare/worker.js"
 site.bucket = ".cloudflare/public"
 
-build.command = "pnpm build"
+build.command = "npm run build"
 
 compatibility_date = "2023-03-15"
 workers_dev = true
