@@ -16,40 +16,73 @@
 			dragFree: true,
 			containScroll: 'trimSnaps',
 			align: 'center',
-			startIndex: 0
+			startIndex: 1
 		},
 		plugins: [Autoplay()]
 	}}
 >
 	<div class="flex">
+		<div class="embla-slide relative">
+			<div class="mb-32 mt-4" />
+			<div class="absolute inset-x-0 bottom-2">
+				<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-l-lg" />
+				<p class="text-xl text-center inset-x-0 absolute bottom-24 text-gray-200">
+					次回作にご期待ください!
+				</p>
+			</div>
+		</div>
 		{#each Object.entries(data.data) as [id, work]}
-			<div class="embla-slide">
-				<a class="block" href="/works/programming/{id}">
-					<div class="mx-4 my-2">
-						<img
-							loading="lazy"
-							alt="サムネイル"
-							src={work.thumbnail}
-							class="mx-auto aspect-video w-1/2 object-cover"
-						/>
-						<div class="flex justify-center items-center">
-							<img loading="lazy" src={work.logo} class="w-12 h-12 " alt="logo" />
-							<h2 class="text-2xl">{work.name}</h2>
+			<div class="embla-slide relative">
+				<div class="mb-32 mt-4">
+					<a class="block" href="/works/programming/{id}">
+						<div class="mx-4 my-2">
+							<img
+								loading="lazy"
+								alt="サムネイル"
+								src={work.thumbnail}
+								class="mx-auto aspect-video w-2/3 md:w-1/2 object-cover rounded-xl"
+							/>
+							<div class="flex justify-center items-center pt-2">
+								<img loading="lazy" src={work.logo} class="w-12 h-12 " alt="logo" />
+								<h2 class="text-xl md:text-2xl">{work.name}</h2>
+							</div>
+							<p class="text-lg text-center mt-4">{work.summary}</p>
 						</div>
-						<p class="text-lg text-center">{work.summary}</p>
-					</div>
-				</a>
-				<div class="w-full h-4 bg-blue mt-8" />
-				<div class="mx-auto w-12 h-12 bg-yellow rounded-full relative -top-8" />
-				<p class="text-center text-xl text-blue relative -top-4">{work.publishedAt}</p>
+					</a>
+				</div>
+				<div class="absolute inset-x-0 bottom-2">
+					<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16" />
+					<div
+						class="mx-auto w-12 h-12 bg-yellow rounded-2xl absolute inset-x-0 bottom-12 shadow-xl"
+					/>
+					<p class="text-center text-xl absolute inset-x-0 bottom-4">
+						{work.publishedAt}
+					</p>
+				</div>
 			</div>
 		{/each}
+		<div class="embla-slide relative">
+			<div class="mb-32 mt-4" />
+			<div class="absolute inset-x-0 bottom-2">
+				<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-r-lg" />
+				<p class="text-xl text-center inset-x-0 absolute bottom-24 text-gray-200">
+					最後までご覧いただきありがとうございました！
+				</p>
+			</div>
+		</div>
 	</div>
 </aside>
 
 <style>
 	.embla-slide {
-		flex: 0 0 50%;
+		flex: 0 0 100%;
 		min-width: 0;
+	}
+	/* pc */
+	@media (min-width: 768px) {
+		.embla-slide {
+			flex: 0 0 50%;
+			min-width: 0;
+		}
 	}
 </style>
