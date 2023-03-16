@@ -17,6 +17,7 @@ module.exports = {
 				yellow: 'var(--yellow)',
 				blue: 'var(--blue)',
 				'ui-bg': 'var(--ui-bg)',
+				'natori-bg': 'var(--natori-bg)',
 				'kmsn-bg': 'var(--kmsn-bg)'
 			}
 		}
