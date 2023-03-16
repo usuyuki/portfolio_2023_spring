@@ -29,25 +29,25 @@
 		className="md:w-1/2 w-full mb-6"
 		title="背景"
 		content={data.data.background}
-		borderColor="yellow"
+		borderColor="black"
 	/>
 	<SentenceFrame
 		className="md:w-1/2 w-full mb-6"
 		title="こだわり"
 		content={data.data.kodawari}
-		borderColor="blue"
+		borderColor="yellow"
 	/>
 </div>
 
 <div class="flex justify-center items-center flex-row mb-4">
 	<PossibleLinkButton title="GitHub🐙" link={data.data.gitHub} />
-	<PossibleLinkButton title="サイト🔗" link="" />
+	<PossibleLinkButton title="サイト🔗" link={data.data.link} />
 </div>
 
 <h2 class="text-2xl text-center font-serif">ギャラリー</h2>
 
 <div class="flex flex-wrap justify-center">
 	{#each data.data.gallery as image}
-		<img src={image} alt={data.data.name} class="md:w-1/2 p-2" loading="lazy" />
+		<img src={image} alt={data.data.name} class="md:w-1/2 p-2 rounded-xl" loading="lazy" />
 	{/each}
 </div>
