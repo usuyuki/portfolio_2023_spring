@@ -74,12 +74,20 @@
 </aside>
 
 <style>
+	/* sp */
 	.embla-slide {
 		flex: 0 0 100%;
 		min-width: 0;
 	}
-	/* pc */
+	/* tablet */
 	@media (min-width: 768px) {
+		.embla-slide {
+			flex: 0 0 70%;
+			min-width: 0;
+		}
+	}
+	/* pc */
+	@media (min-width: 1024px) {
 		.embla-slide {
 			flex: 0 0 50%;
 			min-width: 0;
