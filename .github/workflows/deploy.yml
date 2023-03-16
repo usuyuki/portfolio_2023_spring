@@ -23,7 +23,7 @@ jobs:
           preCommands: |
             corepack enable
             pnpm install
-            cp .env.example .env
+            cat .env.example | sed -e "s/INSERT_NOTION_API_KEY/${{ secrets.NOTION_API_KEY }}/g" > .env
           command: publish --config wrangler-ci.toml 
           env: |
             CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
