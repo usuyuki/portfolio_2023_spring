@@ -23,6 +23,7 @@ jobs:
           preCommands: |
             corepack enable
             pnpm install
+            cp .env.example .env
           command: publish --config wrangler-ci.toml 
           env: |
             CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
