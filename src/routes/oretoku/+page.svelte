@@ -4,3 +4,5 @@
 </svelte:head>
 
 <p class="text-center text-2xl">じゅんびちゅう</p>
+
+<div class="w-full h-screen bg-ui-bg" />

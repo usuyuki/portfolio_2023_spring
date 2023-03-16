@@ -20,12 +20,12 @@
 <style>
 	/* 広がる波紋 */
 	.ripples {
-		width: 5vw;
+		width: 5%;
 		aspect-ratio: 1/1;
 		border-radius: 50%;
 		position: absolute;
-		top: 40vh;
-		left: 50vw;
+		top: 40%;
+		left: 50%;
 		z-index: 3;
 		opacity: 0;
 		background-color: var(--white);
@@ -51,12 +51,12 @@
 	}
 
 	.ripples-dotted {
-		width: 5vw;
+		width: 5%;
 		aspect-ratio: 1/1;
 		border-radius: 50%;
 		position: absolute;
-		top: 40vh;
-		left: 50vw;
+		top: 40%;
+		left: 50%;
 		z-index: 3;
 		opacity: 0;
 		border: 1px dotted var(--yellow);
@@ -80,8 +80,8 @@
 	/* ひし形 */
 	.rhombus {
 		position: absolute;
-		top: 40vh;
-		left: 50vw;
+		top: 40%;
+		left: 50%;
 		width: 40px;
 		height: 40px;
 		background: var(--pink);
@@ -103,6 +103,13 @@
 		font-size: 3rem;
 		margin: 0.2em 0.3rem;
 	}
+	/* スマホ向けはサイズ落とす */
+	@media screen and (max-width: 768px) {
+		p > span {
+			font-size: 2rem;
+		}
+	}
+
 	/* 文字を1つずつカクカクと動かして整列させる */
 	span {
 		animation-duration: 1s;
@@ -269,9 +276,9 @@
 		top: 0;
 		left: 0;
 		background-color: var(--black);
-		/* 100vwだと、スクロールバーの幅分が引かれてしまうので、calcで調整 */
-		width: calc(100vw - calc(100vw - 100%));
-		height: 100dvh;
+		/* 100%だと、スクロールバーの幅分が引かれてしまうので、calcで調整 */
+		width: calc(100% - calc(100% - 100%));
+		height: 100vh;
 		animation: fadeout 0.5s;
 		animation-delay: 1.5s;
 		animation-iteration-count: 1;
@@ -284,7 +291,7 @@
 		}
 		99% {
 			opacity: 0;
-			height: 100vh;
+			height: 100%;
 		}
 		100% {
 			height: 0;

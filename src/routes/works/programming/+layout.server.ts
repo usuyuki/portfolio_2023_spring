@@ -40,6 +40,9 @@ export const load = (async () => {
 	response.results.forEach((row: any) => {
 		data.data[row.id] = {
 			name: row.properties.name.title[0].plain_text,
+			logo: row.properties.logo.files[0].file.url,
+			//galleryの1枚目をサムネイルとして使う
+			thumbnail: row.properties.gallery.files[0].file.url,
 			summary: row.properties.summary.rich_text[0].plain_text,
 			publishedAt: row.properties.publishedAt.date.start.replace(/-/g, '/')
 		};

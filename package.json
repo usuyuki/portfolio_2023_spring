@@ -46,6 +46,9 @@
 	"dependencies": {
 		"@notionhq/client": "^2.2.3",
 		"@sveltejs/adapter-cloudflare": "^2.2.0",
-		"@tryghost/content-api": "^1.11.6"
+		"@tryghost/content-api": "^1.11.6",
+		"embla-carousel": "^7.1.0",
+		"embla-carousel-autoplay": "^7.1.0",
+		"embla-carousel-svelte": "^7.1.0"
 	}
 }
