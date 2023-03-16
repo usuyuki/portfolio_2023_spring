@@ -1,15 +1,15 @@
 <script lang="ts">
+	import type { worksProgrammingShortType } from '$lib/types/worksProgramming';
 	import Autoplay from 'embla-carousel-autoplay';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
-	import type { PageData } from '../$types';
-	export let data: PageData;
+	type dataType = {
+		[key: string]: worksProgrammingShortType;
+	};
+	export let works: dataType;
 </script>
 
-<slot />
-
-<p class="text-center mt-12 mb-4 text-2xl font-serif">他につくったもの！</p>
 <aside
-	class="overflow-hidden border-2 border-pink border-dotted rounded-xl shadow-xl"
+	class="overflow-hidden mt-6"
 	use:emblaCarouselSvelte={{
 		options: {
 			loop: false,
@@ -31,7 +31,7 @@
 				</p>
 			</div>
 		</div>
-		{#each Object.entries(data.data) as [id, work]}
+		{#each Object.entries(works) as [id, work]}
 			<div class="embla-slide relative">
 				<div class="mb-32 mt-4">
 					<a class="block" href="/works/programming/{id}">
@@ -43,7 +43,14 @@
 								class="mx-auto aspect-video w-2/3 md:w-1/2 object-cover rounded-xl"
 							/>
 							<div class="flex justify-center items-center pt-2">
-								<img loading="lazy" src={work.logo} class="w-12 h-12 " alt="logo" />
+								{#if work.logo !== false}
+									<img
+										loading="lazy"
+										src={work.logo}
+										class="w-10 h-10 mr-2"
+										alt="ロゴ"
+									/>
+								{/if}
 								<h2 class="text-xl md:text-2xl">{work.name}</h2>
 							</div>
 							<p class="text-lg text-center mt-4">{work.summary}</p>

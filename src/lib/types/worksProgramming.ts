@@ -3,7 +3,7 @@ export type worksProgrammingShortType = {
 	summary: string;
 	thumbnail: string;
 	publishedAt: string;
-	logo?: string;
+	logo: string | false;
 };
 export type worksProgrammingType = {
 	background: string;

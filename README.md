@@ -38,7 +38,7 @@ wrangler kv:namespace create "kv"
 
 本番のログをtailする
 ```
-wrangler pages deployment tail
+wrangler tail usuyuki-portfolio-v6
 ```
 
 本番push
