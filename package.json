@@ -1,6 +1,6 @@
 {
 	"name": "portfolio-2023-spring",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"private": true,
 	"scripts": {
 		"1": "pnpm format && pnpm lint & pnpm check & pnpm test:u & pnpm test:c & pnpm test:i",
