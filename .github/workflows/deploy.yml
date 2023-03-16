@@ -19,11 +19,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          workingDirectory: .
           preCommands: |
             corepack enable
             pnpm install
-            cat .env.example | sed -e "s/INSERT_NOTION_API_KEY/${{ secrets.NOTION_API_KEY }}/g" > .env
+            touch .env
+            echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
+            echo "GHOST_API_URL=${{ secrets.GHOST_API_URL }}" >> .env
+            echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
+            ls -la
           command: publish --config wrangler-ci.toml 
           env: |
             CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}

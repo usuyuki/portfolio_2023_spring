@@ -46,7 +46,10 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Generate Env 
-        run: cat .env.example | sed -e "s/INSERT_NOTION_API_KEY/${{ secrets.NOTION_API_KEY }}/g" > .env
+        run: |
+          echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
+          echo "GHOST_API_URL=${{ secrets.GHOST_API_URL }}" >> .env
+          echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
 
       - name: Integration test
         run: pnpm test:i
