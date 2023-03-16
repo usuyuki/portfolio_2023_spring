@@ -51,7 +51,7 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           workingDirectory: .
-          command: publish --config wrangler-ci.toml --project-name=usuyuki-portfolio-v6
+          command: publish --config wrangler-ci.toml
           env: |
             CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
             CF_KV_NAMESPACES: ${{ secrets.CF_KV_NAMESPACES }}
