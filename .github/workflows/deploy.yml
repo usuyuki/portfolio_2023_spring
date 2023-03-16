@@ -27,4 +27,8 @@ jobs:
           env: |
             CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
             CF_KV_NAMESPACES: ${{ secrets.CF_KV_NAMESPACES }}
+            NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+            GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
+            GHOST_CONTENT_KEY: ${{ secrets.GHOST_CONTENT_KEY }}
+            
             # 参考:https://developers.cloudflare.com/workers/wrangler/ci-cd/
