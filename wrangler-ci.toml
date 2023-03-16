@@ -1,8 +1,8 @@
 name = "usuyuki-portfolio-v6"
 account_id = "override"
 
-main = ".cloudflare/worker.js"
-site.bucket = ".cloudflare/public"
+main = "dist/worker.js"
+site.bucket = "dist/public"
 
 build.command = "pnpm build"
 
