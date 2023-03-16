@@ -46,7 +46,7 @@
 	/>
 </div>
 
-<div class="relative border-2 border-double border-black rounded-xl m-4 mt-20">
+<div class="relative border-2 border-double border-black rounded-xl m-4 mt-20 mb-40">
 	<div class="flex justify-center absolute inset-x-0 -top-6">
 		<h2 class="text-2xl text-center font-serif bg-white px-4 rounded-2xl">ギャラリー</h2>
 	</div>

@@ -16,7 +16,7 @@ export const load = (async () => {
 	});
 
 	const response = await notion.databases.query({
-		database_id: 'a448d280a2e840d6a4baa	3a34fb853b4',
+		database_id: 'a448d280a2e840d6a4baa3a34fb853b4',
 		filter: {
 			or: [
 				{
@@ -38,6 +38,8 @@ export const load = (async () => {
 	const data: dataType = { data: {} };
 
 	response.results.forEach((row: any) => {
+		//ここですべてのデータはとれる
+		/** @todo 個別ページはlayoutから渡すようにするとAPI叩く回数減らせる(本来の使い方と反するので、エラーハンドリングが面倒で保留にしている) */
 		data.data[row.id] = {
 			name: row.properties.name.title[0].plain_text,
 			logo: row.properties.logo.files[0].file.url,

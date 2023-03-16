@@ -74,7 +74,7 @@
 	<div class="w-full md:w-1/2">
 		<p class="h2 text-center font-serif text-2xl mt-20 mb-2">つくったもの</p>
 		<NormalButton
-			title="もっとよむ?"
+			title="もっとみる!"
 			url="/works/programming"
 			bgColorVariable="pink"
 			textColorVariable="black"
