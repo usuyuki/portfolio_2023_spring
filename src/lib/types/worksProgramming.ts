@@ -1,6 +1,7 @@
 export type worksProgrammingShortType = {
 	name: string;
 	summary: string;
+	thumbnail: string;
 	publishedAt: string;
 	logo?: string;
 };
@@ -10,7 +11,6 @@ export type worksProgrammingType = {
 		name: string;
 		id: string;
 	}[];
-	thumbnail: string;
 	logo: string;
 	gitHub: string;
 	link: string;
