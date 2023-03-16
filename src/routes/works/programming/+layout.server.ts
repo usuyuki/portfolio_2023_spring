@@ -42,11 +42,14 @@ export const load = (async () => {
 		/** @todo 個別ページはlayoutから渡すようにするとAPI叩く回数減らせる(本来の使い方と反するので、エラーハンドリングが面倒で保留にしている) */
 		data.data[row.id] = {
 			name: row.properties.name.title[0].plain_text,
-			logo: row.properties.logo.files[0].file.url,
 			//galleryの1枚目をサムネイルとして使う
 			thumbnail: row.properties.gallery.files[0].file.url,
 			summary: row.properties.summary.rich_text[0].plain_text,
-			publishedAt: row.properties.publishedAt.date.start.replace(/-/g, '/')
+			publishedAt: row.properties.publishedAt.date.start.replace(/-/g, '/'),
+			logo:
+				row.properties.logo.files.length !== 0
+					? row.properties.logo.files[0].file.url
+					: false
 		};
 	});
 	return data;

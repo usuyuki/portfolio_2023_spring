@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ArticleTimeline from '$lib/components/molecule/works/programming/ArticleTimeline.svelte';
-	import type { PageData } from '../$types';
+	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 

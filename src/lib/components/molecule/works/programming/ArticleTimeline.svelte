@@ -43,7 +43,14 @@
 								class="mx-auto aspect-video w-2/3 md:w-1/2 object-cover rounded-xl"
 							/>
 							<div class="flex justify-center items-center pt-2">
-								<img loading="lazy" src={work.logo} class="w-12 h-12 " alt="logo" />
+								{#if work.logo !== false}
+									<img
+										loading="lazy"
+										src={work.logo}
+										class="w-10 h-10 mr-2"
+										alt="ロゴ"
+									/>
+								{/if}
 								<h2 class="text-xl md:text-2xl">{work.name}</h2>
 							</div>
 							<p class="text-lg text-center mt-4">{work.summary}</p>
