@@ -12,11 +12,15 @@
 ```
 pnpm install
 ```
-
 E2E テスト必要な時
 
 ```
 npx playwright install
+```
+
+手元でCloudflare workersを動かす場合
+```
+cp wrangler.toml.example wrangler.toml
 ```
 
 ### 起動
@@ -43,6 +47,7 @@ wrangler tail usuyuki-portfolio-v6
 
 本番push
 ```
+wrangler publish --dry-run --outdir=dist
 wrangler publish
 ```
 
