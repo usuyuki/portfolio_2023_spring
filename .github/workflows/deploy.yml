@@ -1,12 +1,12 @@
 name: 自動デプロイ 
 
-on:
-  pull_request:
-    branches: [main]
 # on:
-#   push:
-#     branches:
-#       - main
+#   pull_request:
+#     branches: [main]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
