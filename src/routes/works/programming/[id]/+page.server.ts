@@ -26,7 +26,10 @@ export const load = (async (params: any) => {
 				tech: response.properties.tech.multi_select.map((item: any) => {
 					return { name: item.name, id: item.id };
 				}),
-				logo: response.properties.logo.files[0].file.url,
+				logo:
+					response.properties.logo.files.length !== 0
+						? response.properties.logo.files[0].file.url
+						: false,
 				gitHub: response.properties.gitHub.url,
 				link: response.properties.link.url,
 				summary: response.properties.summary.rich_text[0].plain_text,

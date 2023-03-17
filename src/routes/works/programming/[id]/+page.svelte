@@ -10,7 +10,13 @@
 	<title>{data.data.name}</title>
 	<meta name="description" content={data.data.summary} />
 </svelte:head>
-<h1 class="text-3xl text-center font-serif">{data.data.name}</h1>
+<div class="flex justify-center items-center md:flex-row flex-col mb-12 md:mb-4">
+	{#if data.data.logo !== false}
+		<img loading="lazy" src={data.data.logo} class="w-10 h-10 mr-2" alt="ロゴ" />
+	{/if}
+
+	<h1 class="text-3xl font-serif">{data.data.name}</h1>
+</div>
 
 <div class="flex justify-center md:block">
 	<div class="md:flex justify-center flex-wrap items-stretch mt-2 mb-6">
