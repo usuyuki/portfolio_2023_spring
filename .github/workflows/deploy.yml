@@ -28,7 +28,6 @@ jobs:
             echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
             ls -la
           command: |
-            whoami
             publish --config wrangler-ci.toml --outdir=dist
           env: |
             CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}

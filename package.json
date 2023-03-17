@@ -20,6 +20,7 @@
 		"@playwright/experimental-ct-svelte": "^1.31.2",
 		"@playwright/test": "^1.31.2",
 		"@sveltejs/adapter-auto": "^1.0.3",
+		"@sveltejs/adapter-cloudflare": "^2.2.0",
 		"@sveltejs/kit": "^1.12.0",
 		"@testing-library/svelte": "^3.2.2",
 		"@types/gtag.js": "^0.0.12",
@@ -45,7 +46,6 @@
 	"type": "module",
 	"dependencies": {
 		"@notionhq/client": "^2.2.3",
-		"@sveltejs/adapter-cloudflare": "^2.2.0",
 		"@tryghost/content-api": "^1.11.7",
 		"embla-carousel": "^7.1.0",
 		"embla-carousel-autoplay": "^7.1.0",
