@@ -1,5 +1,4 @@
-import { NOTION_API_KEY } from '$env/static/private';
-import { Client } from '@notionhq/client';
+import { notionAdaptor } from '$lib/utils/adaptor/notionAdaptor';
 import type { PageServerLoad } from './$types';
 type techStack = {
 	name: string;
@@ -15,11 +14,7 @@ type dataType = {
 };
 
 export const load = (async () => {
-	const notion = new Client({
-		auth: NOTION_API_KEY
-	});
-
-	const response = await notion.databases.query({
+	const response = await notionAdaptor.databases.query({
 		database_id: 'b0f7969c8fc245928e4c2abaa8a2f578',
 		filter: {
 			or: [

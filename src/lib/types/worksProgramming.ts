@@ -11,7 +11,7 @@ export type worksProgrammingType = {
 		name: string;
 		id: string;
 	}[];
-	logo: string;
+	logo: string | false;
 	gitHub: string;
 	link: string;
 	summary: string;

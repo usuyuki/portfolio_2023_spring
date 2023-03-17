@@ -1,7 +1,6 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
-import { NOTION_API_KEY } from '$env/static/private';
 import type { worksProgrammingShortType } from '$lib/types/worksProgramming';
-import { Client } from '@notionhq/client';
+import { notionAdaptor } from '$lib/utils/adaptor/notionAdaptor';
 import type { LayoutServerLoad } from './$types';
 
 // id:データになっている
@@ -11,11 +10,7 @@ type dataType = {
 	};
 };
 export const load = (async () => {
-	const notion = new Client({
-		auth: NOTION_API_KEY
-	});
-
-	const response = await notion.databases.query({
+	const response = await notionAdaptor.databases.query({
 		database_id: 'a448d280a2e840d6a4baa3a34fb853b4',
 		filter: {
 			or: [

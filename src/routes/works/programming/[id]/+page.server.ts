@@ -1,7 +1,7 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
-import { NOTION_API_KEY } from '$env/static/private';
 import type { worksProgrammingType } from '$lib/types/worksProgramming';
-import { APIErrorCode, Client } from '@notionhq/client';
+import { notionAdaptor } from '$lib/utils/adaptor/notionAdaptor';
+import { APIErrorCode } from '@notionhq/client';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -10,12 +10,9 @@ type dataType = {
 	data: worksProgrammingType;
 };
 export const load = (async (params: any) => {
-	const notion = new Client({
-		auth: NOTION_API_KEY
-	});
 	try {
 		/** @todo NotionSDKのretrieveの型が壊れているっぽいので、後ろ全部静的解析で壊さないためにanyにキャストする(TSのメリット潰してるからやめたい) */
-		const response = (await notion.pages.retrieve({
+		const response = (await notionAdaptor.pages.retrieve({
 			page_id: params.params.id
 		})) as any;
 		// publishしてない記事を弾く
@@ -29,7 +26,10 @@ export const load = (async (params: any) => {
 				tech: response.properties.tech.multi_select.map((item: any) => {
 					return { name: item.name, id: item.id };
 				}),
-				logo: response.properties.logo.files[0].file.url,
+				logo:
+					response.properties.logo.files.length !== 0
+						? response.properties.logo.files[0].file.url
+						: false,
 				gitHub: response.properties.gitHub.url,
 				link: response.properties.link.url,
 				summary: response.properties.summary.rich_text[0].plain_text,
