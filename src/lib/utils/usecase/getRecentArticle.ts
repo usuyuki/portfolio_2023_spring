@@ -1,23 +1,21 @@
 import type { blogContent } from '$lib/types/blogContent';
 import { ghostAdaptor } from '$lib/utils/adaptor/ghostAdaptor';
-export const getRecentArticle = async ():Promise<blogContent[]> => {
-
+export const getRecentArticle = async (): Promise<blogContent[]> => {
 	const articles = await ghostAdaptor.posts
 		.browse({
-			limit: 5
+			limit: 3
 		})
 		.catch((err: any) => {
 			console.error(err);
 		});
-		console.log(articles);
-		
-		return articles.map((article: any) => {
-			return {
-				title: article.title,
-				slug: article.slug,
-				date: article.created_at,
-				thumbnail: article.feature_image
-			};
-		});
-
-}
+	if (!articles) return Promise.reject(new Error('記事の取得に失敗しました。'));
+	return articles.map((article: any) => {
+		return {
+			title: article.title,
+			link: 'https://blog.usuyuki.net/' + article.slug,
+			//ISO形式をY-m-dにする
+			date: article.created_at.replace(/-/g, '/'),
+			thumbnail: article.feature_image
+		};
+	});
+};

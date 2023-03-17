@@ -1,22 +1,24 @@
 import type { blogContent } from '$lib/types/blogContent';
+import type { worksProgrammingTopPageType } from '$lib/types/worksProgramming';
 import { notionAdaptor } from '$lib/utils/adaptor/notionAdaptor';
+import { getRecentArticle } from '$lib/utils/usecase/getRecentArticle';
 import type { PageServerLoad } from './$types';
-type infoType={
+type infoType = {
 	[key: string]: string;
-}
+};
 type dataType = {
 	info: infoType;
-	blog: blogContent[];
+	blogs: blogContent[];
+	works: worksProgrammingTopPageType[];
 	accessCounterValue: string;
 };
 
-export const load = (async ({ platform }) => {
-
+export const load = (async ({ platform }): Promise<dataType> => {
 	//
 	/**
 	 * cloudflare workers kv からアクセスカウンタの値を引っ張る
 	 */
-	let nOfVisitorValue = 'むげん';//ローカルでは使えないのでこの値を出す
+	let nOfVisitorValue = 'むげん'; //ローカルでは使えないのでこの値を出す
 	if (platform !== undefined && platform.env !== undefined) {
 		const counter: string = await platform.env.KV.get('counter');
 		const nOfVisitor = Number(counter) + 1;
@@ -24,7 +26,7 @@ export const load = (async ({ platform }) => {
 		await platform.env.KV.put('counter', nOfVisitor);
 		nOfVisitorValue = nOfVisitor.toString();
 	}
-	
+
 	/**
 	 * トップ用のデータ取得
 	 */
@@ -36,6 +38,52 @@ export const load = (async ({ platform }) => {
 		dataInfo[row.properties.key.title[0].plain_text] =
 			row.properties.value.rich_text[0].plain_text;
 	});
-	
-	return { info: dataInfo, blog: [], accessCounterValue: nOfVisitorValue };
+
+	/**
+	 * ブログデータ取得
+	 */
+
+	const blogContent = await getRecentArticle();
+
+	/**
+	 * 作品データ取得
+	 * 3つだけ
+	 */
+	const worksResponse = await notionAdaptor.databases.query({
+		database_id: 'a448d280a2e840d6a4baa3a34fb853b4',
+		page_size: 3,
+		filter: {
+			or: [
+				{
+					property: 'isPublished',
+					checkbox: {
+						equals: true
+					}
+				}
+			]
+		},
+		sorts: [
+			{
+				property: 'publishedAt',
+				direction: 'descending'
+			}
+		]
+	});
+	const worksContent: worksProgrammingTopPageType[] = [];
+	worksResponse.results.forEach((row: any) => {
+		worksContent.push({
+			id: row.id,
+			name: row.properties.name.title[0].plain_text,
+			//galleryの1枚目をサムネイルとして使う
+			thumbnail: row.properties.gallery.files[0].file.url,
+			publishedAt: row.properties.publishedAt.date.start.replace(/-/g, '/')
+		});
+	});
+
+	return {
+		info: dataInfo,
+		blogs: blogContent,
+		works: worksContent,
+		accessCounterValue: nOfVisitorValue
+	};
 }) satisfies PageServerLoad;
