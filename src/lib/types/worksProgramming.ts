@@ -1,3 +1,9 @@
+export type worksProgrammingTopPageType = {
+	id: string;
+	name: string;
+	thumbnail: string;
+	publishedAt: string;
+};
 export type worksProgrammingShortType = {
 	name: string;
 	summary: string;

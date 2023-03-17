@@ -40,9 +40,9 @@
 <NormalButton title="もっと知る！" url="/about" bgColorVariable="blue" textColorVariable="black" />
 
 <!-- かきもの -->
-<div class="flex">
-	<div class="w-full md:w-1/2">
-		<p class="h2 text-center font-serif text-2xl mt-20 mb-2">かきもの</p>
+<div class="flex mt-20">
+	<div class="w-full md:w-1/5 flex flex-col items-center justify-center ">
+		<p class="h2 text-center font-serif text-2xl mb-2">かきもの</p>
 		<NormalButton
 			title="もっとよむ?"
 			url="https://blog.usuyuki.net"
@@ -50,29 +50,40 @@
 			textColorVariable="black"
 		/>
 	</div>
-	<div class="w-full md:w-1/2">
-		<div class="flex justify-center items-center flex-wrap">
-			{#each data.blog as article}
-				<a href={article.link} target="_blank" rel="noopener noreferrer">
-					<div class="flex flex-col justify-center items-center mx-4 my-2">
-						<h2 class="text-xl">{article.title}</h2>
-						<img
-							src={article.thumbnail}
-							alt={article.title + '記事サムネイル'}
-							class="w-24 h-24"
-						/>
-					</div>
-				</a>
-			{/each}
-		</div>
+	<div class="w-full md:w-4/5 flex items-center flex-wrap justify-center">
+		{#each data.blogs as article}
+			<a class="md:w-1/3" href={article.link} target="_blank" rel="noopener noreferrer">
+				<div class="flex flex-col justify-center items-center mx-4 my-2">
+					<img
+						src={article.thumbnail}
+						alt={article.title + 'サムネイル'}
+						class="w-24 h-24 rounded-lg object-cover"
+					/>
+					<h3 class="text-lg md:text-xl">{article.title}</h3>
+				</div>
+			</a>
+		{/each}
 	</div>
 </div>
 
 <!-- つくったもの -->
-<div class="flex">
-	<div class="w-full md:w-1/2" />
-	<div class="w-full md:w-1/2">
-		<p class="h2 text-center font-serif text-2xl mt-20 mb-2">つくったもの</p>
+<div class="flex mt-40">
+	<div class="w-full md:w-4/5 flex items-center flex-wrap justify-center">
+		{#each data.works as article}
+			<a href={'works/programming/' + article.id} class="md:w-1/3">
+				<div class="flex flex-col justify-center items-center mx-4 my-2">
+					<img
+						src={article.thumbnail}
+						alt={article.name + 'サムネイル'}
+						class="w-24 h-24 rounded-lg object-cover"
+					/>
+					<h3 class="text-lg md:text-xl">{article.name}</h3>
+				</div>
+			</a>
+		{/each}
+	</div>
+	<div class="w-full md:w-1/5 flex flex-col items-center justify-center ">
+		<p class="h2 text-center font-serif text-2xl mb-2">つくったもの</p>
 		<NormalButton
 			title="もっとみる!"
 			url="/works/programming"
