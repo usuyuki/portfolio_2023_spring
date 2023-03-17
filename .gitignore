@@ -12,3 +12,4 @@ playwright/.cache
 *.Identifier
 wrangler.toml
 .cloudflare
+/dist
