@@ -51,18 +51,22 @@
 		/>
 	</div>
 	<div class="w-full md:w-4/5 flex items-center flex-wrap justify-center">
-		{#each data.blogs as article}
-			<a class="md:w-1/3" href={article.link} target="_blank" rel="noopener noreferrer">
-				<div class="flex flex-col justify-center items-center mx-4 my-2">
-					<img
-						src={article.thumbnail}
-						alt={article.title + 'サムネイル'}
-						class="w-24 h-24 rounded-lg object-cover"
-					/>
-					<h3 class="text-lg md:text-xl">{article.title}</h3>
-				</div>
-			</a>
-		{/each}
+		{#if data.blogs.length === 0}
+			<p>ブログの取得に失敗しました...😢</p>
+		{:else}
+			{#each data.blogs as article}
+				<a class="md:w-1/3" href={article.link} target="_blank" rel="noopener noreferrer">
+					<div class="flex flex-col justify-center items-center mx-4 my-2">
+						<img
+							src={article.thumbnail}
+							alt={article.title + 'サムネイル'}
+							class="w-24 h-24 rounded-lg object-cover"
+						/>
+						<h3 class="text-lg md:text-xl">{article.title}</h3>
+					</div>
+				</a>
+			{/each}
+		{/if}
 	</div>
 </div>
 

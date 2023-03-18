@@ -10,6 +10,6 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 playwright/.cache
 *.Identifier
-wrangler.toml
+wrangler-prod.toml
 .cloudflare
 /dist

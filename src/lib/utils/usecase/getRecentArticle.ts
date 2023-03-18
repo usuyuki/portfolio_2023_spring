@@ -1,14 +1,18 @@
 import type { blogContent } from '$lib/types/blogContent';
-import { ghostAdaptor } from '$lib/utils/adaptor/ghostAdaptor';
+import { ghostAdapter } from '$lib/utils/adapter/ghostAdapter';
 export const getRecentArticle = async (): Promise<blogContent[]> => {
-	const articles = await ghostAdaptor.posts
+	const articles = await ghostAdapter.posts
 		.browse({
 			limit: 3
 		})
 		.catch((err: any) => {
 			console.error(err);
 		});
-	if (!articles) return Promise.reject(new Error('記事の取得に失敗しました。'));
+	if (!articles) {
+		// Ghostに影響されてポートフォリオ死んでほしくないので、空で返してエラーを握りつぶす
+		// return Promise.reject(new Error('記事の取得に失敗しました。'));
+		return [];
+	}
 	return articles.map((article: any) => {
 		return {
 			title: article.title,

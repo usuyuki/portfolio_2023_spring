@@ -3,7 +3,7 @@
 // and what to do when importing types
 
 /// <reference types="@sveltejs/kit" />
-/// <reference types="@sveltejs/adapter-cloudflare" />
+/// <reference types="@sveltejs/adapter-cloudflare-workers" />
 declare global {
 	namespace App {
 		// interface Error {}

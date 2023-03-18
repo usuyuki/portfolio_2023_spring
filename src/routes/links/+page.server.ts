@@ -1,4 +1,4 @@
-import { notionAdaptor } from '$lib/utils/adaptor/notionAdaptor';
+import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import type { PageServerLoad } from './$types';
 type techStack = {
 	name: string;
@@ -12,7 +12,7 @@ type dataType = {
 };
 
 export const load = (async () => {
-	const response = await notionAdaptor.databases.query({
+	const response = await notionAdapter.databases.query({
 		database_id: 'd773ca5cc7a14127b45b902d6129a321',
 		sorts: [
 			{

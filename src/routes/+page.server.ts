@@ -1,6 +1,6 @@
 import type { blogContent } from '$lib/types/blogContent';
 import type { worksProgrammingTopPageType } from '$lib/types/worksProgramming';
-import { notionAdaptor } from '$lib/utils/adaptor/notionAdaptor';
+import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import { getRecentArticle } from '$lib/utils/usecase/getRecentArticle';
 import type { PageServerLoad } from './$types';
 type infoType = {
@@ -30,7 +30,7 @@ export const load = (async ({ platform }): Promise<dataType> => {
 	/**
 	 * トップ用のデータ取得
 	 */
-	const response = await notionAdaptor.databases.query({
+	const response = await notionAdapter.databases.query({
 		database_id: 'b8ec3c117d1b4677947153bbe44bd42d'
 	});
 	const dataInfo: infoType = {};
@@ -49,7 +49,7 @@ export const load = (async ({ platform }): Promise<dataType> => {
 	 * 作品データ取得
 	 * 3つだけ
 	 */
-	const worksResponse = await notionAdaptor.databases.query({
+	const worksResponse = await notionAdapter.databases.query({
 		database_id: 'a448d280a2e840d6a4baa3a34fb853b4',
 		page_size: 3,
 		filter: {

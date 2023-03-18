@@ -1,6 +1,6 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
 import type { worksProgrammingShortType } from '$lib/types/worksProgramming';
-import { notionAdaptor } from '$lib/utils/adaptor/notionAdaptor';
+import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import type { LayoutServerLoad } from './$types';
 
 // id:データになっている
@@ -10,7 +10,7 @@ type dataType = {
 	};
 };
 export const load = (async () => {
-	const response = await notionAdaptor.databases.query({
+	const response = await notionAdapter.databases.query({
 		database_id: 'a448d280a2e840d6a4baa3a34fb853b4',
 		filter: {
 			or: [
