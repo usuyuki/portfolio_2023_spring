@@ -27,17 +27,12 @@ jobs:
             echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
             echo "GHOST_API_URL=${{ secrets.GHOST_API_URL }}" >> .env
             echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
-            ls -la
+            sed -i -e "s/\(account_id = \".*\)\(\"\)/\\1${{ secrets.CF_ACCOUNT_ID }}\2/" wrangler.toml'
+            sed -i -e "s/\(id = \".*\)\(\"\)/\\1${{ secrets.CF_KV_ID }}\2/" wrangler.toml'
           command: |
             publish
             # --config指定しても効かないので注意
-          secrets: |
-            ACCOUNT_ID
-            KV_NAMESPACES
           env: |
-            ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-            # ↓{ binding = "KV", id = "override", preview_id = "override" }と文字列で入れる
-            KV_NAMESPACES: ${{ secrets.CF_KV_NAMESPACES }}
             # NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
             # GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
             # GHOST_CONTENT_KEY: ${{ secrets.GHOST_CONTENT_KEY }}
