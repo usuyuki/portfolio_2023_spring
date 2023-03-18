@@ -1,5 +1,5 @@
 name = "usuyuki-portfolio-v6"
-account_id = ""
+account_id = "ACCOUNT_ID"
 
 main = ".cloudflare/worker.js"
 site.bucket = ".cloudflare/public"
@@ -10,5 +10,5 @@ compatibility_date = "2023-03-18"
 workers_dev = true
 
 kv_namespaces = [
-  { binding = "KV", id = "", preview_id = "override" }
+  { binding = "KV", id = "KV_ID", preview_id = "override" }
 ]
