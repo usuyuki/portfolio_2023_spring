@@ -1,12 +1,10 @@
-name: 自動デプロイ 
+name: Cloudflare Workersへの自動デプロイ 
 
 on:
   pull_request:
-    branches: [main]
-# on:
-#   push:
-#     branches:
-#       - main
+    branches:
+      - main
+    types: [closed]  
 
 jobs:
   deploy:
