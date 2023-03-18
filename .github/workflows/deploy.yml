@@ -32,9 +32,9 @@ jobs:
             publish
             # --config指定しても効かないので注意
           env: |
-            CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+            account_id: ${{ secrets.CF_ACCOUNT_ID }}
             # ↓{ binding = "KV", id = "override", preview_id = "override" }と文字列で入れる
-            CF_KV_NAMESPACES: ${{ secrets.CF_KV_NAMESPACES }}
+            kv_namespaces: ${{ secrets.CF_KV_NAMESPACES }}
             NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
             GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
             GHOST_CONTENT_KEY: ${{ secrets.GHOST_CONTENT_KEY }}
