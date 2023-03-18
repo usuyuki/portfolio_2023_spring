@@ -26,6 +26,7 @@ jobs:
             echo "GHOST_API_URL=${{ secrets.GHOST_API_URL }}" >> .env
             echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
             # どうやってもできないのでSEDで書き換える↓
+            cp wrangler.toml.example wrangler.toml
             sed -i -e "s/ACCOUNT_ID/${{ secrets.CF_ACCOUNT_ID }}/" wrangler.toml
             sed -i -e "s/KV_ID/${{ secrets.CF_KV_ID }}/" wrangler.toml
           command: |

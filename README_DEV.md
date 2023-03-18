@@ -46,11 +46,8 @@ wrangler publish
 
 dry run
 ```
-wrangler publish --config wrangler-prod.toml --dry-run 
+wrangler publish --config --dry-run 
 ```
-
-- wrangler.toml :ci用(本当はwrangler-ci.tomlにしたいがGithubActionsで--configが効かないので)
-- wrangler-prod.toml :手動でローカルからCloudflare Workersにpush用
 
 
 ### テスト
