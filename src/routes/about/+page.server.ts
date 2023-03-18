@@ -1,4 +1,4 @@
-import { notionAdaptor } from '$lib/utils/adaptor/notionAdaptor';
+import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import type { PageServerLoad } from './$types';
 
 type dataType = {
@@ -9,7 +9,7 @@ type dataType = {
 };
 
 export const load = (async () => {
-	const response = await notionAdaptor.databases.query({
+	const response = await notionAdapter.databases.query({
 		database_id: '74fe901686ac47a1835e3dfdb76ecc60',
 		filter: {
 			or: [
