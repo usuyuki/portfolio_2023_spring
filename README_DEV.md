@@ -46,7 +46,7 @@ wrangler publish
 
 dry run
 ```
-wrangler publish -dry-run dist
+wrangler publish --config wrangler-prod.toml --dry-run 
 ```
 
 - wrangler.toml :ci用(本当はwrangler-ci.tomlにしたいがGithubActionsで--configが効かないので)
