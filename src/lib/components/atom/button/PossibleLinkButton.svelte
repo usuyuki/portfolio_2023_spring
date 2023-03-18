@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
 	export let title = '';
-	export let link = '';
+	export let link: string | null;
 	export let borderColor = 'blue';
 	export let className = '';
 </script>
 
 <p class={className}>
-	{#if link !== ''}
+	{#if link !== null && link !== ''}
 		<a
 			href={link}
 			target="_blank"

@@ -17,9 +17,11 @@ export type worksProgrammingType = {
 		name: string;
 		id: string;
 	}[];
+	// ファイル&メディアは入ってないとNotionの返り値は空配列になる
 	logo: string | false;
-	gitHub: string;
-	link: string;
+	// URLは入ってないとNotionの返り値はnullになる
+	gitHub: string | null;
+	link: string | null;
 	summary: string;
 	whatToOffer: string;
 	genre: {
