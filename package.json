@@ -3,7 +3,8 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"1": "pnpm format && pnpm lint & pnpm check & pnpm test:u & pnpm test:c & pnpm test:i",
+		"1": "pnpm format && (pnpm lint & pnpm check) && exit 0",
+		"tests": "pnpm test:u & pnpm test:c & pnpm test:i",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
