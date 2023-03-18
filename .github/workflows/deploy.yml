@@ -1,12 +1,12 @@
 name: 自動デプロイ 
 
-# on:
-#   pull_request:
-#     branches: [main]
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    branches: [main]
+# on:
+#   push:
+#     branches:
+#       - main
 
 jobs:
   deploy:
@@ -28,7 +28,7 @@ jobs:
             echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
             ls -la
           command: |
-            publish --config wrangler-ci.toml --outdir=dist
+            publish --config wrangler-ci.toml
           env: |
             CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
             # ↓{ binding = "KV", id = "override", preview_id = "override" }と文字列で入れる
