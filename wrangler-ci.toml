@@ -1,4 +1,4 @@
-name = "usuyuki-portfolio-v6"
+name = "usuyuki-portfolio-v6-v2"
 account_id = "override"
 
 main = "dist/worker.js"
