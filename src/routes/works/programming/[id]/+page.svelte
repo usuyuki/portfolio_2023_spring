@@ -58,7 +58,7 @@
 	</div>
 	<div class="flex flex-wrap justify-center p-4 ">
 		{#each data.data.gallery as image}
-			<img src={image} alt={data.data.name} class="md:w-1/2 p-2 rounded-xl" loading="lazy" />
+			<img src={image} alt={data.data.name} class="md:w-1/2 p-2 rounded-xl object-contain" loading="lazy" />
 		{/each}
 	</div>
 </div>
