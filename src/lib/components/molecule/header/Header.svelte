@@ -1,6 +1,6 @@
 <header>
 	<a href="/">
-		<h1 class="text-center">うすゆきどっとねっと</h1>
+		<p class="text-center">うすゆきどっとねっと</p>
 	</a>
 </header>
 
@@ -28,7 +28,7 @@
 		}
 	}
 
-	h1 {
+	p {
 		width: 10em;
 		border-right: 0.08em solid;
 		border-color: transparent;

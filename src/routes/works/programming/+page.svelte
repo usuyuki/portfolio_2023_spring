@@ -1,5 +1,6 @@
 <script lang="ts">
 	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
+	import NormalPageTitle from '$lib/components/atom/text/sentence/NormalPageTitle.svelte';
 </script>
 
 <NormalHead
@@ -7,6 +8,7 @@
 	slug="/works/programming"
 	description="プログラミングで作ったもの"
 />
+<NormalPageTitle title="プログラミング作品" />
 
 <p class="text-center text-xl mt-4 md:mt-20 mb-4">
 	ここはプログラミング関係の<br class="md:hidden" />制作物のページです。

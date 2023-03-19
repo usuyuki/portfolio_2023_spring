@@ -1,12 +1,13 @@
 <script lang="ts">
 	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
+	import NormalPageTitle from '$lib/components/atom/text/sentence/NormalPageTitle.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
 <NormalHead title="映像作品" slug="/works/programming" description="映像作品のページです" />
 
-<h2 class="text-center text-xl mt-20 mb-12">映像作品</h2>
+<NormalPageTitle title="映像作品" />
 
 <div class="flex justify-center items-stretch flex-wrap">
 	{#each data.data as videos}
@@ -17,6 +18,7 @@
 				src={videos.youtubeIframe}
 				title="YouTube video player"
 				frameborder="0"
+				allowfullscreen={true}
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 			/>
 			<h2 class="text-2xl">{videos.name}</h2>
