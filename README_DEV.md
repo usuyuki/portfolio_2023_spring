@@ -85,6 +85,9 @@ npx playwright codegen http://localhost:5173/
 ```
 で出てきたブラウザで操作をするとコードが生成できる
 
+```
+npx playwright show-report
+```
 ### Lint
 
 ```
