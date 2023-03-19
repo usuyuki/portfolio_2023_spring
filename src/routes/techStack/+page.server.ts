@@ -1,15 +1,11 @@
+import type { techStackType } from '$lib/types/techStack';
 import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import type { PageServerLoad } from './$types';
-type techStack = {
-	name: string;
-	content: string;
-	power: number;
-};
 
 // ジャンルごとに ジャンル:データ となるようにしている
 type dataType = {
 	data: {
-		[key: string]: techStack[];
+		[key: string]: techStackType[];
 	};
 };
 
@@ -37,7 +33,7 @@ export const load = (async () => {
 	const data: dataType = { data: {} };
 	response.results.forEach((row: any) => {
 		const genre: string = row.properties.genre.select.name;
-		const techArray: techStack = {
+		const techArray: techStackType = {
 			name: row.properties.name.title[0].plain_text,
 			content: row.properties.content.rich_text[0].plain_text,
 			power: row.properties.power.number

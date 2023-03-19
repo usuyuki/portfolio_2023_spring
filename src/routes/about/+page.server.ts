@@ -1,11 +1,8 @@
+import type { aboutType } from '$lib/types/about';
 import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import type { PageServerLoad } from './$types';
-
 type dataType = {
-	data: {
-		name: string;
-		content: string;
-	}[];
+	data: aboutType[];
 };
 
 export const load = (async () => {

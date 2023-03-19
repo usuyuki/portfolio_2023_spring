@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { worksProgrammingShortType } from '$lib/types/worksProgramming';
+	import type { worksProgrammingShortType } from '$lib/types/works/worksProgramming';
 	import Autoplay from 'embla-carousel-autoplay';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	type dataType = {

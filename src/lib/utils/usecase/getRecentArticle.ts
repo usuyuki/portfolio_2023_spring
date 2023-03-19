@@ -1,6 +1,6 @@
-import type { blogContent } from '$lib/types/blogContent';
+import type { blogContentType } from '$lib/types/blogContent';
 import { ghostAdapter } from '$lib/utils/adapter/ghostAdapter';
-export const getRecentArticle = async (): Promise<blogContent[]> => {
+export const getRecentArticle = async (): Promise<blogContentType[]> => {
 	const articles = await ghostAdapter.posts
 		.browse({
 			limit: 3

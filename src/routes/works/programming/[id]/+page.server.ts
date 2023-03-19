@@ -1,5 +1,5 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
-import type { worksProgrammingType } from '$lib/types/worksProgramming';
+import type { worksProgrammingType } from '$lib/types/works/worksProgramming';
 import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import { APIErrorCode } from '@notionhq/client';
 import { error } from '@sveltejs/kit';

@@ -1,11 +1,8 @@
+import type { kokosukiType } from '$lib/types/kokosuki';
 import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import type { PageServerLoad } from './$types';
-
 type dataType = {
-	data: {
-		name: string;
-		content: string;
-	}[];
+	data: kokosukiType[];
 };
 
 export const load = (async () => {

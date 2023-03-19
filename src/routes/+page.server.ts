@@ -1,5 +1,5 @@
-import type { blogContent } from '$lib/types/blogContent';
-import type { worksProgrammingTopPageType } from '$lib/types/worksProgramming';
+import type { blogContentType } from '$lib/types/blogContent';
+import type { worksProgrammingTopPageType } from '$lib/types/works/worksProgramming';
 import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import { getRecentArticle } from '$lib/utils/usecase/getRecentArticle';
 import type { PageServerLoad } from './$types';
@@ -8,7 +8,7 @@ type infoType = {
 };
 type dataType = {
 	info: infoType;
-	blogs: blogContent[];
+	blogs: blogContentType[];
 	works: worksProgrammingTopPageType[];
 	accessCounterValue: string;
 };
