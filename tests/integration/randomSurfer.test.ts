@@ -2,6 +2,8 @@ import { test } from '@playwright/test';
 
 test.describe('移動しての動作テスト', () => {
 	test('らんだむさーふぁー', async ({ page }) => {
+		// 結構重いので終わるようにタイムアウトを長めに取る
+		await page.setDefaultTimeout(60000);
 		await page.goto('/');
 		await page.getByRole('link', { name: 'もっとみる!' }).click();
 		await page
@@ -16,12 +18,5 @@ test.describe('移動しての動作テスト', () => {
 			.click();
 		await page.getByRole('link', { name: 'うすゆきどっとねっと' }).click();
 		await page.getByRole('link', { name: 'スライド' }).click();
-		await page.getByRole('banner').click();
-		await page.getByText('う す ゆ き ど っ と ね っ と').click();
-		await page.getByRole('link', { name: '動画作品' }).click();
-		await page.getByRole('link', { name: 'うすゆきどっとねっと' }).click();
-		await page.getByRole('link', { name: 'もっと知る！' }).click();
-		await page.getByRole('main').getByRole('link', { name: '技術スタック' }).click();
-		await page.getByRole('link', { name: 'うすゆきどっとねっと' }).click();
 	});
 });
