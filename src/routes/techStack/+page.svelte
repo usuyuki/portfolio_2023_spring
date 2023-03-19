@@ -15,7 +15,7 @@
 			<div class="w-full md:w-1/2 flex items-center">
 				<div
 					class="techStackPercent m-4 flex justify-center items-center w-60 h-60 rounded-full"
-					style="--power:{techStack.power}%"
+					style="--power:{techStack.power}"
 				>
 					<h2 class="text-2xl techStackName">{techStack.name}</h2>
 				</div>
@@ -29,32 +29,51 @@
 
 <style>
 	/* 結果となる%変数 */
-	@property --power {
-		syntax: '<percentage>';
-		inherits: false;
-		initial-value: 0%;
-	}
-	/* アニメーション用で動的に変わる%変数 */
-	@property --percent {
-		syntax: '<percentage>';
-		inherits: false;
-		initial-value: 0%;
-	}
+	/* @propertyはwebkit系が全滅なので使わないこと！ */
+	/* @propertyが使えると0と100の指定だけでいい感じになめらかにできるので、safariが対応したら使いたい  */
 	@keyframes circleAnim {
 		0% {
-			--percent: 0%;
+			--percent: 0;
 		}
-		99.9%,
-		to {
+		10% {
+			--percent: calc(var(--power) / 10);
+		}
+		20% {
+			--percent: calc(var(--power) / 5);
+		}
+		30% {
+			--percent: calc(var(--power) / 4);
+		}
+		40% {
+			--percent: calc(var(--power) / 3);
+		}
+		50% {
+			--percent: calc(var(--power) / 2);
+		}
+		60% {
+			--percent: calc(var(--power) / 1.5);
+		}
+		70% {
+			--percent: calc(var(--power) / 1.2);
+		}
+		80% {
+			--percent: calc(var(--power) / 1.1);
+		}
+		90% {
+			--percent: calc(var(--power) / 1.05);
+		}
+		100% {
 			--percent: var(--power);
 		}
 	}
 	.techStackPercent {
+		--power: 0;
+		--percent: 0;
 		animation: circleAnim 1s forwards;
 		background-image: conic-gradient(
 			var(--blue) 0%,
-			var(--blue) var(--percent),
-			gray calc(var(--percent) * 1.01) 100%
+			var(--blue) calc(var(--percent) * 1%),
+			gray calc(var(--percent) * 1.01%) 100%
 		);
 	}
 </style>
