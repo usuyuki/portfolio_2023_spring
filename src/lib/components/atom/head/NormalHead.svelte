@@ -8,7 +8,7 @@
 	export let title: string;
 	export let slug: string;
 	export let description: string;
-	export let ogImage: string = SITE_URL + '/ogp/ogp.png';
+	export let ogImage: string = SITE_URL + '/img/ogp/ogp.png';
 
 	let url = SITE_URL + slug;
 	let pageTitle = title + ' | ' + SITE_TITLE;

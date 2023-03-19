@@ -77,6 +77,14 @@ pnpm test:c
 pnpm test:i
 ```
 
+#### テストの追加
+
+playwrightでクリックのテストを追加したいとき
+```
+npx playwright codegen http://localhost:5173/
+```
+で出てきたブラウザで操作をするとコードが生成できる
+
 ### Lint
 
 ```
