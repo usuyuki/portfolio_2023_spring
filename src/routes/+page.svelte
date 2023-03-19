@@ -2,6 +2,7 @@
 	import FirstView from '$lib/animations/firstView.svelte';
 	import usuyukiIcon from '$lib/assets/icon/usuyukiIcon.jpg';
 	import NormalButton from '$lib/components/atom/button/NormalButton.svelte';
+	import SnsMenu from '$lib/components/molecule/menu/SNSMenu.svelte';
 	import { portfolioVersionLogger } from '$lib/utils/console/portfolioVersionLogger';
 	import { snsLinkProvider } from '$lib/utils/console/snsLinkProvider';
 	import { tuyotuyoConsole } from '$lib/utils/console/tuyotuyoConsole';
@@ -33,7 +34,9 @@
 <h2 class="text-center my-40 mx-4">{data.info.greeting}</h2>
 
 <!-- アクセスカウンタ -->
-<h3 class="text-center text-2xl">あなたは{data.accessCounterValue}番目の訪問者です！</h3>
+<h3 class="text-center text-2xl mb-20">あなたは{data.accessCounterValue}番目の訪問者です！</h3>
+
+<SnsMenu />
 
 <!-- うすゆきについて -->
 <p class="h2 text-center font-serif text-2xl mb-12">うすゆきについて</p>

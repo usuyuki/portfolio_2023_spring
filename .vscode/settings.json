@@ -17,19 +17,23 @@
 		"embla",
 		"imagetools",
 		"Kaisei",
+		"keybase",
 		"kmsn",
 		"kodawari",
 		"kokosuki",
 		"Maru",
+		"misskey",
 		"notionhq",
 		"npmrc",
 		"oretoku",
 		"postcss",
+		"qiita",
 		"souko",
 		"tailwindcss",
 		"truetype",
 		"tuyotuyo",
 		"vite",
-		"Vitest"
+		"Vitest",
+		"zenn"
 	]
 }
