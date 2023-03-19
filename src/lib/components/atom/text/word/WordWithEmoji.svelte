@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	export let emoji = '✍';
 	export let content = '';
 	export let emojiMean = '';

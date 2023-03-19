@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	export let bgColorVariable = 'pink';
 	export let textColorVariable = 'black';
 	export let title = 'ボタン名';

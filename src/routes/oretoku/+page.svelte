@@ -1,7 +1,12 @@
-<svelte:head>
-	<title>すきなものを表現するばしょ</title>
-	<meta name="description" content="すきなものを表現するページ" />
-</svelte:head>
+<script lang="ts">
+	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
+</script>
+
+<NormalHead
+	title="すきなものを表現するばしょ"
+	slug="/oretoku"
+	description="すきなものを表現するページ"
+/>
 
 <p class="text-center text-2xl">じゅんびちゅう</p>
 

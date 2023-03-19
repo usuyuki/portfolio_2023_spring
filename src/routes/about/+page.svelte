@@ -1,13 +1,11 @@
 <script lang="ts">
+	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
 	import NormalButton from '$lib/components/atom/button/NormalButton.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
-<svelte:head>
-	<title>あばうと</title>
-	<meta name="description" content="うすゆきについて" />
-</svelte:head>
+<NormalHead title="あばうと" slug="/kokosuki" description="うすゆきについて" />
 
 <div class="flex justify-center items-center flex-col">
 	{#each data.data as works}

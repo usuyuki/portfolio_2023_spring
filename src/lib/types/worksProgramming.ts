@@ -12,6 +12,7 @@ export type worksProgrammingShortType = {
 	logo: string | false;
 };
 export type worksProgrammingType = {
+	slug: string;
 	background: string;
 	tech: {
 		name: string;
