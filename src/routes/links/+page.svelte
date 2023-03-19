@@ -1,10 +1,12 @@
 <script lang="ts">
 	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
+	import NormalPageTitle from '$lib/components/atom/text/sentence/NormalPageTitle.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
 <NormalHead title="リンク集" slug="/links" description="リンク集ページ" />
+<NormalPageTitle title="リンク集" />
 
 {#each Object.entries(data.data) as [title, links]}
 	<h2 class="text-3xl text-center mx-4 mt-6">{title}</h2>

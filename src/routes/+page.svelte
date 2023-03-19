@@ -40,7 +40,7 @@
 
 <!-- つくったもの -->
 <div class="flex flex-wrap mt-20">
-	<div class="w-full md:w-4/5 flex items-center flex-wrap justify-center">
+	<div class="w-1/2 md:w-4/5 flex items-center flex-wrap justify-center">
 		{#each data.works as article}
 			<a href={'works/programming/' + article.id} class="md:w-1/3">
 				<div class="flex flex-col justify-center items-center mx-4 my-2">
@@ -54,7 +54,7 @@
 			</a>
 		{/each}
 	</div>
-	<div class="w-full md:w-1/5 flex flex-col items-center justify-center ">
+	<div class="w-1/2 md:w-1/5 flex flex-col items-center justify-center ">
 		<p class="h2 text-center font-serif text-2xl mb-2">つくったもの</p>
 		<NormalButton
 			title="もっとみる!"

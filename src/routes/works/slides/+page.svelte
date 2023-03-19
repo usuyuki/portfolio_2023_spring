@@ -1,5 +1,7 @@
 <script lang="ts">
 	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
+	import HeadingWithBorder from '$lib/components/atom/text/sentence/HeadingWithBorder.svelte';
+	import NormalPageTitle from '$lib/components/atom/text/sentence/NormalPageTitle.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
@@ -10,10 +12,10 @@
 	description="登壇などで使用したスライドの一覧ページです"
 />
 
-<h2 class="text-center text-3xl mt-20 mb-12">スライド</h2>
+<NormalPageTitle title="スライド" />
 
 {#each Object.entries(data.data) as [title, slides]}
-	<h2 class="text-2xl text-center mx-4 mt-6">{title}</h2>
+	<HeadingWithBorder {title} />
 	<div class="flex justify-center items-stretch flex-wrap">
 		{#each slides as slide}
 			<div class="flex justify-center flex-col items-center px-8 py-12 w-full ">
@@ -27,7 +29,9 @@
 				/>
 				<h2 class="text-2xl">{slide.name}</h2>
 				<p class="mt-2">{slide.publishedAt}</p>
-				<p class="text-lg mt-8">{slide.description}</p>
+				<div class="flex justify-center items-center mt-8 w-5/6 md:w-2/3 mx-auto">
+					<p class="text-lg">{slide.description}</p>
+				</div>
 			</div>
 		{/each}
 	</div>
