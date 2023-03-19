@@ -17,6 +17,7 @@
 				src={videos.youtubeIframe}
 				title="YouTube video player"
 				frameborder="0"
+				allowfullscreen={true}
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 			/>
 			<h2 class="text-2xl">{videos.name}</h2>
