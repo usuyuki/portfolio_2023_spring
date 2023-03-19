@@ -69,7 +69,7 @@
 	</div>
 	<div class="flex justify-center flex-wrap items-stretch my-4">
 		{#each data.data.tech as tech}
-			<WordForTag title={tech.name} url={tech.id} />
+			<WordForTag title={tech.name} />
 		{/each}
 	</div>
 </div>
