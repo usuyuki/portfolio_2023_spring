@@ -13,3 +13,4 @@ playwright/.cache
 wrangler.toml
 .cloudflare
 /dist
+/playwright-report
