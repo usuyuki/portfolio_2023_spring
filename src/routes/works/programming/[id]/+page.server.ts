@@ -22,6 +22,7 @@ export const load = (async (params: any) => {
 		}
 		const data: dataType = {
 			data: {
+				slug: response.id,
 				background: response.properties.background.rich_text[0].plain_text,
 				tech: response.properties.tech.multi_select.map((item: any) => {
 					return { name: item.name, id: item.id };

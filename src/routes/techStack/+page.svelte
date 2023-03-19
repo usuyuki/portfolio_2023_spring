@@ -1,12 +1,11 @@
 <script lang="ts">
+	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
-<svelte:head>
-	<title>技術スタック</title>
-	<meta name="description" content="シェフのきまぐれ技術スタック" />
-</svelte:head>
+<NormalHead title="技術スタック" slug="/techStack" description="シェフのきまぐれ技術スタック" />
+
 {#each Object.entries(data.data) as [genreTitle, techStacks]}
 	<h2 class="text-3xl text-center mx-4 mt-60 mb-4 ">「{genreTitle}」</h2>
 	<div class="flex justify-center items-center flex-wrap">

@@ -1,15 +1,19 @@
 <script lang="ts">
 	import PossibleLinkButton from '$lib/components/atom/button/PossibleLinkButton.svelte';
+	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
 	import SentenceFrame from '$lib/components/atom/text/sentence/SentenceFrame.svelte';
 	import WordWithEmoji from '$lib/components/atom/text/word/WordWithEmoji.svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
-<svelte:head>
-	<title>{data.data.name}</title>
-	<meta name="description" content={data.data.summary} />
-</svelte:head>
+<NormalHead
+	title={data.data.name}
+	slug={`/works/programming/${data.data.slug}`}
+	description={data.data.summary}
+	ogImage={data.data.gallery[0]}
+/>
+
 <div class="flex justify-center items-center md:flex-row flex-col mb-12 md:mb-4">
 	{#if data.data.logo !== false}
 		<img loading="lazy" src={data.data.logo} class="w-10 h-10 mr-2 object-contain" alt="ロゴ" />

@@ -1,3 +1,13 @@
+<script lang="ts">
+	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
+</script>
+
+<NormalHead
+	title="カラー置き場"
+	slug="/souko"
+	description="Tailwindのクラス生成のために作っているページ"
+/>
+
 <h1 class="text-2xl">カラー置き場</h1>
 <div class="flex">
 	<div class="w-20 h-20 bg-white hover:bg-white" />
