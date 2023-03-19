@@ -39,7 +39,7 @@
 <h2 class="text-center mt-12 mb-4 mx-4 mt-20">{data.info.greeting}</h2>
 
 <!-- つくったもの -->
-<div class="flex mt-20">
+<div class="flex flex-wrap mt-20">
 	<div class="w-full md:w-4/5 flex items-center flex-wrap justify-center">
 		{#each data.works as article}
 			<a href={'works/programming/' + article.id} class="md:w-1/3">
@@ -62,6 +62,25 @@
 			bgColorVariable="pink"
 			textColorVariable="black"
 		/>
+	</div>
+	<div class="w-full mt-12">
+		<h2 class="text-center text-xl">プログラミング以外もあります!</h2>
+		<div class="flex justify-center items-center flex-wrap mt-4">
+			<NormalButton
+				className="p-2"
+				title="動画作品"
+				url="/works/videos"
+				bgColorVariable="black"
+				textColorVariable="blue"
+			/>
+			<NormalButton
+				className="p-2"
+				title="スライド"
+				url="/works/slides"
+				bgColorVariable="black"
+				textColorVariable="blue"
+			/>
+		</div>
 	</div>
 </div>
 

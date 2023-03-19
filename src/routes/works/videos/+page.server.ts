@@ -1,13 +1,13 @@
-import type { aboutType } from '$lib/types/about';
+import type { worksVideoType } from '$lib/types/works/worksVideos';
 import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
 import type { PageServerLoad } from './$types';
 type dataType = {
-	data: aboutType[];
+	data: worksVideoType[];
 };
 
 export const load = (async () => {
 	const response = await notionAdapter.databases.query({
-		database_id: '74fe901686ac47a1835e3dfdb76ecc60',
+		database_id: 'dcbb3d52369d4da688bc5be120fc5db6',
 		filter: {
 			or: [
 				{
@@ -17,15 +17,23 @@ export const load = (async () => {
 					}
 				}
 			]
-		}
+		},
+		sorts: [
+			{
+				property: 'publishedAt',
+				direction: 'descending'
+			}
+		]
 	});
 
 	const data: dataType = { data: [] };
-
 	response.results.forEach((row: any) => {
 		data.data.push({
+			publishedAt: row.properties.publishedAt.date.start,
 			name: row.properties.name.title[0].plain_text,
-			content: row.properties.content.rich_text[0].plain_text
+			description: row.properties.description.rich_text[0].plain_text,
+			youtubeIframe: row.properties.youTubeIframe.url,
+			thumbnail: row.properties.thumbnail.files[0].file.url
 		});
 	});
 	return data;
