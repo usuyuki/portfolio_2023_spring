@@ -94,6 +94,11 @@
 		borderColor="yellow"
 	/>
 </div>
+{#if data.data.content !== null}
+	<div class="w-full px-12 pt-2 pb-4 shadow-sm rounded-xl">
+		{@html data.data.content}
+	</div>
+{/if}
 
 <div class="relative border-2 border-double border-black rounded-xl m-4 mt-20 mb-40">
 	<div class="flex justify-center absolute inset-x-0 -top-6">

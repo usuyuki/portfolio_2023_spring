@@ -14,6 +14,7 @@ export type worksProgrammingShortType = {
 export type worksProgrammingType = {
 	slug: string;
 	background: string;
+	content: string | null;
 	tech: {
 		name: string;
 		id: string;
