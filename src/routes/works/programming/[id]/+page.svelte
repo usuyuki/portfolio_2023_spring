@@ -99,7 +99,7 @@
 	<div class="flex justify-center absolute inset-x-0 -top-6">
 		<h2 class="text-2xl text-center font-serif bg-white px-4 rounded-2xl">ギャラリー</h2>
 	</div>
-	<div class="flex flex-wrap justify-center p-4 ">
+	<div class="flex flex-wrap justify-center p-4">
 		{#each data.data.gallery as image}
 			<img
 				src={image}

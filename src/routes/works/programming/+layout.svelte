@@ -6,7 +6,7 @@
 
 <slot />
 
-<div class="relative border-2 border-blue border-dashed	rounded-xl mb-4">
+<div class="relative border-2 border-blue border-dashed rounded-xl mb-4">
 	<div class="flex justify-center absolute inset-x-0 -top-6">
 		<h4 class="text-center text-2xl font-serif bg-white px-4 rounded">つくったもの！</h4>
 	</div>
