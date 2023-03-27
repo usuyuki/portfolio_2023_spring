@@ -9,15 +9,6 @@
 <NormalHead title="あばうと" slug="/kokosuki" description="うすゆきについて" />
 <NormalPageTitle title="あばうと" />
 
-<div class="flex justify-center items-center flex-col">
-	{#each data.data as works}
-		<div class="flex mx-4 my-2 w-full">
-			<h2 class="text-2xl w-1/2 text-right mr-4">{works.name}</h2>
-			<p class="text-xl w-1/2 text-left">{works.content}</p>
-		</div>
-	{/each}
-</div>
-
 <div class="flex justify-center items-center">
 	<NormalButton
 		className="p-4"
@@ -28,9 +19,25 @@
 	/>
 	<NormalButton
 		className="p-4"
-		title="技術スタック"
-		url="/techStack"
+		title="経歴"
+		url="/history"
 		bgColorVariable="blue"
 		textColorVariable="black"
 	/>
+	<NormalButton
+		className="p-4"
+		title="技術スタック"
+		url="/techStack"
+		bgColorVariable="black"
+		textColorVariable="blue"
+	/>
+</div>
+
+<div class="flex justify-center items-center flex-col">
+	{#each data.data as works}
+		<div class="flex mx-4 my-2 w-full">
+			<h2 class="text-2xl w-1/2 text-right mr-4">{works.name}</h2>
+			<p class="text-xl w-1/2 text-left">{works.content}</p>
+		</div>
+	{/each}
 </div>

@@ -18,7 +18,7 @@
 	<HeadingWithBorder {title} />
 	<div class="flex justify-center items-stretch flex-wrap">
 		{#each slides as slide}
-			<div class="flex justify-center flex-col items-center px-8 py-12 w-full ">
+			<div class="flex justify-center flex-col items-center px-8 py-12 w-full">
 				<iframe
 					class="aspect-video mx-4 mb-2 w-full md:w-4/5 bg-gray-400 rounded-lg"
 					src={slide.slideIframe}

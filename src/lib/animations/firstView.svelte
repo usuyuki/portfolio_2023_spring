@@ -106,7 +106,7 @@
 	/* スマホ向けはサイズ落とす */
 	@media screen and (max-width: 768px) {
 		p > span {
-			font-size: 2rem;
+			font-size: 1.5rem;
 		}
 	}
 

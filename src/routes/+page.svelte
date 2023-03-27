@@ -54,7 +54,7 @@
 			</a>
 		{/each}
 	</div>
-	<div class="w-1/2 md:w-1/5 flex flex-col items-center justify-center ">
+	<div class="w-1/2 md:w-1/5 flex flex-col items-center justify-center">
 		<p class="h2 text-center font-serif text-2xl mb-2">つくったもの</p>
 		<NormalButton
 			title="もっとみる!"
@@ -86,7 +86,7 @@
 
 <!-- かきもの -->
 <div class="flex mt-40">
-	<div class="w-full md:w-1/5 flex flex-col items-center justify-center ">
+	<div class="w-full md:w-1/5 flex flex-col items-center justify-center">
 		<p class="h2 text-center font-serif text-2xl mb-2">かきもの</p>
 		<NormalButton
 			title="もっとよむ?"

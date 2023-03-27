@@ -7,6 +7,7 @@ const config: PlaywrightTestConfig = {
 	},
 	testDir: 'tests/integration',
 	reporter: process.env.CI ? 'github' : 'html',
+	// workersは増やしてもコア数が足りないと重くなるのでそのまにする
 	projects: [
 		{
 			name: 'chromium',
