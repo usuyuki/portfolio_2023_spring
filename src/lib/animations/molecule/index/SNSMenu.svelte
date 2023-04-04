@@ -12,7 +12,7 @@
 </script>
 
 <div class="flex justify-center flex-wrap">
-	<div class="relative">
+	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.2s">
 			<SnsIconButton
 				link="https://m5y.usuyuki.net/@usuyuki"
@@ -22,34 +22,34 @@
 		</div>
 		<Burst
 			color="blue"
-			className="-translate-y-20"
+			className="absolute top-0"
 			animationDelay="2.1s"
 			animationDuration="0.5s"
 		/>
 	</div>
-	<div class="relative">
+	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.3s">
 			<SnsIconButton link="https://github.com/usuyuki" alt="github logo" logo={github} />
 		</div>
 		<Burst
 			color="pink"
-			className="-translate-y-20"
+			className="absolute top-0"
 			animationDelay="2.2s"
 			animationDuration="0.5s"
 		/>
 	</div>
-	<div class="relative">
+	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.4s">
 			<SnsIconButton link="https://twitter.com/usuyuki26" alt="twitter logo" logo={twitter} />
 		</div>
 		<Burst
 			color="yellow"
-			className="-translate-y-20"
+			className="absolute top-0"
 			animationDelay="2.3s"
 			animationDuration="0.5s"
 		/>
 	</div>
-	<div class="relative">
+	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.5s">
 			<SnsIconButton
 				link="https://www.youtube.com/@usuyuki"
@@ -59,51 +59,51 @@
 		</div>
 		<Burst
 			color="blue"
-			className="-translate-y-20"
+			className="absolute top-0"
 			animationDelay="2.4s"
 			animationDuration="0.5s"
 		/>
 	</div>
-	<div class="relative">
+	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.6s">
 			<SnsIconButton link="https://qiita.com/Usuyuki" alt="qiita logo" logo={qiita} />
 		</div>
 		<Burst
 			color="pink"
-			className="-translate-y-20"
+			className="absolute top-0"
 			animationDelay="2.5s"
 			animationDuration="0.5s"
 		/>
 	</div>
-	<div class="relative">
+	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.7s">
 			<SnsIconButton link="https://zenn.dev/usuyuki" alt="zenn logo" logo={zenn} />
 		</div>
 		<Burst
 			color="yellow"
-			className="-translate-y-20"
+			className="absolute top-0"
 			animationDelay="2.6s"
 			animationDuration="0.5s"
 		/>
 	</div>
-	<div class="relative">
+	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.8s">
 			<SnsIconButton link="https://keybase.io/usuyuki" alt="keybase logo" logo={keybase} />
 		</div>
 		<Burst
 			color="blue"
-			className="-translate-y-20"
+			className="absolute top-0"
 			animationDelay="2.7s"
 			animationDuration="0.5s"
 		/>
 	</div>
-	<div class="relative">
+	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.9s">
 			<SnsIconButton link="https://blog.usuyuki.net" alt="blog logo" logo={usuyukiBlog} />
 		</div>
 		<Burst
 			color="pink"
-			className="-translate-y-20"
+			className="absolute top-0"
 			animationDelay="2.8s"
 			animationDuration="0.5s"
 		/>

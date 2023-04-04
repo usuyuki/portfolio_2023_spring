@@ -21,7 +21,6 @@
 
 <style>
 	.burst-wrapper {
-		/* position: relative; */
 		height: 60px;
 		width: 60px;
 	}

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Opening from '$lib/animations/molecule/Opening.svelte';
-	import SnsMenu from '$lib/animations/molecule/SNSMenu.svelte';
-	import WelcomeGreeting from '$lib/animations/molecule/WelcomeGreeting.svelte';
+	import AccessCounter from '$lib/animations/molecule/index/AccessCounter.svelte';
+	import Opening from '$lib/animations/molecule/index/Opening.svelte';
+	import SnsMenu from '$lib/animations/molecule/index/SNSMenu.svelte';
+	import WelcomeGreeting from '$lib/animations/molecule/index/WelcomeGreeting.svelte';
 	import usuyukiIcon from '$lib/assets/icon/usuyukiIcon.jpg';
 	import NormalButton from '$lib/components/atom/button/NormalButton.svelte';
 	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
@@ -22,11 +23,6 @@
 	<Opening />
 </div>
 
-<!-- アクセスカウンタ -->
-<h3 class="text-center text-2xl mt-20 mb-12">
-	あなたは{data.accessCounterValue}番目の訪問者です！
-</h3>
-
 <div class="flex justify-center flex-col items-center">
 	<img
 		alt="うすゆきアイコン"
@@ -36,6 +32,9 @@
 	<h2 class="text-2xl mb-4">うすゆきです</h2>
 </div>
 <SnsMenu />
+<!-- アクセスカウンタ -->
+<AccessCounter count={data.accessCounterValue} />
+
 <WelcomeGreeting greeting={data.info.greeting} />
 
 <!-- つくったもの -->
