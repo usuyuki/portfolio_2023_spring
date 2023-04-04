@@ -57,7 +57,7 @@
 						</div>
 					</a>
 				</div>
-			<div class="absolute inset-x-0 bottom-2">
+				<div class="absolute inset-x-0 bottom-2">
 					<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16" />
 					<div
 						class="mx-auto w-12 h-12 bg-yellow rounded-2xl absolute inset-x-0 bottom-12 shadow-xl"

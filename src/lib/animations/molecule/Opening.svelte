@@ -269,6 +269,7 @@
 
 	/* ラッパー自体のAnimation */
 	.animation-wrapper {
+		z-index: 1000;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;

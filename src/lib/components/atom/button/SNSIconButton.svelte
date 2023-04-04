@@ -2,9 +2,10 @@
 	export let link: string;
 	export let logo: string;
 	export let alt: string;
+	export let className = '';
 </script>
 
-<a class="p-4" href={link} target="_blank" rel="noopener noreferrer">
+<a class={`p-4 ${className}`} href={link} target="_blank" rel="noopener noreferrer">
 	<img
 		{alt}
 		src={logo}
