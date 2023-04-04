@@ -1,9 +1,11 @@
 <script lang="ts">
-	import FirstView from '$lib/animations/firstView.svelte';
+	import AccessCounter from '$lib/animations/molecule/index/AccessCounter.svelte';
+	import Opening from '$lib/animations/molecule/index/Opening.svelte';
+	import SnsMenu from '$lib/animations/molecule/index/SNSMenu.svelte';
+	import WelcomeGreeting from '$lib/animations/molecule/index/WelcomeGreeting.svelte';
 	import usuyukiIcon from '$lib/assets/icon/usuyukiIcon.jpg';
 	import NormalButton from '$lib/components/atom/button/NormalButton.svelte';
 	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
-	import SnsMenu from '$lib/components/molecule/menu/SNSMenu.svelte';
 	import { portfolioVersionLogger } from '$lib/utils/console/portfolioVersionLogger';
 	import { snsLinkProvider } from '$lib/utils/console/snsLinkProvider';
 	import { tuyotuyoConsole } from '$lib/utils/console/tuyotuyoConsole';
@@ -18,13 +20,8 @@
 
 <!-- 最初のアニメーション -->
 <div class="relativ">
-	<FirstView />
+	<Opening />
 </div>
-
-<!-- アクセスカウンタ -->
-<h3 class="text-center text-2xl mt-20 mb-12">
-	あなたは{data.accessCounterValue}番目の訪問者です！
-</h3>
 
 <div class="flex justify-center flex-col items-center">
 	<img
@@ -35,8 +32,10 @@
 	<h2 class="text-2xl mb-4">うすゆきです</h2>
 </div>
 <SnsMenu />
+<!-- アクセスカウンタ -->
+<AccessCounter count={data.accessCounterValue} />
 
-<h2 class="text-center mt-12 mb-4 mx-4 mt-20">{data.info.greeting}</h2>
+<WelcomeGreeting greeting={data.info.greeting} />
 
 <!-- つくったもの -->
 <div class="flex flex-wrap mt-20">

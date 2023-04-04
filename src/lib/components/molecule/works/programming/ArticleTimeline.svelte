@@ -47,7 +47,7 @@
 									<img
 										loading="lazy"
 										src={work.logo}
-										class="w-10 h-10 mr-2"
+										class="w-10 h-10 mr-2 object-contain"
 										alt="ロゴ"
 									/>
 								{/if}
