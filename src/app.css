@@ -20,6 +20,8 @@
 	--footer-height: 120px;
 	--main-padding-top: 20px;
 	--main-max-width: 1300px;
+	--tb-frame-width: 30px;
+	--lr-frame-width: 30px;
 
 	/* アニメーション */
 	/* オープニングの時間(以後送らせるためのdelay用) */
@@ -29,12 +31,15 @@
 	/* SNSのうごきのあと、アクセスカウンタの動きが終わった時間 */
 	--after-access-counter-time: calc(var(--after-sns-time) + 3400ms);
 }
+/* スマホ向け */
 @media screen and (max-width: 640px) {
 	:root {
 		--heder-height: 60px;
 		--footer-height: 120px;
 		--main-padding-top: 20px;
 		--main-max-width: 1300px;
+		--tb-frame-width: 25px;
+		--lr-frame-width: 15px;
 	}
 }
 
@@ -45,9 +50,9 @@ body {
 }
 
 main {
-	padding: 1rem;
+	padding: 1rem calc(1rem + var(--lr-frame-width));
 	max-width: var(--main-max-width);
-	margin: 0 auto;
+	margin: var(--tb-frame-width) auto;
 	min-height: calc(100vh - var(--heder-height) - var(--footer-height));
 	padding-top: var(--main-padding-top);
 }

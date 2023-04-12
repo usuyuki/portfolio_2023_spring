@@ -9,7 +9,7 @@
 <NormalHead title="あばうと" slug="/kokosuki" description="うすゆきについて" />
 <NormalPageTitle title="あばうと" />
 
-<div class="flex justify-center items-center">
+<div class="flex justify-center items-center flex-wrap">
 	<NormalButton
 		className="p-4"
 		title="ここすきポイント"
