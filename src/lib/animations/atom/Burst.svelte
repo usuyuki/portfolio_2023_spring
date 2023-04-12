@@ -23,6 +23,7 @@
 	.burst-wrapper {
 		height: 60px;
 		width: 60px;
+		pointer-events: none;
 	}
 	.burst-wrapper span {
 		position: absolute;
