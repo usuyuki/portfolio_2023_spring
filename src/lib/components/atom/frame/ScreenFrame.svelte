@@ -39,7 +39,7 @@
 		top: 0;
 		left: 0;
 		width: var(--lr-frame-width);
-		height: 100%;
+		height: 100vh;
 		background-color: var(--pink);
 	}
 	#right {
@@ -47,14 +47,14 @@
 		top: 0;
 		right: 0;
 		width: var(--lr-frame-width);
-		height: 100%;
+		height: 100vh;
 		background-color: var(--pink);
 	}
 	#top {
 		position: fixed;
 		top: 0;
 		right: 0;
-		width: 100%;
+		width: 100vw;
 		height: var(--tb-frame-width);
 		background-color: var(--blue);
 	}
@@ -62,7 +62,7 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		width: 100%;
+		width: 100vw;
 		height: var(--tb-frame-width);
 		background-color: var(--blue);
 	}
