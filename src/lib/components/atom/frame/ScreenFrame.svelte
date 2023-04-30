@@ -1,8 +1,9 @@
 <!-- 画面の上下左右に帯を作る -->
-<div class="z-10">
+<!-- デフォルトのposition:staticだとzindex付けれないのでトップもfixedにしている, z-50がtailwindの最大なのでこれを超えてきたらコンポーネント側を疑う -->
+<div class="fixed z-50">
 	<header id="top" class="flex justify-center items-center">
 		<a href="/">
-			<p class="text-center text-sm md:text-xl">うすゆきどっとねっと</p>
+			<p class="text-sm text-center md:text-xl">うすゆきどっとねっと</p>
 		</a>
 	</header>
 	<div id="bottom" />
@@ -25,6 +26,9 @@
 		50% {
 			border-right: 0;
 		}
+	}
+	:root {
+		--z-index: 50;
 	}
 
 	p {

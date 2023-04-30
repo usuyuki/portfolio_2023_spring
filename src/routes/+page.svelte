@@ -16,7 +16,7 @@
 	snsLinkProvider();
 </script>
 
-<NormalHead title="トップ" slug="" description="うすゆきのポートフォリオです" />
+<NormalHead title="トップ" description="うすゆきのポートフォリオです" />
 
 <!-- 最初のアニメーション -->
 <div class="relativ">

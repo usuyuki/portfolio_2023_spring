@@ -1,16 +1,14 @@
 <script lang="ts">
-	const SITE_URL = 'https://usuyuki.net';
+	import { page } from '$app/stores';
 	const SITE_TITLE = 'うすゆきどっとねっと';
 	const SITE_SUB_TITLE = 'うすゆきのポートフォリオです';
 	const SITE_AUTHOR = 'うすゆき';
 	const TWITTER_ID = '@usuyuki26';
 
 	export let title: string;
-	export let slug: string;
 	export let description: string;
-	export let ogImage: string = SITE_URL + '/img/ogp/ogp.png';
+	export let ogImage: string = $page.url.origin + '/img/ogp/ogp.png';
 
-	let url = SITE_URL + slug;
 	let pageTitle = title + ' | ' + SITE_TITLE;
 </script>
 
@@ -25,7 +23,7 @@
 	<meta property="og:site_name" content={SITE_TITLE + ' - ' + SITE_SUB_TITLE} />
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={pageTitle} />
-	<meta property="og:url" content={url} />
+	<meta property="og:url" content={$page.url.href} />
 	<meta property="og:image" content={ogImage} />
 	<meta property="og:image:secure_url" content={ogImage} />
 

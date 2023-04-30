@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<NormalHead title="ここすき" slug="/kokosuki" description="すきなものを表現するページ" />
+<NormalHead title="ここすき" description="すきなものを表現するページ" />
 <NormalPageTitle title="ここすき" />
 
 <div class="flex justify-center items-center flex-col">

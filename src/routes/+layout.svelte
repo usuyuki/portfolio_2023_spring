@@ -5,9 +5,9 @@
 	import '../app.css';
 </script>
 
+<ScreenFrame />
 <LeftMenu />
 <main>
 	<slot />
 </main>
 <Footer />
-<ScreenFrame />

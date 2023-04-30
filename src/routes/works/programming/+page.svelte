@@ -3,11 +3,7 @@
 	import NormalPageTitle from '$lib/components/atom/text/sentence/NormalPageTitle.svelte';
 </script>
 
-<NormalHead
-	title="プログラミング作品"
-	slug="/works/programming"
-	description="プログラミングで作ったもの"
-/>
+<NormalHead title="プログラミング作品" description="プログラミングで作ったもの" />
 <NormalPageTitle title="プログラミング作品" />
 
 <p class="text-center text-xl mt-4 md:mt-20 mb-4">
