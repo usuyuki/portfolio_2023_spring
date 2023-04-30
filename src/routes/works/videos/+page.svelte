@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<NormalHead title="映像作品" slug="/works/programming" description="映像作品のページです" />
+<NormalHead title="映像作品" description="映像作品のページです" />
 
 <NormalPageTitle title="映像作品" />
 

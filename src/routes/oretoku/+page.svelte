@@ -3,11 +3,7 @@
 	import NormalPageTitle from '$lib/components/atom/text/sentence/NormalPageTitle.svelte';
 </script>
 
-<NormalHead
-	title="すきなものを表現するばしょ"
-	slug="/oretoku"
-	description="すきなものを表現するページ"
-/>
+<NormalHead title="すきなものを表現するばしょ" description="すきなものを表現するページ" />
 <NormalPageTitle title="好きなものを表現するばしょ" />
 
 <p class="text-center text-2xl">じゅんびちゅう</p>

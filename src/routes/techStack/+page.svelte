@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<NormalHead title="技術スタック" slug="/techStack" description="シェフのきまぐれ技術スタック" />
+<NormalHead title="技術スタック" description="シェフのきまぐれ技術スタック" />
 <NormalPageTitle title="技術スタック" />
 
 {#each Object.entries(data.data) as [genreTitle, techStacks]}

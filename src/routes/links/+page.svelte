@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<NormalHead title="リンク集" slug="/links" description="リンク集ページ" />
+<NormalHead title="リンク集" description="リンク集ページ" />
 <NormalPageTitle title="リンク集" />
 
 {#each Object.entries(data.data) as [title, links]}

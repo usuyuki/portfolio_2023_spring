@@ -6,7 +6,7 @@
 	export let data: PageData;
 </script>
 
-<NormalHead title="あばうと" slug="/kokosuki" description="うすゆきについて" />
+<NormalHead title="あばうと" description="うすゆきについて" />
 <NormalPageTitle title="あばうと" />
 
 <div class="flex justify-center items-center flex-wrap">

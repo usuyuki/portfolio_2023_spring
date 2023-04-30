@@ -4,11 +4,7 @@
 	import NormalPageTitle from '$lib/components/atom/text/sentence/NormalPageTitle.svelte';
 </script>
 
-<NormalHead
-	title="カラー置き場"
-	slug="/souko"
-	description="Tailwindのクラス生成のために作っているページ"
-/>
+<NormalHead title="カラー置き場" description="Tailwindのクラス生成のために作っているページ" />
 <NormalPageTitle title="カラー置き場" />
 <Burst />
 <div class="flex">

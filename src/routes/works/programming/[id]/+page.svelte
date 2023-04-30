@@ -8,12 +8,7 @@
 	export let data: PageData;
 </script>
 
-<NormalHead
-	title={data.data.name}
-	slug={`/works/programming/${data.data.slug}`}
-	description={data.data.summary}
-	ogImage={data.data.gallery[0]}
-/>
+<NormalHead title={data.data.name} description={data.data.summary} ogImage={data.data.gallery[0]} />
 
 <div class="flex justify-center items-center md:flex-row flex-col mb-4 md:mb-4">
 	{#if data.data.logo !== false}

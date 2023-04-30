@@ -6,11 +6,7 @@
 	export let data: PageData;
 </script>
 
-<NormalHead
-	title="スライド"
-	slug="/works/programming"
-	description="登壇などで使用したスライドの一覧ページです"
-/>
+<NormalHead title="スライド" description="登壇などで使用したスライドの一覧ページです" />
 
 <NormalPageTitle title="スライド" />
 
