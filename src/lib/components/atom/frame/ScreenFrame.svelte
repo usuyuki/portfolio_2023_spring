@@ -39,6 +39,7 @@
 		animation: typing 3s steps(10, end), caret 0.5s step-end 10;
 	}
 	#left {
+		/* トップdivのfixedはz-index指定のために必要、このfixedは表示のために必要 */
 		position: fixed;
 		top: 0;
 		left: 0;
