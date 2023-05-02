@@ -273,7 +273,7 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		background-color: var(--black);
