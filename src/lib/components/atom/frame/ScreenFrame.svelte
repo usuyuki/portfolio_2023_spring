@@ -27,7 +27,7 @@
 			border-right: 0;
 		}
 	}
-	:root {
+	div {
 		--z-index: 50;
 	}
 
