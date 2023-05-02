@@ -20,6 +20,11 @@
 </div>
 
 <style>
+	div {
+		/* 1つあたりに割り当てられる角度の計算 */
+		--numberOfElement: 8;
+		--perAngle: calc(360deg / var(--numberOfElement));
+	}
 	.burst-wrapper {
 		height: 60px;
 		width: 60px;
@@ -36,12 +41,13 @@
 		border-radius: 2rem;
 		opacity: 0;
 		/* 円形配置 */
-		--angle: calc(360deg / 8 * var(--index));
+		/* この要素の角度の計算 */
+		--angle: calc(var(--perAngle) * var(--index));
 		--x: calc(cos(var(--angle)) * 30px);
 		--y: calc(sin(var(--angle)) * 30px);
 		translate: calc(var(--x) - 50%) calc(var(--y) - 50%);
 		/* 長方形が中心に向かうようにする */
-		transform: rotateZ(calc(-90deg + (45deg * var(--index))));
+		transform: rotateZ(calc(-90deg + (var(--perAngle) * var(--index))));
 
 		animation: burst var(--animation-duration) ease-out forwards;
 		animation-delay: var(--animation-delay);
