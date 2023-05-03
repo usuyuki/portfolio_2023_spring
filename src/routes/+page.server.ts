@@ -20,11 +20,7 @@ export const load = (async ({ platform }): Promise<dataType> => {
 	 */
 	let nOfVisitorValue = '7777'; //ローカルでは使えないのでこの値を出す
 	if (platform !== undefined && platform.env !== undefined) {
-		const counter: string = await platform.env.KV.get('counter');
-		const nOfVisitor = Number(counter) + 1;
-		//アクセスカウンタ増やす(リロードで増えてしまうが、IPとか取って判定厳密にするの大変なので後回し。現実的にはクッキー見て判定とかが良さそう)
-		await platform.env.KV.put('counter', nOfVisitor);
-		nOfVisitorValue = nOfVisitor.toString();
+		nOfVisitorValue = await platform.env.KV.get('counter');
 	}
 
 	/**
