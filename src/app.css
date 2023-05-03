@@ -30,6 +30,11 @@
 	--after-sns-time: calc(var(--opening-time) + 700ms);
 	/* SNSのうごきのあと、アクセスカウンタの動きが終わった時間 */
 	--after-access-counter-time: calc(var(--after-sns-time) + 3400ms);
+	/* 挨拶メッセージが終わった時間 */
+	--after-greeting-message-time: calc(var(--after-access-counter-time) + 700ms);
+	/* ここまで3800ms */
+	/* circle Menuの登場アニメーションが終わった時間 */
+	--after-circle-menu-time: calc(var(--after-greeting-message-time) + 1000ms);
 }
 /* スマホ向け */
 @media screen and (max-width: 640px) {

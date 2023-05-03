@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { blur } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import { isCircleMenuOpen, toggleCircleMenu } from '$lib/stores/menus';
 	type Link = {
 		icon: string;
@@ -16,7 +16,7 @@
 	];
 </script>
 
-<div class="fixed right-6 -bottom-7 md:-bottom-7 md:right-8">
+<div class="fixed right-6 -bottom-7 z-40 md:-bottom-7 md:right-8">
 	<button
 		on:click={toggleCircleMenu}
 		class="flex flex-col justify-center items-center w-20 h-20 rounded-3xl duration-500 bg-yellow hover:bg-blue"
@@ -25,7 +25,7 @@
 		<p>Menu</p>
 	</button>
 	{#if $isCircleMenuOpen}
-		<nav transition:blur>
+		<nav out:fly={{ x: -300, y: -300, duration: 500 }}>
 			{#each linkList as link, index}
 				<a
 					href={link.path}
@@ -45,7 +45,7 @@
 		margin-bottom: -16px;
 	}
 	a[aria-current='true'] {
-		animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+		background: var(--blue);
 	}
 	div {
 		/* 1つあたりに割り当てられる角度の計算 */
@@ -94,7 +94,21 @@
 		--x: calc(cos(var(--angle)) * 150px);
 		--y: calc(sin(var(--angle)) * 150px);
 		translate: calc(var(--x) - 50%) calc(var(--y) - 50%);
-		/* 長方形が中心に向かうようにする */
-		/* transform: rotatez(calc(-90deg + (var(--perAngle) * var(--index)))); */
+
+		animation: spread 0.5s;
+		animation-delay: calc(var(--index) * 100ms);
+		animation-fill-mode: both;
+	}
+
+	@keyframes spread {
+		from {
+			opacity: 0;
+			translate: -50% -50%;
+		}
+
+		to {
+			opacity: 1;
+			translate: calc(var(--x) - 50%) calc(var(--y) - 50%);
+		}
 	}
 </style>

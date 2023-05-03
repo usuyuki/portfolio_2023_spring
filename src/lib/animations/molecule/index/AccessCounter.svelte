@@ -18,7 +18,7 @@
 	}, 2700);
 </script>
 
-<div class="mx-auto md:w-1/2 text-2xl mt-2 mb-4 relative flex justify-center items-center flex-col">
+<div class="flex relative flex-col justify-center items-center mx-auto mt-2 mb-4 text-2xl md:w-1/2">
 	{#if visible}
 		<p class="w-full text-left" in:fly={{ y: 50, duration: 500, delay: 0 }}>あなたは</p>
 		<div class="relative">
