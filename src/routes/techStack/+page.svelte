@@ -9,17 +9,17 @@
 <NormalPageTitle title="技術スタック" />
 
 {#each Object.entries(data.data) as [genreTitle, techStacks]}
-	<h2 class="text-3xl text-center mx-4 mt-12 mb-4">「{genreTitle}」</h2>
-	<div class="flex justify-center items-center flex-wrap mb-20">
+	<h2 class="mx-4 mt-12 mb-4 text-3xl text-center">「{genreTitle}」</h2>
+	<div class="flex flex-wrap justify-center items-center mb-20">
 		{#each techStacks as techStack}
-			<div class="w-full md:w-1/2 flex flex-wrap justify-center items-center">
+			<div class="flex flex-wrap justify-center items-center w-full md:w-1/2">
 				<div
-					class="techStackPercent m-4 flex justify-center items-center w-60 h-60 rounded-full"
+					class="flex justify-center items-center m-4 w-60 h-60 rounded-full techStackPercent"
 					style="--power:{techStack.power}"
 				>
 					<h2 class="text-2xl techStackName">{techStack.name}</h2>
 				</div>
-				<div class="flex flex-col jusify-center items-center px-4 py-2 w-full md:w-1/2">
+				<div class="flex flex-col items-center py-2 px-4 w-full md:w-1/2 jusify-center">
 					<p class="">{techStack.content}</p>
 				</div>
 			</div>
@@ -31,6 +31,7 @@
 	/* 結果となる%変数 */
 	/* @propertyはwebkit系が全滅なので使わないこと！ */
 	/* @propertyが使えると0と100の指定だけでいい感じになめらかにできるので、safariが対応したら使いたい  */
+	/* 現状これでもfirefoxが上手く動かない模様  */
 	@keyframes circleAnim {
 		0% {
 			--percent: 0;
