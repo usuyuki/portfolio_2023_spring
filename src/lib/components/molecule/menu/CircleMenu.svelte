@@ -16,7 +16,7 @@
 	];
 </script>
 
-<div class="fixed right-6 -bottom-7 md:-bottom-7 md:right-8">
+<div class="fixed right-6 -bottom-7 z-40 md:-bottom-7 md:right-8">
 	<button
 		on:click={toggleCircleMenu}
 		class="flex flex-col justify-center items-center w-20 h-20 rounded-3xl duration-500 bg-yellow hover:bg-blue"
