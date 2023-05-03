@@ -1,6 +1,8 @@
 import { json } from '@sveltejs/kit';
 
 // cloudflare workers kv のcounternの値をインクリメントする
+// SvelteKitのjsonはResponseオブジェクトを作ってくれるので問題ないが、asyncだと Invalid response from route /api/counter: handler should return a Response objectとなるっぽい？？
+// 動作上は問題ないので一旦保留
 export const PATCH = async ({ platform }) => {
 	if (platform !== undefined && platform.env !== undefined) {
 		const counter: string = await platform.env.KV.get('counter');
