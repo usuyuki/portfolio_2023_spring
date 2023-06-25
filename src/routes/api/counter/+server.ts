@@ -13,7 +13,12 @@ export const PATCH = async ({ platform }) => {
 		await platform.env.KV.put('counter', nOfVisitor);
 		return json({
 			nOfVisitor: nOfVisitor.toString(),
-			message: '来てくれてありがとう'
+			message: 'お越しいただきありがとうございます！'
+		});
+	} else {
+		return json({
+			nOfVisitor: 0,
+			message: 'カウントできませんでした...'
 		});
 	}
 };

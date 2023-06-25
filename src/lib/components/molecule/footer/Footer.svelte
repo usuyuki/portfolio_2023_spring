@@ -1,8 +1,7 @@
 <footer>
 	<div class="flex justify-center my-4 mx-2">
-		<a class="p-2" href="/techStack">技術スタック</a>
 		<a class="p-2" href="/links">リンク</a>
-		<!-- <a class="p-2" href="/souko">倉庫</a> -->
+		<a class="p-2" href="/aboutThisSite">このサイトについて</a>
 	</div>
 </footer>
 

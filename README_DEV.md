@@ -24,29 +24,29 @@ pnpm dev
 
 Cloudflare Workers込の開発環境
 ```
-wrangler dev
+pnpm wrangler dev
 ```
 ##  Cloudflare関連
 kv作る
 ```
-wrangler kv:namespace create "kv" --preview
-wrangler kv:namespace create "kv"
+pnpm wrangler kv:namespace create "kv" --preview
+pnpm wrangler kv:namespace create "kv"
 ```
 
 本番のログをtailする
 ```
-wrangler tail usuyuki-portfolio-v6
+pnpm wrangler tail usuyuki-portfolio-v6
 ```
 
 本番push
 ```
-wrangler publish
+pnpm wrangler publish
 ```
 --configオプションは存在するが効かないので、CI向けのwrangler.tomlを書き換える
 
 dry run
 ```
-wrangler publish --config --dry-run 
+pnpm wrangler publish --config --dry-run 
 ```
 
 
