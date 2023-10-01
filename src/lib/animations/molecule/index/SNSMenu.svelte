@@ -4,7 +4,7 @@
 	import keybase from '$lib/assets/icon/keybase-official.svg';
 	import misskey from '$lib/assets/icon/misskey-logo.png';
 	import qiita from '$lib/assets/icon/qiita-icon.png';
-	import twitter from '$lib/assets/icon/Twitter-social-icons-circle-blue.png';
+	import twitter from '$lib/assets/icon/x-logo.png';
 	import usuyukiBlog from '$lib/assets/icon/usuyukiBlog-icon.png';
 	import youtube from '$lib/assets/icon/youtube_social_icon_red.png';
 	import zenn from '$lib/assets/icon/zenn-logo.svg';
@@ -40,7 +40,12 @@
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.4s">
-			<SnsIconButton link="https://twitter.com/usuyuki26" alt="twitter logo" logo={twitter} />
+			<SnsIconButton
+				link="https://twitter.com/usuyuki26"
+				alt="x logo"
+				logo={twitter}
+				className="p-3"
+			/>
 		</div>
 		<Burst
 			color="yellow"
