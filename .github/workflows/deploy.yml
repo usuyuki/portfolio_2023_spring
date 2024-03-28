@@ -61,23 +61,23 @@ jobs:
 
       - name: cloudflare
         run: |
-          pnpm build
+          pnpm wrangler deploy
 
-      - name: Publish
-        # @v3だとwranglerのバージョンが古くビルドに失敗するので明示的に指定
-        uses: cloudflare/wrangler-action@v3.4.1
-        with:
-          workingDirectory: .
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          preCommands: |
-            pnpm install
-          command: |
-            deploy
-            # --config指定しても効かないので注意
-          # env: |
-            # NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-            # GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
-            # GHOST_CONTENT_KEY: ${{ secrets.GHOST_CONTENT_KEY }}
-            
-            # 参考:https://developers.cloudflare.com/workers/wrangler/ci-cd/
+      # - name: Publish
+      #   # @v3だとwranglerのバージョンが古くビルドに失敗するので明示的に指定
+      #   uses: cloudflare/wrangler-action@v3.4.1
+      #   with:
+      #     workingDirectory: .
+      #     apiToken: ${{ secrets.CF_API_TOKEN }}
+      #     accountId: ${{ secrets.CF_ACCOUNT_ID }}
+      #     preCommands: |
+      #       pnpm install
+      #     command: |
+      #       deploy
+      #       # --config指定しても効かないので注意
+      #     # env: |
+      #       # NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+      #       # GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
+      #       # GHOST_CONTENT_KEY: ${{ secrets.GHOST_CONTENT_KEY }}
+      #       
+      #       # 参考:https://developers.cloudflare.com/workers/wrangler/ci-cd/
