@@ -16,10 +16,10 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           workingDirectory: .
+          packageManager: pnpm
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           preCommands: |
-            npm install -g pnpm
             pnpm install
             touch .env
             echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
