@@ -16,3 +16,4 @@ wrangler.toml
 /playwright-report
 /playwright/images
 salt
+.wrangler

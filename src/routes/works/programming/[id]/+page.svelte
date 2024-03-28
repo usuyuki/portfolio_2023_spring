@@ -90,6 +90,8 @@
 	/>
 </div>
 {#if data.data.content !== null}
+	<!-- ここは自分で作ったコードしか入らないのでサニタイズ不要 -->
+	<!-- eslint-disable svelte/no-at-html-tags -->
 	<div class="w-full px-12 pt-2 pb-4 shadow-sm rounded-xl">
 		{@html data.data.content}
 	</div>

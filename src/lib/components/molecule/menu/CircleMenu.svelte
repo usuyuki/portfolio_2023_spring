@@ -25,7 +25,7 @@
 		<p>Menu</p>
 	</button>
 	{#if $isCircleMenuOpen}
-		<nav out:fly={{ x: -300, y: -300, duration: 500 }}>
+		<nav out:fly|global={{ x: -300, y: -300, duration: 500 }}>
 			{#each linkList as link, index}
 				<a
 					href={link.path}
