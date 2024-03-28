@@ -62,9 +62,11 @@ jobs:
       - name: cloudflare
         run: |
           pnpm wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
+      #   絶妙にバージョンが古くてビルドコケるので自前で全部やる
       # - name: Publish
-      #   # @v3だとwranglerのバージョンが古くビルドに失敗するので明示的に指定
       #   uses: cloudflare/wrangler-action@v3.4.1
       #   with:
       #     workingDirectory: .
