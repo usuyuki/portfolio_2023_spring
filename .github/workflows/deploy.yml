@@ -61,6 +61,7 @@ jobs:
 
       - name: cloudflare
         run: |
+          echo $CLOUDFLARE_API_TOKEN
           pnpm wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
