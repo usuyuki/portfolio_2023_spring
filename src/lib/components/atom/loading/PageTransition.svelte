@@ -5,7 +5,7 @@
 <div
 	style="max-width:84vw"
 	class="flex fixed left-6 top-12 z-50 justify-center items-center py-2 px-4 bg-black rounded-lg opacity-95 md:left-12"
-	transition:fly={{ x: -300, duration: 500 }}
+	transition:fly|global={{ x: -300, duration: 500 }}
 >
 	<div class="flex justify-center">
 		<div
