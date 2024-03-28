@@ -10,29 +10,73 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Publish
-        uses: cloudflare/wrangler-action@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          preCommands: |
-            pnpm install
-            touch .env
-            echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
-            echo "GHOST_API_URL=${{ secrets.GHOST_API_URL }}" >> .env
-            echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
-            # どうやってもできないのでSEDで書き換える↓
-            cp wrangler.toml.example wrangler.toml
-            sed -i -e "s/ACCOUNT_ID/${{ secrets.CF_ACCOUNT_ID }}/" wrangler.toml
-            sed -i -e "s/KV_ID/${{ secrets.CF_KV_ID }}/" wrangler.toml
-          command: |
-            publish
-            # --config指定しても効かないので注意
-          # env: |
-            # NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-            # GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
-            # GHOST_CONTENT_KEY: ${{ secrets.GHOST_CONTENT_KEY }}
-            
-            # 参考:https://developers.cloudflare.com/workers/wrangler/ci-cd/
+          node-version: 20
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Generate Env 
+        run: |
+          echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
+          echo "GHOST_API_URL=${{ secrets.GHOST_API_URL }}" >> .env
+          echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
+    
+      - name: Generate wrangler.toml
+        run: |
+          cp wrangler.toml.example wrangler.toml
+          sed -i -e "s/ACCOUNT_ID/${{ secrets.CF_ACCOUNT_ID }}/" wrangler.toml
+          sed -i -e "s/KV_ID/${{ secrets.CF_KV_ID }}/" wrangler.toml
+
+      - name: cloudflare
+        run: |
+          pnpm wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+
+      #   cloudflare/wrangler-actionは最新でも絶妙にバージョンが古くてビルドコケるので自前で全部やる
+      # - name: Publish
+      #   uses: cloudflare/wrangler-action@v3
+      #   with:
+      #     workingDirectory: .
+      #     apiToken: ${{ secrets.CF_API_TOKEN }}
+      #     accountId: ${{ secrets.CF_ACCOUNT_ID }}
+      #     preCommands: |
+      #       pnpm install
+      #     command: |
+      #       deploy
+      #       # --config指定しても効かないので注意
+      #     # env: |
+      #       # NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+      #       # GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
+      #       # GHOST_CONTENT_KEY: ${{ secrets.GHOST_CONTENT_KEY }}
+      #       
+      #       # 参考:https://developers.cloudflare.com/workers/wrangler/ci-cd/
