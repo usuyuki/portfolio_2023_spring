@@ -96,7 +96,8 @@
 	</div>
 	<div class="w-full md:w-4/5 flex items-center flex-wrap justify-center">
 		{#if data.blogs.length === 0}
-			<p>ブログの取得に失敗しました...😢</p>
+			<!-- 本番だけなぜか絶対に取得に失敗する -->
+			<p>ぜひうすゆきブログも見てみてください！！</p>
 		{:else}
 			{#each data.blogs as article}
 				<a class="md:w-1/3" href={article.link} target="_blank" rel="noopener noreferrer">
