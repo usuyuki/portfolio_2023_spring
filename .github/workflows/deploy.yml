@@ -1,13 +1,10 @@
 name: Cloudflare Workersへの自動デプロイ 
 
-# on:
-#   pull_request:
-#     branches:
-#       - main
-#     types: [closed]  
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - main
+    types: [closed]  
 
 jobs:
   deploy:
@@ -61,14 +58,13 @@ jobs:
 
       - name: cloudflare
         run: |
-          echo $CLOUDFLARE_API_TOKEN
           pnpm wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
-      #   絶妙にバージョンが古くてビルドコケるので自前で全部やる
+      #   cloudflare/wrangler-actionは最新でも絶妙にバージョンが古くてビルドコケるので自前で全部やる
       # - name: Publish
-      #   uses: cloudflare/wrangler-action@v3.4.1
+      #   uses: cloudflare/wrangler-action@v3
       #   with:
       #     workingDirectory: .
       #     apiToken: ${{ secrets.CF_API_TOKEN }}
