@@ -70,6 +70,8 @@ jobs:
           workingDirectory: .
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          preCommands: |
+            pnpm install
           command: |
             deploy
             # --config指定しても効かないので注意
