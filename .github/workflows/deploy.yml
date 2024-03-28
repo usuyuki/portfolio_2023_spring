@@ -21,9 +21,6 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           preCommands: |
-            pwd
-            ls -laF
-            pnpm install
             touch .env
             echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
             echo "GHOST_API_URL=${{ secrets.GHOST_API_URL }}" >> .env
