@@ -59,8 +59,12 @@ jobs:
           sed -i -e "s/ACCOUNT_ID/${{ secrets.CF_ACCOUNT_ID }}/" wrangler.toml
           sed -i -e "s/KV_ID/${{ secrets.CF_KV_ID }}/" wrangler.toml
 
+      # - name: cloudflare
+      #   run: |
+      #     pnpm build
+
       - name: Publish
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v3.4.1
         with:
           workingDirectory: .
           apiToken: ${{ secrets.CF_API_TOKEN }}
