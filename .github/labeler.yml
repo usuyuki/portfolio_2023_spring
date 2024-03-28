@@ -1,53 +1,81 @@
 🗃components:
-  - src/lib/components/*
+  - changed-files:
+      - any-glob-to-any-file:
+        - src/lib/components/*
 🧩types:
-  - frontend/src/lib/types/*
+  - changed-files:
+      - any-glob-to-any-file:
+        - frontend/src/lib/types/*
 ⚒utils:
-  - src/lib/utils/*
+  - changed-files:
+      - any-glob-to-any-file:
+        - src/lib/utils/*
 📄pages:
-  - src/routes/*
-  - src/app.html
-  - src/error.html
+  - changed-files:
+      - any-glob-to-any-file:
+        - src/routes/*
+        - src/app.html
+        - src/error.html
 🕵test:
-  - tests/*
+  - changed-files:
+      - any-glob-to-any-file:
+        - tests/*
 🗺config:
-  - .env.example
-  - .eslintignore
-  - .eslintrc.cjs
-  - .gitattributes
-  - .gitignore
-  - .npmrc
-  - .prettierignore
-  - .prettierrc
-  - playwright-ct.config.ts
-  - playwright.config.ts
-  - postcss.config.cjs
-  - svelte.config.js
-  - tailwind.config.cjs
-  - tsconfig.json
-  - vite.config.ts
+  - changed-files:
+      - any-glob-to-any-file:
+        - .env.example
+        - .eslintignore
+        - .eslintrc.cjs
+        - .gitattributes
+        - .gitignore
+        - .npmrc
+        - .prettierignore
+        - .prettierrc
+        - playwright-ct.config.ts
+        - playwright.config.ts
+        - postcss.config.cjs
+        - svelte.config.js
+        - tailwind.config.cjs
+        - tsconfig.json
+        - vite.config.ts
 🎁package:
-  - package.json
-  - pnpm-lock.yaml
+  - changed-files:
+      - any-glob-to-any-file:
+        - package.json
+        - pnpm-lock.yaml
 👗static:
-  - static/*
+  - changed-files:
+      - any-glob-to-any-file:
+        - static/*
 🐙github:
-  - .github/*
+  - changed-files:
+      - any-glob-to-any-file:
+        - .github/*
 📄docs:
-  - README.md
-  - LICENSE
+  - changed-files:
+      - any-glob-to-any-file:
+        - README.md
+        - LICENSE
 
 # 細かい分類
 ✈ci:
-  - .github/workflows/*
-  - .github/labeler.yml
+  - changed-files:
+      - any-glob-to-any-file:
+        - .github/workflows/*
+        - .github/labeler.yml
 🖼layout:
-  - src/routes/**/+layout.svelte
-  - src/app.css
+  - changed-files:
+      - any-glob-to-any-file:
+        - src/routes/**/+layout.svelte
+        - src/app.css
 🐟serverScript:
-  - src/routes/**/+page.server.ts
-  - src/lib/server/*
-  - src/hooks.server.js
-  - src/service-worker.js
+  - changed-files:
+      - any-glob-to-any-file:
+        - src/routes/**/+page.server.ts
+        - src/lib/server/*
+        - src/hooks.server.js
+        - src/service-worker.js
 📱clientScript:
-  - src/hooks.client.js
+  - changed-files:
+      - any-glob-to-any-file:
+        - src/hooks.client.js
