@@ -29,13 +29,13 @@ devDependencies:
     specifier: ^1.42.1
     version: 1.42.1
   '@sveltejs/adapter-auto':
-    specifier: ^3.0.0
+    specifier: ^3.2.0
     version: 3.2.0(@sveltejs/kit@2.5.4)
   '@sveltejs/adapter-cloudflare-workers':
-    specifier: ^2.0.0
+    specifier: ^2.2.0
     version: 2.2.0(@sveltejs/kit@2.5.4)(wrangler@3.39.0)
   '@sveltejs/kit':
-    specifier: ^2.0.0
+    specifier: ^2.5.4
     version: 2.5.4(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.12)(vite@5.2.6)
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.0.2
@@ -95,10 +95,10 @@ devDependencies:
     specifier: ^5.4.3
     version: 5.4.3
   vite:
-    specifier: ^5.0.0
+    specifier: ^5.2.6
     version: 5.2.6
   vitest:
-    specifier: ^1.0.0
+    specifier: ^1.4.0
     version: 1.4.0(jsdom@21.1.2)
   wrangler:
     specifier: ^3.39.0
@@ -3199,7 +3199,7 @@ packages:
       exit-hook: 2.2.1
       glob-to-regexp: 0.4.1
       stoppable: 1.1.0
-      undici: 5.28.2
+      undici: 5.28.3
       workerd: 1.20240320.1
       ws: 8.16.0
       youch: 3.3.3
@@ -4363,8 +4363,8 @@ packages:
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  /undici@5.28.2:
-    resolution: {integrity: sha512-wh1pHJHnUeQV5Xa8/kyQhO7WFa8M34l026L5P/+2TYiakvGy5Rdc8jWZVyG7ieht/0WgJLEd3kcU5gKx+6GC8w==}
+  /undici@5.28.3:
+    resolution: {integrity: sha512-3ItfzbrhDlINjaP0duwnNsKpDQk3acHI3gVJ1z4fmwMK31k5G9OVIAMLSIaP6w4FaGkaAkN6zaQO9LUvZ1t7VA==}
     engines: {node: '>=14.0'}
     dependencies:
       '@fastify/busboy': 2.1.1
