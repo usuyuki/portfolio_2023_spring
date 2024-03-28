@@ -22,7 +22,10 @@
 	{#if visible}
 		<p class="w-full text-left" in:fly|global={{ y: 50, duration: 500, delay: 0 }}>あなたは</p>
 		<div class="relative">
-			<p class="w-full text-3xl text-center" in:fly|global={{ y: 50, duration: 500, delay: 500 }}>
+			<p
+				class="w-full text-3xl text-center"
+				in:fly|global={{ y: 50, duration: 500, delay: 500 }}
+			>
 				{nowValue}
 			</p>
 			<div class="burst-add">
