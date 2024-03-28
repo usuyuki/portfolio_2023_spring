@@ -17,7 +17,7 @@ export const load = (async (params: any) => {
 		})) as any;
 		// publishしてない記事を弾く
 		if (!response.properties.isPublished.checkbox) {
-			throw error(403);
+			error(403);
 			//処理はtry catchのcatchで続く
 		}
 		const data: dataType = {
@@ -64,17 +64,17 @@ export const load = (async (params: any) => {
 		console.log(e);
 		//notionSdkでなくこちらで吐かせたエラーの処理
 		if (e.status === 403) {
-			throw error(403, '403 今は公開してないよ。');
+			error(403, '403 今は公開してないよ。');
 		} else if (
 			e.code === APIErrorCode.ValidationError ||
 			e.code === APIErrorCode.ObjectNotFound
 		) {
 			// ValidationErrorを404にするのは変だが、実態は404と同義で扱えるので
-			throw error(404, 'そんな作品はありません。');
+			error(404, 'そんな作品はありません。');
 		} else if (e.code === APIErrorCode.Unauthorized) {
-			throw error(500, '製作者へ:サーバー側のAPI呼び出しで認証エラーになっています。');
+			error(500, '製作者へ:サーバー側のAPI呼び出しで認証エラーになっています。');
 		} else {
-			throw error(500, '未知のエラーです。ごめんなさい');
+			error(500, '未知のエラーです。ごめんなさい');
 		}
 	}
 }) satisfies PageServerLoad;
