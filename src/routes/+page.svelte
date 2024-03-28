@@ -116,7 +116,7 @@
 
 <!-- うすゆきについて -->
 <p class="h2 text-center font-serif text-2xl mb-4 mt-40">うすゆきについて</p>
-<NormalButton title="もっと知る！" url="/about" bgColorVariable="blue" textColorVariable="black" />
+<NormalButton title="もっと知る!" url="/about" bgColorVariable="blue" textColorVariable="black" />
 
 <!-- <p class="h2 text-center font-serif text-2xl mt-20 mb-2">ORETOKU</p>
 <NormalButton
