@@ -3,6 +3,8 @@
 	import github from '$lib/assets/icon/github-mark.png';
 	import keybase from '$lib/assets/icon/keybase-official.svg';
 	import misskey from '$lib/assets/icon/misskey-logo.png';
+	import bluesky from '$lib/assets/icon/bluesky-logo.png';
+	import mixi2 from '$lib/assets/icon/bluesky-logo.png';
 	import qiita from '$lib/assets/icon/qiita-icon.png';
 	import twitter from '$lib/assets/icon/x-logo.png';
 	import usuyukiBlog from '$lib/assets/icon/usuyukiBlog-icon.png';
@@ -27,6 +29,33 @@
 			animationDuration="0.5s"
 		/>
 	</div>
+	<div class="relative p-2">
+		<div class="sns-icon-wrapper" style="--delay:0.2s">
+			<SnsIconButton link="https://m5y.usuyuki.net/@usuyuki" alt="mixi2 logo" logo={mixi2} />
+		</div>
+		<Burst
+			color="pink"
+			className="absolute top-0"
+			animationDelay="2.1s"
+			animationDuration="0.5s"
+		/>
+	</div>
+	<div class="relative p-2">
+		<div class="sns-icon-wrapper" style="--delay:0.2s">
+			<SnsIconButton
+				link="https://bsky.app/profile/usuyuki.net"
+				alt="bluesky logo"
+				logo={bluesky}
+			/>
+		</div>
+		<Burst
+			color="pink"
+			className="absolute top-0"
+			animationDelay="2.1s"
+			animationDuration="0.5s"
+		/>
+	</div>
+
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.3s">
 			<SnsIconButton link="https://github.com/usuyuki" alt="github logo" logo={github} />
