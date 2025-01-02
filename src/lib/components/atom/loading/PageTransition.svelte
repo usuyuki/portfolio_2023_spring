@@ -10,7 +10,7 @@
 	<div class="flex justify-center">
 		<div
 			class="w-8 h-8 rounded-full border-4 animate-spin border-yellow border-t-transparent"
-		/>
+		></div>
 	</div>
 	<div>
 		<p class="pl-2 text-xl text-white">

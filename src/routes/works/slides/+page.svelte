@@ -22,7 +22,7 @@
 					frameborder="0"
 					allowfullscreen={false}
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				/>
+				></iframe>
 				<h2 class="text-2xl">{slide.name}</h2>
 				<p class="mt-2">{slide.publishedAt}</p>
 				<div class="flex justify-center items-center mt-8 w-5/6 md:w-2/3 mx-auto">

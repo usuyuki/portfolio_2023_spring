@@ -23,9 +23,9 @@
 >
 	<div class="flex">
 		<div class="embla-slide relative">
-			<div class="mb-32 mt-4" />
+			<div class="mb-32 mt-4"></div>
 			<div class="absolute inset-x-0 bottom-2">
-				<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-l-lg" />
+				<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-l-lg"></div>
 				<p class="text-xl text-center inset-x-0 absolute bottom-24 text-gray-200">
 					次回作にご期待ください!
 				</p>
@@ -58,10 +58,10 @@
 					</a>
 				</div>
 				<div class="absolute inset-x-0 bottom-2">
-					<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16" />
+					<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16"></div>
 					<div
 						class="mx-auto w-12 h-12 bg-yellow rounded-2xl absolute inset-x-0 bottom-12 shadow-xl"
-					/>
+					></div>
 					<p class="text-center text-xl absolute inset-x-0 bottom-4">
 						{work.publishedAt}
 					</p>
@@ -69,9 +69,9 @@
 			</div>
 		{/each}
 		<div class="embla-slide relative">
-			<div class="mb-32 mt-4" />
+			<div class="mb-32 mt-4"></div>
 			<div class="absolute inset-x-0 bottom-2">
-				<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-r-lg" />
+				<div class="w-full h-4 bg-blue absolute inset-x-0 bottom-16 rounded-r-lg"></div>
 				<p class="text-xl text-center inset-x-0 absolute bottom-24 text-gray-200">
 					最後までご覧いただきありがとうございました！
 				</p>

@@ -12,9 +12,9 @@
 		<span>っ</span>
 		<span>と</span>
 	</p>
-	<div class="rhombus" />
-	<div class="ripples" />
-	<div class="ripples-dotted" />
+	<div class="rhombus"></div>
+	<div class="ripples"></div>
+	<div class="ripples-dotted"></div>
 </div>
 
 <style>
