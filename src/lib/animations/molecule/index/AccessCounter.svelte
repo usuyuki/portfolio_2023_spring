@@ -11,9 +11,12 @@
 		visible = true;
 		//2秒掛けてnowValueの値をcountの値にする
 		for (let i = 0; i <= countInt; i++) {
-			setTimeout(() => {
-				nowValue = i;
-			}, (2000 / countInt) * i);
+			setTimeout(
+				() => {
+					nowValue = i;
+				},
+				(2000 / countInt) * i
+			);
 		}
 	}, 2700);
 </script>
@@ -37,7 +40,7 @@
 		</p>
 	{:else}
 		<!-- 3行分事前に確保(揺れを防ぐ) -->
-		<div class="h-16" />
+		<div class="h-16"></div>
 	{/if}
 </div>
 

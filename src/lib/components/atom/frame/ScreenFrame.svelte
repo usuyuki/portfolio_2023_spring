@@ -6,9 +6,9 @@
 			<p class="text-sm text-center md:text-xl">うすゆきどっとねっと</p>
 		</a>
 	</header>
-	<div id="bottom" />
-	<div id="left" class="" />
-	<div id="right" />
+	<div id="bottom"></div>
+	<div id="left" class=""></div>
+	<div id="right"></div>
 </div>
 
 <style>
@@ -36,7 +36,9 @@
 		border-color: transparent;
 		overflow: hidden;
 		white-space: nowrap;
-		animation: typing 3s steps(10, end), caret 0.5s step-end 10;
+		animation:
+			typing 3s steps(10, end),
+			caret 0.5s step-end 10;
 	}
 	#left {
 		/* トップdivのfixedはz-index指定のために必要、このfixedは表示のために必要 */

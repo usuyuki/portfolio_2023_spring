@@ -9,14 +9,14 @@
 	class={`burst-wrapper ${className}`}
 	style="--burst-color:var(--{color});--animation-duration:{animationDuration};--animation-delay:{animationDelay};"
 >
-	<span style="--index: 0;" />
-	<span style="--index: 1;" />
-	<span style="--index: 2;" />
-	<span style="--index: 3;" />
-	<span style="--index: 4;" />
-	<span style="--index: 5;" />
-	<span style="--index: 6;" />
-	<span style="--index: 7;" />
+	<span style="--index: 0;"></span>
+	<span style="--index: 1;"></span>
+	<span style="--index: 2;"></span>
+	<span style="--index: 3;"></span>
+	<span style="--index: 4;"></span>
+	<span style="--index: 5;"></span>
+	<span style="--index: 6;"></span>
+	<span style="--index: 7;"></span>
 </div>
 
 <style>

@@ -8,11 +8,11 @@
 <NormalPageTitle title="カラー置き場" />
 <Burst />
 <div class="flex">
-	<div class="w-20 h-20 bg-white hover:bg-white" />
-	<div class="w-20 h-20 bg-black hover:bg-black" />
-	<div class="w-20 h-20 bg-pink hover:bg-pink" />
-	<div class="w-20 h-20 bg-yellow hover:bg-yellow" />
-	<div class="w-20 h-20 bg-blue hover:bg-blue" />
+	<div class="w-20 h-20 bg-white hover:bg-white"></div>
+	<div class="w-20 h-20 bg-black hover:bg-black"></div>
+	<div class="w-20 h-20 bg-pink hover:bg-pink"></div>
+	<div class="w-20 h-20 bg-yellow hover:bg-yellow"></div>
+	<div class="w-20 h-20 bg-blue hover:bg-blue"></div>
 </div>
 
 <div class="flex">

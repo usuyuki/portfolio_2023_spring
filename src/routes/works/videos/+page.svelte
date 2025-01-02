@@ -20,7 +20,7 @@
 				frameborder="0"
 				allowfullscreen={true}
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-			/>
+			></iframe>
 			<h2 class="text-2xl">{videos.name}</h2>
 			<p class="text-lg mt-4">{videos.description}</p>
 		</div>
