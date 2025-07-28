@@ -58,7 +58,7 @@ This is a **SvelteKit portfolio application** deployed on **Cloudflare Workers**
 - **SvelteKit 2.x** with Svelte 5 for the framework
 - **TypeScript** for type safety
 - **TailwindCSS** for styling
-- **Cloudflare Workers** adapter for SSR deployment
+- **Cloudflare** adapter for SSR deployment
 - **Vite** for build tooling
 - **pnpm** as package manager
 
