@@ -19,7 +19,7 @@ export const load = (async ({ platform }): Promise<dataType> => {
 	 * cloudflare workers kv からアクセスカウンタの値を引っ張る
 	 */
 	let nOfVisitorValue = '7777'; //ローカルでは使えないのでこの値を出す
-	if (platform !== undefined && platform.env !== undefined) {
+	if (platform !== undefined && platform.env !== undefined && platform.env.KV !== undefined) {
 		nOfVisitorValue = await platform.env.KV.get('counter');
 	}
 

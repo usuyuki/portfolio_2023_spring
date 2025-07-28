@@ -4,7 +4,7 @@ import { json } from '@sveltejs/kit';
 // SvelteKitのjsonはResponseオブジェクトを作ってくれるので問題ないが、asyncだと Invalid response from route /api/counter: handler should return a Response objectとなるっぽい？？
 // 動作上は問題ないので一旦保留
 export const PATCH = async ({ platform }) => {
-	if (platform !== undefined && platform.env !== undefined) {
+	if (platform?.env?.KV) {
 		const counter: string = await platform.env.KV.get('counter');
 		console.log(counter);
 		const nOfVisitor = Number(counter) + 1;
