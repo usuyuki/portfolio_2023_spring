@@ -5,12 +5,19 @@ export async function getBlogData(): Promise<blogContentType[]> {
 	const response = await fetch(repoUrl);
 	const blogs = await response.json();
 
-	return blogs.map((blog: any) => {
-		return {
-			title: blog.title.rendered,
-			date: blog.date_gmt,
-			link: blog.link,
-			thumbnail: blog.thumbnail.url
-		};
-	});
+	return blogs.map(
+		(blog: {
+			title: { rendered: string };
+			date_gmt: string;
+			link: string;
+			thumbnail: { url: string };
+		}) => {
+			return {
+				title: blog.title.rendered,
+				date: blog.date_gmt,
+				link: blog.link,
+				thumbnail: blog.thumbnail.url
+			};
+		}
+	);
 }

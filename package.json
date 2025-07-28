@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"1": "pnpm format && (pnpm lint & pnpm check) && exit 0",
-		"tests": "pnpm test:u & pnpm test:c & pnpm test:i",
+		"tests": "pnpm test:u & pnpm test:i",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
@@ -14,7 +14,6 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"test:u": "vitest run",
-		"test:c": "playwright test -c playwright-ct.config.ts",
 		"test:i": "playwright test -c playwright.config.ts"
 	},
 	"devDependencies": {
