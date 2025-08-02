@@ -6,6 +6,7 @@
 		"1": "pnpm format && (pnpm lint & pnpm check) && exit 0",
 		"tests": "pnpm test:u & pnpm test:i",
 		"dev": "vite dev",
+		"dev-cf": "wrangler dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync",
