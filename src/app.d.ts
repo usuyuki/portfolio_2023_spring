@@ -13,6 +13,7 @@ declare global {
 			env?: {
 				KV: KVNamespace;
 			};
+			fetch?: typeof globalThis.fetch;
 		}
 	}
 }

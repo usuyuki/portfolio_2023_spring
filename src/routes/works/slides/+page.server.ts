@@ -13,7 +13,9 @@ type dataType = {
 };
 
 export const load = (async ({ platform, fetch }) => {
-	const response = (await getNotionClient(platform?.fetch || fetch).databases.query({
+	const response = (await getNotionClient(
+		platform?.fetch || fetch,
+	).databases.query({
 		database_id: "d5b6c2e74260462e97e24ed898399337",
 		filter: {
 			or: [

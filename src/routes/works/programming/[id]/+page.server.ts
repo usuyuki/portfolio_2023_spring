@@ -13,7 +13,9 @@ type dataType = {
 };
 export const load = (async ({ params, platform, fetch }) => {
 	try {
-		const response = (await getNotionClient(platform?.fetch || fetch).pages.retrieve({
+		const response = (await getNotionClient(
+			platform?.fetch || fetch,
+		).pages.retrieve({
 			page_id: params.id,
 		})) as unknown as WorksProgrammingRow;
 		// publishしてない記事を弾く
