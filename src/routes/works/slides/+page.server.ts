@@ -3,7 +3,7 @@ import type {
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
 import type { worksSlideType } from "$lib/types/works/worksSlides";
-import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -12,8 +12,8 @@ type dataType = {
 	};
 };
 
-export const load = (async () => {
-	const response = (await notionAdapter.databases.query({
+export const load = (async ({ platform, fetch }) => {
+	const response = (await getNotionClient(platform?.fetch || fetch).databases.query({
 		database_id: "d5b6c2e74260462e97e24ed898399337",
 		filter: {
 			or: [

@@ -3,7 +3,7 @@ import type {
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
 import type { techStackType } from "$lib/types/techStack";
-import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 // ジャンルごとに ジャンル:データ となるようにしている
@@ -13,8 +13,8 @@ type dataType = {
 	};
 };
 
-export const load = (async () => {
-	const response = (await notionAdapter.databases.query({
+export const load = (async ({ platform, fetch }) => {
+	const response = (await getNotionClient(platform?.fetch || fetch).databases.query({
 		database_id: "b0f7969c8fc245928e4c2abaa8a2f578",
 		filter: {
 			or: [

@@ -5,7 +5,7 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
-import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
 import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている
@@ -14,8 +14,8 @@ type dataType = {
 		[key: string]: worksProgrammingShortType;
 	};
 };
-export const load = (async () => {
-	const response = (await notionAdapter.databases.query({
+export const load = (async ({ platform, fetch }) => {
+	const response = (await getNotionClient(platform?.fetch || fetch).databases.query({
 		database_id: "a448d280a2e840d6a4baa3a34fb853b4",
 		filter: {
 			or: [

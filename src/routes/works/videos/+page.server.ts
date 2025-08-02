@@ -3,15 +3,15 @@ import type {
 	VideoDatabaseRow,
 } from "$lib/types/notion";
 import type { worksVideoType } from "$lib/types/works/worksVideos";
-import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
 	data: worksVideoType[];
 };
 
-export const load = (async () => {
-	const response = (await notionAdapter.databases.query({
+export const load = (async ({ platform, fetch }) => {
+	const response = (await getNotionClient(platform?.fetch || fetch).databases.query({
 		database_id: "dcbb3d52369d4da688bc5be120fc5db6",
 		filter: {
 			or: [
