@@ -1,6 +1,6 @@
-import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
 
-const data = await notionAdapter.databases.query({
+const data = await getNotionClient().databases.query({
 	database_id: "d773ca5cc7a14127b45b902d6129a321",
 });
 

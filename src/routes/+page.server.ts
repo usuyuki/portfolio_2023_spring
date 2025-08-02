@@ -5,7 +5,7 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingTopPageType } from "$lib/types/works/worksProgramming";
-import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
 import { getRecentArticle } from "$lib/utils/usecase/getRecentArticle";
 import type { PageServerLoad } from "./$types";
 
@@ -19,7 +19,8 @@ type dataType = {
 	accessCounterValue: string;
 };
 
-export const load = (async ({ platform }): Promise<dataType> => {
+export const load = (async ({ platform, fetch }): Promise<dataType> => {
+	const notionAdapter = getNotionClient(platform?.fetch || fetch);
 	//
 	/**
 	 * cloudflare workers kv からアクセスカウンタの値を引っ張る
