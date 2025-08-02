@@ -3,6 +3,8 @@ account_id = "ACCOUNT_ID"
 
 main = ".cloudflare/worker.js"
 
+compatibility_date = "2025-08-02"
+
 [assets]
 directory = ".cloudflare/assets"
 binding = "ASSETS"
