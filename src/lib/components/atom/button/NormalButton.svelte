@@ -1,13 +1,8 @@
 <script lang="ts">
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let bgColorVariable: "pink" | "black" | "yellow" | "blue" = "pink";
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let textColorVariable: "black" | "blue" = "black";
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let title: string = "ボタン名";
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let url: string = "/link";
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let className: string = "";
 </script>
 

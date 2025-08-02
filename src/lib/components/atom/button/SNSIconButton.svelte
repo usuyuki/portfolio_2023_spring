@@ -2,7 +2,6 @@
 export let link: string;
 export let logo: string;
 export let alt: string;
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let className: string = "";
 </script>
 

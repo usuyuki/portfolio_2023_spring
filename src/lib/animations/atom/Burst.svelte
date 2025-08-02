@@ -1,11 +1,7 @@
 <script lang="ts">
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let animationDuration: string = "1s";
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let animationDelay: string = "0";
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let color: "blue" | "pink" | "yellow" = "blue";
-// biome-ignore lint/style/useConst: These are Svelte component props
 export let className: string = "";
 </script>
 
