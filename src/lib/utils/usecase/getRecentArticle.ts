@@ -16,7 +16,7 @@ export const getRecentArticle = async (): Promise<blogContentType[]> => {
 	return articles.map((article) => {
 		return {
 			title: article.title || "",
-			link: "https://blog.usuyuki.net/" + (article.slug || ""),
+			link: `https://blog.usuyuki.net/${article.slug || ""}`,
 			//ISO形式をY-m-dにする
 			date: article.created_at?.replace(/-/g, "/") || "",
 			thumbnail: article.feature_image || "",

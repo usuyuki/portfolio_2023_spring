@@ -8,9 +8,9 @@ const TWITTER_ID = "@usuyuki26";
 
 export let title: string;
 export let description: string;
-export const ogImage: string = $page.url.origin + "/img/ogp/ogp.png";
+export const ogImage: string = `${$page.url.origin}/img/ogp/ogp.png`;
 
-const pageTitle = title + " | " + SITE_TITLE;
+const pageTitle = `${title} | ${SITE_TITLE}`;
 </script>
 
 <svelte:head>
@@ -21,7 +21,7 @@ const pageTitle = title + " | " + SITE_TITLE;
 
 	<meta name="robots" content="max-image-preview:large" />
 	<meta property="og:locale" content="ja_JP" />
-	<meta property="og:site_name" content={SITE_TITLE + ' - ' + SITE_SUB_TITLE} />
+	<meta property="og:site_name" content={`${SITE_TITLE} - ${SITE_SUB_TITLE}`} />
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={pageTitle} />
 	<meta property="og:url" content={$page.url.href} />

@@ -43,7 +43,7 @@ export interface NotionFileProperty {
 export interface NotionDatabaseRow {
 	id: string;
 	properties: {
-		[key: string]: any; // Properties are dynamic, but we'll type specific ones below
+		[key: string]: unknown; // Properties are dynamic, but we'll type specific ones below
 	};
 }
 
@@ -88,7 +88,7 @@ export interface GenericDatabaseRow extends NotionDatabaseRow {
 		url?: { url: string };
 		slideIframe?: { url: string };
 		power?: { number: number };
-		[key: string]: any;
+		[key: string]: unknown;
 	};
 }
 
