@@ -39,16 +39,16 @@ snsLinkProvider();
 
 <!-- つくったもの -->
 <div class="flex flex-wrap mt-20">
-	<div class="w-1/2 md:w-4/5 flex items-center flex-wrap justify-center">
+	<div class="w-1/2 md:w-4/5 flex items-top flex-wrap justify-center">
 		{#each data.works as article}
-			<a href={'works/programming/' + article.id} class="md:w-1/3">
+			<a href={"works/programming/" + article.id} class="md:w-1/3">
 				<div class="flex flex-col justify-center items-center mx-4 my-2">
 					<img
 						src={article.thumbnail}
-						alt={article.name + 'サムネイル'}
+						alt={article.name + "サムネイル"}
 						class="w-24 h-24 rounded-lg object-cover"
 					/>
-					<h3 class="text-lg md:text-xl">{article.name}</h3>
+					<h3 class="text-lg md:text-xl mt-2">{article.name}</h3>
 				</div>
 			</a>
 		{/each}
@@ -94,20 +94,25 @@ snsLinkProvider();
 			textColorVariable="black"
 		/>
 	</div>
-	<div class="w-full md:w-4/5 flex items-center flex-wrap justify-center">
+	<div class="w-full md:w-4/5 flex items-top flex-wrap justify-center">
 		{#if data.blogs.length === 0}
 			<!-- 本番だけなぜか絶対に取得に失敗する -->
 			<p>ぜひうすゆきブログも見てみてください！！</p>
 		{:else}
 			{#each data.blogs as article}
-				<a class="md:w-1/3" href={article.link} target="_blank" rel="noopener noreferrer">
+				<a
+					class="md:w-1/3"
+					href={article.link}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<div class="flex flex-col justify-center items-center mx-4 my-2">
 						<img
 							src={article.thumbnail}
-							alt={article.title + 'サムネイル'}
+							alt={article.title + "サムネイル"}
 							class="w-24 h-24 rounded-lg object-cover"
 						/>
-						<h3 class="text-lg md:text-xl">{article.title}</h3>
+						<h3 class="text-lg md:text-xl mt-2">{article.title}</h3>
 					</div>
 				</a>
 			{/each}
@@ -117,7 +122,12 @@ snsLinkProvider();
 
 <!-- うすゆきについて -->
 <p class="h2 text-center font-serif text-2xl mb-4 mt-40">うすゆきについて</p>
-<NormalButton title="もっと知る!" url="/about" bgColorVariable="blue" textColorVariable="black" />
+<NormalButton
+	title="もっと知る!"
+	url="/about"
+	bgColorVariable="blue"
+	textColorVariable="black"
+/>
 
 <!-- <p class="h2 text-center font-serif text-2xl mt-20 mb-2">ORETOKU</p>
 <NormalButton
