@@ -9,7 +9,7 @@ dependencies:
     specifier: ^4.0.1
     version: 4.0.1
   '@tryghost/content-api':
-    specifier: ^1.12.0
+    specifier: ^1.11.21
     version: 1.12.0
   embla-carousel:
     specifier: ^8.6.0
