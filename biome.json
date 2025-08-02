@@ -15,12 +15,6 @@
 			"recommended": true
 		}
 	},
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "double",
-			"semicolons": "always"
-		}
-	},
 	"overrides": [
 		{
 			"includes": ["**/*.svelte"],
