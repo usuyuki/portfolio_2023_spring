@@ -1,8 +1,8 @@
-import type { worksSlideType } from "$lib/types/works/worksSlides";
 import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
+import type { worksSlideType } from "$lib/types/works/worksSlides";
 import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 

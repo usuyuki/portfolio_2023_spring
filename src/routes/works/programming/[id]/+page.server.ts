@@ -2,8 +2,8 @@
 
 import { APIErrorCode } from "@notionhq/client";
 import { error } from "@sveltejs/kit";
-import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
 import type { WorksProgrammingRow } from "$lib/types/notion";
+import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
 import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 

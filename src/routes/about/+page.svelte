@@ -1,7 +1,7 @@
 <script lang="ts">
-import NormalButton from "$lib/components/atom/button/NormalButton.svelte";
 import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
 import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
+import NormalButton from "$lib/components/atom/button/NormalButton.svelte";
 import type { PageData } from "./$types";
 export let data: PageData;
 </script>

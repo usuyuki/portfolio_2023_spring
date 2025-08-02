@@ -1,8 +1,8 @@
-import type { techStackType } from "$lib/types/techStack";
 import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
+import type { techStackType } from "$lib/types/techStack";
 import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
