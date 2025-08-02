@@ -1,11 +1,11 @@
 <script lang="ts">
-	import PossibleLinkButton from '$lib/components/atom/button/PossibleLinkButton.svelte';
-	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
-	import SentenceFrame from '$lib/components/atom/text/sentence/SentenceFrame.svelte';
-	import WordForTag from '$lib/components/atom/text/word/WordForTag.svelte';
-	import WordWithEmoji from '$lib/components/atom/text/word/WordWithEmoji.svelte';
-	import type { PageData } from './$types';
-	export let data: PageData;
+import PossibleLinkButton from "$lib/components/atom/button/PossibleLinkButton.svelte";
+import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
+import SentenceFrame from "$lib/components/atom/text/sentence/SentenceFrame.svelte";
+import WordForTag from "$lib/components/atom/text/word/WordForTag.svelte";
+import WordWithEmoji from "$lib/components/atom/text/word/WordWithEmoji.svelte";
+import type { PageData } from "./$types";
+export let data: PageData;
 </script>
 
 <NormalHead title={data.data.name} description={data.data.summary} ogImage={data.data.gallery[0]} />

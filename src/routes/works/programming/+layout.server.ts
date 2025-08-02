@@ -1,7 +1,7 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
-import type { worksProgrammingShortType } from '$lib/types/works/worksProgramming';
-import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
-import type { LayoutServerLoad } from './$types';
+import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
+import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている
 type dataType = {
@@ -11,23 +11,23 @@ type dataType = {
 };
 export const load = (async () => {
 	const response = await notionAdapter.databases.query({
-		database_id: 'a448d280a2e840d6a4baa3a34fb853b4',
+		database_id: "a448d280a2e840d6a4baa3a34fb853b4",
 		filter: {
 			or: [
 				{
-					property: 'isPublished',
+					property: "isPublished",
 					checkbox: {
-						equals: true
-					}
-				}
-			]
+						equals: true,
+					},
+				},
+			],
 		},
 		sorts: [
 			{
-				property: 'publishedAt',
-				direction: 'descending'
-			}
-		]
+				property: "publishedAt",
+				direction: "descending",
+			},
+		],
 	});
 
 	const data: dataType = { data: {} };
@@ -40,11 +40,11 @@ export const load = (async () => {
 			//galleryの1枚目をサムネイルとして使う
 			thumbnail: row.properties.gallery.files[0].file.url,
 			summary: row.properties.summary.rich_text[0].plain_text,
-			publishedAt: row.properties.publishedAt.date.start.replace(/-/g, '/'),
+			publishedAt: row.properties.publishedAt.date.start.replace(/-/g, "/"),
 			logo:
 				row.properties.logo.files.length !== 0
 					? row.properties.logo.files[0].file.url
-					: false
+					: false,
 		};
 	});
 	return data;

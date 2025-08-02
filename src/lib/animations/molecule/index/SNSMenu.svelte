@@ -1,14 +1,14 @@
 <script lang="ts">
-	import Burst from '$lib/animations/atom/Burst.svelte';
-	import github from '$lib/assets/icon/github-mark.png';
-	import keybase from '$lib/assets/icon/keybase-official.svg';
-	import misskey from '$lib/assets/icon/misskey-logo.png';
-	import qiita from '$lib/assets/icon/qiita-icon.png';
-	import twitter from '$lib/assets/icon/x-logo.png';
-	import usuyukiBlog from '$lib/assets/icon/usuyukiBlog-icon.png';
-	import youtube from '$lib/assets/icon/youtube_social_icon_red.png';
-	import zenn from '$lib/assets/icon/zenn-logo.svg';
-	import SnsIconButton from '$lib/components/atom/button/SNSIconButton.svelte';
+import Burst from "$lib/animations/atom/Burst.svelte";
+import github from "$lib/assets/icon/github-mark.png";
+import keybase from "$lib/assets/icon/keybase-official.svg";
+import misskey from "$lib/assets/icon/misskey-logo.png";
+import qiita from "$lib/assets/icon/qiita-icon.png";
+import usuyukiBlog from "$lib/assets/icon/usuyukiBlog-icon.png";
+import twitter from "$lib/assets/icon/x-logo.png";
+import youtube from "$lib/assets/icon/youtube_social_icon_red.png";
+import zenn from "$lib/assets/icon/zenn-logo.svg";
+import SnsIconButton from "$lib/components/atom/button/SNSIconButton.svelte";
 </script>
 
 <div class="flex justify-center flex-wrap">

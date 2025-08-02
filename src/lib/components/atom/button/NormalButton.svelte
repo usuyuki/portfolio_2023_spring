@@ -1,9 +1,9 @@
 <script lang="ts">
-	export let bgColorVariable = 'pink';
-	export let textColorVariable = 'black';
-	export let title = 'ボタン名';
-	export let url = '/link';
-	export let className = '';
+export const bgColorVariable = "pink";
+export const textColorVariable = "black";
+export const title = "ボタン名";
+export const url = "/link";
+export const className = "";
 </script>
 
 <!-- bg-変数名 のように指定すると、Tailwindのバンドル時に対象外になってしまう危険があるが、他で絶対使うのでこの指定を許している -->

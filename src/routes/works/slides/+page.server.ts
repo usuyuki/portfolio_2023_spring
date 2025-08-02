@@ -1,6 +1,7 @@
-import type { worksSlideType } from '$lib/types/works/worksSlides';
-import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
-import type { PageServerLoad } from './$types';
+import type { worksSlideType } from "$lib/types/works/worksSlides";
+import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import type { PageServerLoad } from "./$types";
+
 type dataType = {
 	data: {
 		[key: string]: worksSlideType[];
@@ -9,23 +10,23 @@ type dataType = {
 
 export const load = (async () => {
 	const response = await notionAdapter.databases.query({
-		database_id: 'd5b6c2e74260462e97e24ed898399337',
+		database_id: "d5b6c2e74260462e97e24ed898399337",
 		filter: {
 			or: [
 				{
-					property: 'isPublished',
+					property: "isPublished",
 					checkbox: {
-						equals: true
-					}
-				}
-			]
+						equals: true,
+					},
+				},
+			],
 		},
 		sorts: [
 			{
-				property: 'publishedAt',
-				direction: 'descending'
-			}
-		]
+				property: "publishedAt",
+				direction: "descending",
+			},
+		],
 	});
 
 	const data: dataType = { data: {} };
@@ -35,7 +36,7 @@ export const load = (async () => {
 			publishedAt: row.properties.publishedAt.date.start,
 			name: row.properties.name.title[0].plain_text,
 			description: row.properties.description.rich_text[0].plain_text,
-			slideIframe: row.properties.slideIframe.url
+			slideIframe: row.properties.slideIframe.url,
 		};
 		if (genre in data.data) {
 			data.data[genre].push(techArray);

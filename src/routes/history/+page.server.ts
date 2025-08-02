@@ -1,6 +1,7 @@
-import type { historyType } from '$lib/types/history';
-import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
-import type { PageServerLoad } from './$types';
+import type { historyType } from "$lib/types/history";
+import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import type { PageServerLoad } from "./$types";
+
 type dataType = {
 	data: {
 		[key: string]: historyType[];
@@ -9,23 +10,23 @@ type dataType = {
 
 export const load = (async () => {
 	const response = await notionAdapter.databases.query({
-		database_id: 'a0a905a075ae4a83868984c5b53705e8',
+		database_id: "a0a905a075ae4a83868984c5b53705e8",
 		filter: {
 			or: [
 				{
-					property: 'isPublished',
+					property: "isPublished",
 					checkbox: {
-						equals: true
-					}
-				}
-			]
+						equals: true,
+					},
+				},
+			],
 		},
 		sorts: [
 			{
-				property: 'date',
-				direction: 'descending'
-			}
-		]
+				property: "date",
+				direction: "descending",
+			},
+		],
 	});
 
 	const data: dataType = { data: {} };
@@ -35,7 +36,7 @@ export const load = (async () => {
 			name: row.properties.name.title[0].plain_text,
 			content: row.properties.content.rich_text[0].plain_text,
 			start_date: row.properties.date.date.start,
-			end_date: row.properties.date.date.end
+			end_date: row.properties.date.date.end,
 		};
 		if (genre in data.data) {
 			data.data[genre].push(techArray);

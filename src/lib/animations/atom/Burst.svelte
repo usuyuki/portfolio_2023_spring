@@ -1,8 +1,8 @@
 <script lang="ts">
-	export let animationDuration = '1s';
-	export let animationDelay = '0';
-	export let color = 'blue';
-	export let className = '';
+export const animationDuration = "1s";
+export const animationDelay = "0";
+export const color = "blue";
+export const className = "";
 </script>
 
 <div

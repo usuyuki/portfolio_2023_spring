@@ -1,6 +1,6 @@
-import type { techStackType } from '$lib/types/techStack';
-import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
-import type { PageServerLoad } from './$types';
+import type { techStackType } from "$lib/types/techStack";
+import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import type { PageServerLoad } from "./$types";
 
 // ジャンルごとに ジャンル:データ となるようにしている
 type dataType = {
@@ -11,23 +11,23 @@ type dataType = {
 
 export const load = (async () => {
 	const response = await notionAdapter.databases.query({
-		database_id: 'b0f7969c8fc245928e4c2abaa8a2f578',
+		database_id: "b0f7969c8fc245928e4c2abaa8a2f578",
 		filter: {
 			or: [
 				{
-					property: 'isPublished',
+					property: "isPublished",
 					checkbox: {
-						equals: true
-					}
-				}
-			]
+						equals: true,
+					},
+				},
+			],
 		},
 		sorts: [
 			{
-				property: 'updatedAt',
-				direction: 'descending'
-			}
-		]
+				property: "updatedAt",
+				direction: "descending",
+			},
+		],
 	});
 
 	const data: dataType = { data: {} };
@@ -36,7 +36,7 @@ export const load = (async () => {
 		const techArray: techStackType = {
 			name: row.properties.name.title[0].plain_text,
 			content: row.properties.content.rich_text[0].plain_text,
-			power: row.properties.power.number
+			power: row.properties.power.number,
 		};
 		if (genre in data.data) {
 			data.data[genre].push(techArray);

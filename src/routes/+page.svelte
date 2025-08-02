@@ -1,19 +1,19 @@
 <script lang="ts">
-	import AccessCounter from '$lib/animations/molecule/index/AccessCounter.svelte';
-	import Opening from '$lib/animations/molecule/index/Opening.svelte';
-	import SnsMenu from '$lib/animations/molecule/index/SNSMenu.svelte';
-	import WelcomeGreeting from '$lib/animations/molecule/index/WelcomeGreeting.svelte';
-	import usuyukiIcon from '$lib/assets/icon/usuyukiIcon.png';
-	import NormalButton from '$lib/components/atom/button/NormalButton.svelte';
-	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
-	import { portfolioVersionLogger } from '$lib/utils/console/portfolioVersionLogger';
-	import { snsLinkProvider } from '$lib/utils/console/snsLinkProvider';
-	import { tuyotuyoConsole } from '$lib/utils/console/tuyotuyoConsole';
-	import type { PageData } from './$types';
-	export let data: PageData;
-	portfolioVersionLogger();
-	tuyotuyoConsole(data.info.log);
-	snsLinkProvider();
+import AccessCounter from "$lib/animations/molecule/index/AccessCounter.svelte";
+import Opening from "$lib/animations/molecule/index/Opening.svelte";
+import SnsMenu from "$lib/animations/molecule/index/SNSMenu.svelte";
+import WelcomeGreeting from "$lib/animations/molecule/index/WelcomeGreeting.svelte";
+import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
+import NormalButton from "$lib/components/atom/button/NormalButton.svelte";
+import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
+import { portfolioVersionLogger } from "$lib/utils/console/portfolioVersionLogger";
+import { snsLinkProvider } from "$lib/utils/console/snsLinkProvider";
+import { tuyotuyoConsole } from "$lib/utils/console/tuyotuyoConsole";
+import type { PageData } from "./$types";
+export let data: PageData;
+portfolioVersionLogger();
+tuyotuyoConsole(data.info.log);
+snsLinkProvider();
 </script>
 
 <NormalHead title="トップ" description="うすゆきのポートフォリオです" />

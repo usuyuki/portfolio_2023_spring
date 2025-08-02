@@ -1,8 +1,8 @@
 <script lang="ts">
-	export let title = '';
-	export let content = '';
-	export let borderColor = 'black';
-	export let className = '';
+export const title = "";
+export const content = "";
+export const borderColor = "black";
+export const className = "";
 </script>
 
 <div class={className}>

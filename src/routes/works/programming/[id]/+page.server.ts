@@ -1,9 +1,10 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
-import type { worksProgrammingType } from '$lib/types/works/worksProgramming';
-import { notionAdapter } from '$lib/utils/adapter/notionAdapter';
-import { APIErrorCode } from '@notionhq/client';
-import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+
+import { APIErrorCode } from "@notionhq/client";
+import { error } from "@sveltejs/kit";
+import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
+import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
+import type { PageServerLoad } from "./$types";
 
 // id:データになっている
 type dataType = {
@@ -13,7 +14,7 @@ export const load = (async ({ params }) => {
 	try {
 		/** @todo NotionSDKのretrieveの型が壊れているっぽいので、後ろ全部静的解析で壊さないためにanyにキャストする(TSのメリット潰してるからやめたい) */
 		const response = (await notionAdapter.pages.retrieve({
-			page_id: params.id
+			page_id: params.id,
 		})) as any;
 		// publishしてない記事を弾く
 		if (!response.properties.isPublished.checkbox) {
@@ -43,21 +44,24 @@ export const load = (async ({ params }) => {
 				whatToOffer: response.properties.whatToOffer.rich_text[0].plain_text,
 				genre: {
 					name: response.properties.genre.select.name,
-					id: response.properties.genre.select.id
+					id: response.properties.genre.select.id,
 				},
-				publishedAt: response.properties.publishedAt.date.start.replace(/-/g, '/'),
+				publishedAt: response.properties.publishedAt.date.start.replace(
+					/-/g,
+					"/",
+				),
 				toWhom: response.properties.toWhom.rich_text[0].plain_text,
 				form: {
 					name: response.properties.form.select.name,
-					id: response.properties.form.select.id
+					id: response.properties.form.select.id,
 				},
 				kodawari: response.properties.kodawari.rich_text[0].plain_text,
 				kana: response.properties.kana.rich_text[0].plain_text,
 				gallery: response.properties.gallery.files.map((item: any) => {
 					return item.file.url;
 				}),
-				name: response.properties.name.title[0].plain_text
-			}
+				name: response.properties.name.title[0].plain_text,
+			},
 		};
 		return data;
 	} catch (e: unknown) {
@@ -65,17 +69,20 @@ export const load = (async ({ params }) => {
 		//notionSdkでなくこちらで吐かせたエラーの処理
 		const errorObj = e as { status?: number; code?: string };
 		if (errorObj.status === 403) {
-			error(403, '403 今は公開してないよ。');
+			error(403, "403 今は公開してないよ。");
 		} else if (
 			errorObj.code === APIErrorCode.ValidationError ||
 			errorObj.code === APIErrorCode.ObjectNotFound
 		) {
 			// ValidationErrorを404にするのは変だが、実態は404と同義で扱えるので
-			error(404, 'そんな作品はありません。');
+			error(404, "そんな作品はありません。");
 		} else if (errorObj.code === APIErrorCode.Unauthorized) {
-			error(500, '製作者へ:サーバー側のAPI呼び出しで認証エラーになっています。');
+			error(
+				500,
+				"製作者へ:サーバー側のAPI呼び出しで認証エラーになっています。",
+			);
 		} else {
-			error(500, '未知のエラーです。ごめんなさい');
+			error(500, "未知のエラーです。ごめんなさい");
 		}
 	}
 }) satisfies PageServerLoad;
