@@ -8,7 +8,7 @@ import SnsMenu from "$lib/animations/molecule/index/SNSMenu.svelte";
 import AccessCounter from "$lib/animations/molecule/index/AccessCounter.svelte";
 import WelcomeGreeting from "$lib/animations/molecule/index/WelcomeGreeting.svelte";
 import NormalButton from "$lib/components/atom/button/NormalButton.svelte";
-import usuyukiIcon from "$lib/assets/icon/usuyuki-icon.png";
+import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
 import type { PageData } from "./$types";
 export let data: PageData;
 portfolioVersionLogger();
