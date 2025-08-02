@@ -1,5 +1,5 @@
 <script lang="ts">
-import Autoplay from "embla-carousel-autoplay";
+import * as autoplay from "embla-carousel-autoplay";
 import emblaCarouselSvelte from "embla-carousel-svelte";
 import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
 
@@ -19,7 +19,7 @@ export let works: dataType;
 			align: 'center',
 			startIndex: 1
 		},
-		plugins: [Autoplay()]
+		plugins: [autoplay.default()]
 	}}
 >
 	<div class="flex">
