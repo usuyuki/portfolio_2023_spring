@@ -1,9 +1,14 @@
 <script lang="ts">
-export const emoji = "✍";
-export const content = "";
-export const emojiMean = "";
-export const bgColor = "black";
-export const className = "";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let emoji: string = "✍";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let content: string = "";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let emojiMean: string = "";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let bgColor: string = "black";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let className: string = "";
 </script>
 
 <div class={className}>

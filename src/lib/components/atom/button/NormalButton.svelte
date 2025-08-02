@@ -1,9 +1,14 @@
 <script lang="ts">
-export const bgColorVariable = "pink";
-export const textColorVariable = "black";
-export const title = "ボタン名";
-export const url = "/link";
-export const className = "";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let bgColorVariable: "pink" | "black" | "yellow" | "blue" = "pink";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let textColorVariable: "black" | "blue" = "black";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let title: string = "ボタン名";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let url: string = "/link";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let className: string = "";
 </script>
 
 <!-- bg-変数名 のように指定すると、Tailwindのバンドル時に対象外になってしまう危険があるが、他で絶対使うのでこの指定を許している -->

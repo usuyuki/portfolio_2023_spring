@@ -3,6 +3,7 @@
 import { APIErrorCode } from "@notionhq/client";
 import { error } from "@sveltejs/kit";
 import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
+import type { WorksProgrammingRow } from "$lib/types/notion";
 import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
@@ -12,10 +13,9 @@ type dataType = {
 };
 export const load = (async ({ params }) => {
 	try {
-		/** @todo NotionSDKのretrieveの型が壊れているっぽいので、後ろ全部静的解析で壊さないためにanyにキャストする(TSのメリット潰してるからやめたい) */
 		const response = (await notionAdapter.pages.retrieve({
 			page_id: params.id,
-		})) as any;
+		})) as unknown as WorksProgrammingRow;
 		// publishしてない記事を弾く
 		if (!response.properties.isPublished.checkbox) {
 			error(403);
@@ -29,7 +29,7 @@ export const load = (async ({ params }) => {
 					response.properties.content.rich_text.length === 0
 						? null
 						: response.properties.content.rich_text[0].plain_text,
-				tech: response.properties.tech.multi_select.map((item: any) => {
+				tech: response.properties.tech.multi_select.map((item) => {
 					return { name: item.name, id: item.id };
 				}),
 				// ファイル&メディアは値なしだと空配列になる
@@ -57,7 +57,7 @@ export const load = (async ({ params }) => {
 				},
 				kodawari: response.properties.kodawari.rich_text[0].plain_text,
 				kana: response.properties.kana.rich_text[0].plain_text,
-				gallery: response.properties.gallery.files.map((item: any) => {
+				gallery: response.properties.gallery.files.map((item) => {
 					return item.file.url;
 				}),
 				name: response.properties.name.title[0].plain_text,

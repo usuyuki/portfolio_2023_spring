@@ -1,4 +1,8 @@
 import type { worksVideoType } from "$lib/types/works/worksVideos";
+import type {
+	VideoDatabaseRow,
+	NotionDatabaseResponse,
+} from "$lib/types/notion";
 import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
@@ -7,7 +11,7 @@ type dataType = {
 };
 
 export const load = (async () => {
-	const response = await notionAdapter.databases.query({
+	const response = (await notionAdapter.databases.query({
 		database_id: "dcbb3d52369d4da688bc5be120fc5db6",
 		filter: {
 			or: [
@@ -25,10 +29,10 @@ export const load = (async () => {
 				direction: "descending",
 			},
 		],
-	});
+	})) as unknown as NotionDatabaseResponse<VideoDatabaseRow>;
 
 	const data: dataType = { data: [] };
-	response.results.forEach((row: any) => {
+	response.results.forEach((row: VideoDatabaseRow) => {
 		data.data.push({
 			publishedAt: row.properties.publishedAt.date.start,
 			name: row.properties.name.title[0].plain_text,

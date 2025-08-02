@@ -1,8 +1,11 @@
 <script lang="ts">
-export const title = "";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let title: string = "";
 export let link: string | null;
-export const borderColor = "blue";
-export const className = "";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let borderColor: string = "blue";
+// biome-ignore lint/style/useConst: These are Svelte component props
+export let className: string = "";
 </script>
 
 <p class={className}>

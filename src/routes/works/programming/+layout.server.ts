@@ -1,5 +1,9 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
 import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
+import type {
+	WorksProgrammingRow,
+	NotionDatabaseResponse,
+} from "$lib/types/notion";
 import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
 import type { LayoutServerLoad } from "./$types";
 
@@ -10,7 +14,7 @@ type dataType = {
 	};
 };
 export const load = (async () => {
-	const response = await notionAdapter.databases.query({
+	const response = (await notionAdapter.databases.query({
 		database_id: "a448d280a2e840d6a4baa3a34fb853b4",
 		filter: {
 			or: [
@@ -28,11 +32,11 @@ export const load = (async () => {
 				direction: "descending",
 			},
 		],
-	});
+	})) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 
 	const data: dataType = { data: {} };
 
-	response.results.forEach((row: any) => {
+	response.results.forEach((row: WorksProgrammingRow) => {
 		//ここですべてのデータはとれる
 		/** @todo 個別ページはlayoutから渡すようにするとAPI叩く回数減らせる(本来の使い方と反するので、エラーハンドリングが面倒で保留にしている) */
 		data.data[row.id] = {

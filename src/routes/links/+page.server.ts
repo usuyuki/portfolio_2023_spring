@@ -1,4 +1,8 @@
 import type { linkType } from "$lib/types/link";
+import type {
+	GenericDatabaseRow,
+	NotionDatabaseResponse,
+} from "$lib/types/notion";
 import { notionAdapter } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
@@ -9,7 +13,7 @@ type dataType = {
 };
 
 export const load = (async () => {
-	const response = await notionAdapter.databases.query({
+	const response = (await notionAdapter.databases.query({
 		database_id: "d773ca5cc7a14127b45b902d6129a321",
 		filter: {
 			or: [
@@ -27,14 +31,14 @@ export const load = (async () => {
 				direction: "descending",
 			},
 		],
-	});
+	})) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;
 
 	const data: dataType = { data: {} };
-	response.results.forEach((row: any) => {
-		const genre: string = row.properties.genre.select.name;
+	response.results.forEach((row: GenericDatabaseRow) => {
+		const genre: string = row.properties.genre?.select.name || "";
 		const techArray: linkType = {
 			name: row.properties.name.title[0].plain_text,
-			url: row.properties.url.url,
+			url: row.properties.url?.url || "",
 		};
 		if (genre in data.data) {
 			data.data[genre].push(techArray);
