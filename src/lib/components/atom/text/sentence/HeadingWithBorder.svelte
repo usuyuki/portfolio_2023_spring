@@ -1,6 +1,6 @@
 <script lang="ts">
-	export let title: string;
-	export let className = '';
+export let title: string;
+export const className = "";
 </script>
 
 <div class={`flex justify-center items-center ${className}`}>

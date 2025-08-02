@@ -1,11 +1,12 @@
 <script lang="ts">
-	import type { worksProgrammingShortType } from '$lib/types/works/worksProgramming';
-	import Autoplay from 'embla-carousel-autoplay';
-	import emblaCarouselSvelte from 'embla-carousel-svelte';
-	type dataType = {
-		[key: string]: worksProgrammingShortType;
-	};
-	export let works: dataType;
+import Autoplay from "embla-carousel-autoplay";
+import emblaCarouselSvelte from "embla-carousel-svelte";
+import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
+
+type dataType = {
+	[key: string]: worksProgrammingShortType;
+};
+export let works: dataType;
 </script>
 
 <aside

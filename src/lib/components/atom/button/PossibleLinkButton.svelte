@@ -1,8 +1,8 @@
 <script lang="ts">
-	export let title = '';
-	export let link: string | null;
-	export let borderColor = 'blue';
-	export let className = '';
+export let title: string = "";
+export let link: string | null;
+export let borderColor: string = "blue";
+export let className: string = "";
 </script>
 
 <p class={className}>

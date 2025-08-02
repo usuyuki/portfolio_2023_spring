@@ -1,6 +1,6 @@
 <script lang="ts">
-	import NormalHead from '$lib/components/atom/head/NormalHead.svelte';
-	import NormalPageTitle from '$lib/components/atom/text/sentence/NormalPageTitle.svelte';
+import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
+import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
 </script>
 
 <NormalHead title="すきなものを表現するばしょ" description="すきなものを表現するページ" />

@@ -24,8 +24,11 @@ pnpm wrangler dev     # Development with Cloudflare Workers integration
 ```bash
 pnpm build            # Production build
 pnpm check            # Type checking with svelte-check
-pnpm lint             # Prettier + ESLint checks
-pnpm format           # Auto-format code with Prettier
+pnpm lint             # Biome lint checks
+pnpm format           # Auto-format code with Biome
+pnpm format:check     # Check formatting without writing
+pnpm biome:check      # Comprehensive Biome check (format + lint + organize imports)
+pnpm biome:fix        # Auto-fix Biome issues
 pnpm 1                # Quick quality check: format + (lint & check)
 ```
 

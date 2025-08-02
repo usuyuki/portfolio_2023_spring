@@ -1,9 +1,9 @@
-import type { blogContentType } from '$lib/types/blogContent';
-import { ghostAdapter } from '$lib/utils/adapter/ghostAdapter';
+import type { blogContentType } from "$lib/types/blogContent";
+import { ghostAdapter } from "$lib/utils/adapter/ghostAdapter";
 export const getRecentArticle = async (): Promise<blogContentType[]> => {
 	const articles = await ghostAdapter.posts
 		.browse({
-			limit: 3
+			limit: 3,
 		})
 		.catch((err: Error) => {
 			console.error(err);
@@ -15,11 +15,11 @@ export const getRecentArticle = async (): Promise<blogContentType[]> => {
 	}
 	return articles.map((article) => {
 		return {
-			title: article.title || '',
-			link: 'https://blog.usuyuki.net/' + (article.slug || ''),
+			title: article.title || "",
+			link: `https://blog.usuyuki.net/${article.slug || ""}`,
 			//ISO形式をY-m-dにする
-			date: article.created_at?.replace(/-/g, '/') || '',
-			thumbnail: article.feature_image || ''
+			date: article.created_at?.replace(/-/g, "/") || "",
+			thumbnail: article.feature_image || "",
 		};
 	});
 };

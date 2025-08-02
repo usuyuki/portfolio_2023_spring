@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+import { page } from "$app/stores";
 </script>
 
 <h1 class="text-3xl text-center mx-2 my-2">

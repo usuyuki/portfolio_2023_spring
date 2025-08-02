@@ -1,19 +1,20 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { fly } from 'svelte/transition';
-	import { isCircleMenuOpen, toggleCircleMenu } from '$lib/stores/menus';
-	type Link = {
-		icon: string;
-		name: string;
-		path: string;
-	};
-	const linkList: Link[] = [
-		{ icon: '🏡', name: 'home', path: '/' },
-		{ icon: '💼', name: 'techStack', path: '/techStack' },
-		{ icon: '🔍', name: 'about', path: '/about' },
-		{ icon: '💻', name: 'programming', path: '/works/programming' },
-		{ icon: '📒', name: 'slides', path: '/works/slides' }
-	];
+import { fly } from "svelte/transition";
+import { page } from "$app/stores";
+import { isCircleMenuOpen, toggleCircleMenu } from "$lib/stores/menus";
+
+type Link = {
+	icon: string;
+	name: string;
+	path: string;
+};
+const linkList: Link[] = [
+	{ icon: "🏡", name: "home", path: "/" },
+	{ icon: "💼", name: "techStack", path: "/techStack" },
+	{ icon: "🔍", name: "about", path: "/about" },
+	{ icon: "💻", name: "programming", path: "/works/programming" },
+	{ icon: "📒", name: "slides", path: "/works/slides" },
+];
 </script>
 
 <div class="fixed right-6 -bottom-7 z-40 md:-bottom-7 md:right-8">
