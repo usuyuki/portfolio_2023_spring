@@ -90,7 +90,8 @@
 	/** 文字関連 */
 	p {
 		/* font読み込みで崩れるので、ユーザーの端末で持つフォントを指定する */
-		font-family: 'MS UI Gothic', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', sans-serif;
+		font-family:
+			'MS UI Gothic', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', sans-serif;
 		color: var(--white);
 		display: flex;
 		justify-content: center;

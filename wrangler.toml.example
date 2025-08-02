@@ -2,13 +2,18 @@ name = "usuyuki-portfolio-v6"
 account_id = "ACCOUNT_ID"
 
 main = ".cloudflare/worker.js"
-site.bucket = ".cloudflare/public"
 
-build.command = "pnpm build"
+[assets]
+directory = ".cloudflare/assets"
+binding = "ASSETS"
 
-compatibility_date = "2023-03-18"
-workers_dev = true
+[build]
+command = "pnpm build"
 
-kv_namespaces = [
-  { binding = "KV", id = "KV_ID", preview_id = "override" }
-]
+[[kv_namespaces]]
+binding = "KV"
+id = "KV_ID"
+preview_id = "override"
+
+[observability.logs]
+enabled = true

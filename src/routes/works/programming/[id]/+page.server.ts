@@ -9,11 +9,11 @@ import type { PageServerLoad } from './$types';
 type dataType = {
 	data: worksProgrammingType;
 };
-export const load = (async (params: any) => {
+export const load = (async ({ params }) => {
 	try {
 		/** @todo NotionSDKのretrieveの型が壊れているっぽいので、後ろ全部静的解析で壊さないためにanyにキャストする(TSのメリット潰してるからやめたい) */
 		const response = (await notionAdapter.pages.retrieve({
-			page_id: params.params.id
+			page_id: params.id
 		})) as any;
 		// publishしてない記事を弾く
 		if (!response.properties.isPublished.checkbox) {
@@ -60,18 +60,19 @@ export const load = (async (params: any) => {
 			}
 		};
 		return data;
-	} catch (e: any) {
+	} catch (e: unknown) {
 		console.log(e);
 		//notionSdkでなくこちらで吐かせたエラーの処理
-		if (e.status === 403) {
+		const errorObj = e as { status?: number; code?: string };
+		if (errorObj.status === 403) {
 			error(403, '403 今は公開してないよ。');
 		} else if (
-			e.code === APIErrorCode.ValidationError ||
-			e.code === APIErrorCode.ObjectNotFound
+			errorObj.code === APIErrorCode.ValidationError ||
+			errorObj.code === APIErrorCode.ObjectNotFound
 		) {
 			// ValidationErrorを404にするのは変だが、実態は404と同義で扱えるので
 			error(404, 'そんな作品はありません。');
-		} else if (e.code === APIErrorCode.Unauthorized) {
+		} else if (errorObj.code === APIErrorCode.Unauthorized) {
 			error(500, '製作者へ:サーバー側のAPI呼び出しで認証エラーになっています。');
 		} else {
 			error(500, '未知のエラーです。ごめんなさい');

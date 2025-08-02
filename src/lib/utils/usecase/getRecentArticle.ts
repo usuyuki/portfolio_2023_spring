@@ -5,7 +5,7 @@ export const getRecentArticle = async (): Promise<blogContentType[]> => {
 		.browse({
 			limit: 3
 		})
-		.catch((err: any) => {
+		.catch((err: Error) => {
 			console.error(err);
 		});
 	if (!articles) {
@@ -13,13 +13,13 @@ export const getRecentArticle = async (): Promise<blogContentType[]> => {
 		// return Promise.reject(new Error('記事の取得に失敗しました。'));
 		return [];
 	}
-	return articles.map((article: any) => {
+	return articles.map((article) => {
 		return {
-			title: article.title,
-			link: 'https://blog.usuyuki.net/' + article.slug,
+			title: article.title || '',
+			link: 'https://blog.usuyuki.net/' + (article.slug || ''),
 			//ISO形式をY-m-dにする
-			date: article.created_at.replace(/-/g, '/'),
-			thumbnail: article.feature_image
+			date: article.created_at?.replace(/-/g, '/') || '',
+			thumbnail: article.feature_image || ''
 		};
 	});
 };
