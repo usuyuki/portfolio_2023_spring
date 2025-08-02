@@ -30,7 +30,8 @@ export const load = (async ({ platform }): Promise<dataType> => {
 		platform.env !== undefined &&
 		platform.env.KV !== undefined
 	) {
-		nOfVisitorValue = await platform.env.KV.get("counter");
+		const { KV } = platform.env;
+		nOfVisitorValue = await KV.get("counter");
 	}
 
 	/**
