@@ -49,6 +49,7 @@ jobs:
           echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
           echo "GHOST_API_URL=${{ secrets.GHOST_API_URL }}" >> .env
           echo "GHOST_CONTENT_KEY=${{ secrets.GHOST_CONTENT_KEY }}" >> .env
+          echo "NODE_ENV=production" >> .env
     
       - name: Generate wrangler.toml
         run: |
