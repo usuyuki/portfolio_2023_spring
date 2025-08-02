@@ -1,6 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500&family=Kiwi+Maru:wght@500&display=swap");
+
+@theme {
+	--color-white: #f5f7fa;
+	--color-black: #2b2e3d;
+	--color-pink: #e8b0b7;
+	--color-yellow: #fedd59;
+	--color-blue: #a1d0ec;
+	--color-ui-bg: #fdf1e1;
+	--color-natori-bg: #ffc0cb;
+	--color-kmsn-bg: #5ebfeb;
+
+	--font-serif: "Kaisei Decol", ui-serif, serif;
+	--font-sans: "Kiwi Maru", ui-sans-serif, sans-serif;
+}
 
 :root {
 	/* からーず */
