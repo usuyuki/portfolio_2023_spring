@@ -1,6 +1,8 @@
 export const snsLinkProvider = () => {
 	// console.logの結果をおしゃれに出すスタイル
-	console.log(
+	// Cloudflare Workersでのillegal invocation回避のため.bind(console)を使用
+	const log = console.log.bind(console);
+	log(
 		"%cX(旧Twitter)%chttps://twitter.com/usuyuki26%c\n%cMisskey%chttps://m5y.usuyuki.net/@usuyuki%c\n%cGitHub%chttps://github.com/usuyuki",
 		"background: #1da1f2; color: white;padding: 0.25rem 0.25rem;",
 		"background: black; color: white;padding: 0.25rem 0.25rem;",

@@ -1,6 +1,8 @@
 export const portfolioVersionLogger = () => {
 	// console.logの結果をおしゃれに出すスタイル
-	console.log(
+	// Cloudflare Workersでのillegal invocation回避のため.bind(console)を使用
+	const log = console.log.bind(console);
+	log(
 		"%cusuyuki portfolio🌂%c\n%cversion:6%cPowered By usuyuki",
 		"background: white; color: gray; border-radius:2px; font-size: 1.1rem;padding: 0.25rem 0.25rem;",
 		"",
