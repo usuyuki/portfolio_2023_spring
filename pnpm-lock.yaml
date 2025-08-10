@@ -19,7 +19,7 @@ dependencies:
     version: 8.6.0(embla-carousel@8.6.0)
   embla-carousel-svelte:
     specifier: ^8.6.0
-    version: 8.6.0(svelte@5.37.2)
+    version: 8.6.0(svelte@5.38.0)
 
 devDependencies:
   '@biomejs/biome':
@@ -36,16 +36,16 @@ devDependencies:
     version: 7.1.2(@sveltejs/kit@2.27.0)(wrangler@4.27.0)
   '@sveltejs/kit':
     specifier: ^2.27.0
-    version: 2.27.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.37.2)(vite@7.0.6)
+    version: 2.27.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.38.0)(vite@7.0.6)
   '@sveltejs/vite-plugin-svelte':
     specifier: ^6.1.0
-    version: 6.1.0(svelte@5.37.2)(vite@7.0.6)
+    version: 6.1.0(svelte@5.38.0)(vite@7.0.6)
   '@tailwindcss/postcss':
     specifier: ^4.1.11
     version: 4.1.11
   '@testing-library/svelte':
     specifier: ^5.2.8
-    version: 5.2.8(svelte@5.37.2)(vite@7.0.6)(vitest@3.2.4)
+    version: 5.2.8(svelte@5.38.0)(vite@7.0.6)(vitest@3.2.4)
   '@types/gtag.js':
     specifier: ^0.0.20
     version: 0.0.20
@@ -62,11 +62,11 @@ devDependencies:
     specifier: ^8.5.6
     version: 8.5.6
   svelte:
-    specifier: ^5.37.2
-    version: 5.37.2
+    specifier: ^5.38.0
+    version: 5.38.0
   svelte-check:
     specifier: ^4.3.1
-    version: 4.3.1(svelte@5.37.2)(typescript@5.9.2)
+    version: 4.3.1(svelte@5.38.0)(typescript@5.9.2)
   tailwindcss:
     specifier: ^4.1.11
     version: 4.1.11
@@ -1235,7 +1235,7 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
-      '@sveltejs/kit': 2.27.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.37.2)(vite@7.0.6)
+      '@sveltejs/kit': 2.27.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.38.0)(vite@7.0.6)
     dev: true
 
   /@sveltejs/adapter-cloudflare@7.1.2(@sveltejs/kit@2.27.0)(wrangler@4.27.0):
@@ -1245,12 +1245,12 @@ packages:
       wrangler: ^4.0.0
     dependencies:
       '@cloudflare/workers-types': 4.20250802.0
-      '@sveltejs/kit': 2.27.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.37.2)(vite@7.0.6)
+      '@sveltejs/kit': 2.27.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.38.0)(vite@7.0.6)
       worktop: 0.8.0-next.18
       wrangler: 4.27.0
     dev: true
 
-  /@sveltejs/kit@2.27.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.37.2)(vite@7.0.6):
+  /@sveltejs/kit@2.27.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.38.0)(vite@7.0.6):
     resolution: {integrity: sha512-pEX1Z2Km8tqmkni+ykIIou+ojp/7gb3M9tpllN5nDWNo9zlI0dI8/hDKFyBwQvb4jYR+EyLriFtrmgJ6GvbnBA==}
     engines: {node: '>=18.13'}
     hasBin: true
@@ -1261,7 +1261,7 @@ packages:
     dependencies:
       '@standard-schema/spec': 1.0.0
       '@sveltejs/acorn-typescript': 1.0.5(acorn@8.15.0)
-      '@sveltejs/vite-plugin-svelte': 6.1.0(svelte@5.37.2)(vite@7.0.6)
+      '@sveltejs/vite-plugin-svelte': 6.1.0(svelte@5.38.0)(vite@7.0.6)
       '@types/cookie': 0.6.0
       acorn: 8.15.0
       cookie: 0.6.0
@@ -1273,11 +1273,11 @@ packages:
       sade: 1.8.1
       set-cookie-parser: 2.7.1
       sirv: 3.0.1
-      svelte: 5.37.2
+      svelte: 5.38.0
       vite: 7.0.6
     dev: true
 
-  /@sveltejs/vite-plugin-svelte-inspector@5.0.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.37.2)(vite@7.0.6):
+  /@sveltejs/vite-plugin-svelte-inspector@5.0.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.38.0)(vite@7.0.6):
     resolution: {integrity: sha512-iwQ8Z4ET6ZFSt/gC+tVfcsSBHwsqc6RumSaiLUkAurW3BCpJam65cmHw0oOlDMTO0u+PZi9hilBRYN+LZNHTUQ==}
     engines: {node: ^20.19 || ^22.12 || >=24}
     peerDependencies:
@@ -1285,27 +1285,27 @@ packages:
       svelte: ^5.0.0
       vite: ^6.3.0 || ^7.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 6.1.0(svelte@5.37.2)(vite@7.0.6)
+      '@sveltejs/vite-plugin-svelte': 6.1.0(svelte@5.38.0)(vite@7.0.6)
       debug: 4.4.1
-      svelte: 5.37.2
+      svelte: 5.38.0
       vite: 7.0.6
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte@6.1.0(svelte@5.37.2)(vite@7.0.6):
+  /@sveltejs/vite-plugin-svelte@6.1.0(svelte@5.38.0)(vite@7.0.6):
     resolution: {integrity: sha512-+U6lz1wvGEG/BvQyL4z/flyNdQ9xDNv5vrh+vWBWTHaebqT0c9RNggpZTo/XSPoHsSCWBlYaTlRX8pZ9GATXCw==}
     engines: {node: ^20.19 || ^22.12 || >=24}
     peerDependencies:
       svelte: ^5.0.0
       vite: ^6.3.0 || ^7.0.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 5.0.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.37.2)(vite@7.0.6)
+      '@sveltejs/vite-plugin-svelte-inspector': 5.0.0(@sveltejs/vite-plugin-svelte@6.1.0)(svelte@5.38.0)(vite@7.0.6)
       debug: 4.4.1
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.17
-      svelte: 5.37.2
+      svelte: 5.38.0
       vite: 7.0.6
       vitefu: 1.1.1(vite@7.0.6)
     transitivePeerDependencies:
@@ -1484,7 +1484,7 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/svelte@5.2.8(svelte@5.37.2)(vite@7.0.6)(vitest@3.2.4):
+  /@testing-library/svelte@5.2.8(svelte@5.38.0)(vite@7.0.6)(vitest@3.2.4):
     resolution: {integrity: sha512-ucQOtGsJhtawOEtUmbR4rRh53e6RbM1KUluJIXRmh6D4UzxR847iIqqjRtg9mHNFmGQ8Vkam9yVcR5d1mhIHKA==}
     engines: {node: '>= 10'}
     peerDependencies:
@@ -1498,7 +1498,7 @@ packages:
         optional: true
     dependencies:
       '@testing-library/dom': 10.4.1
-      svelte: 5.37.2
+      svelte: 5.38.0
       vite: 7.0.6
       vitest: 3.2.4(jsdom@26.1.0)
     dev: true
@@ -1891,14 +1891,14 @@ packages:
       embla-carousel: 8.6.0
     dev: false
 
-  /embla-carousel-svelte@8.6.0(svelte@5.37.2):
+  /embla-carousel-svelte@8.6.0(svelte@5.38.0):
     resolution: {integrity: sha512-ZDsKk8Sdv+AUTygMYcwZjfRd1DTh+JSUzxkOo8b9iKAkYjg+39mzbY/lwHsE3jXSpKxdKWS69hPSNuzlOGtR2Q==}
     peerDependencies:
       svelte: ^3.49.0 || ^4.0.0 || ^5.0.0
     dependencies:
       embla-carousel: 8.6.0
       embla-carousel-reactive-utils: 8.6.0(embla-carousel@8.6.0)
-      svelte: 5.37.2
+      svelte: 5.38.0
     dev: false
 
   /embla-carousel@8.6.0:
@@ -2725,7 +2725,7 @@ packages:
     engines: {node: '>=18'}
     dev: true
 
-  /svelte-check@4.3.1(svelte@5.37.2)(typescript@5.9.2):
+  /svelte-check@4.3.1(svelte@5.38.0)(typescript@5.9.2):
     resolution: {integrity: sha512-lkh8gff5gpHLjxIV+IaApMxQhTGnir2pNUAqcNgeKkvK5bT/30Ey/nzBxNLDlkztCH4dP7PixkMt9SWEKFPBWg==}
     engines: {node: '>= 18.0.0'}
     hasBin: true
@@ -2738,14 +2738,14 @@ packages:
       fdir: 6.4.6(picomatch@4.0.3)
       picocolors: 1.1.1
       sade: 1.8.1
-      svelte: 5.37.2
+      svelte: 5.38.0
       typescript: 5.9.2
     transitivePeerDependencies:
       - picomatch
     dev: true
 
-  /svelte@5.37.2:
-    resolution: {integrity: sha512-SAakJiy04/OvXRAUnGxRACGzw6GB9kmxYIjuMO/zTcTL6psqc54Y0O/yR6I3OLqFqn79EPd23qsCGkKozvYYbQ==}
+  /svelte@5.38.0:
+    resolution: {integrity: sha512-cWF1Oc2IM/QbktdK89u5lt9MdKxRtQnRKnf2tq6KOhYuhLOd2hbMuTiJ+vWMzAeMDe81AzbCgLd4GVtOJ4fDRg==}
     engines: {node: '>=18'}
     dependencies:
       '@ampproject/remapping': 2.3.0
