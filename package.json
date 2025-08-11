@@ -48,5 +48,5 @@
 		"embla-carousel-autoplay": "^8.6.0",
 		"embla-carousel-svelte": "^8.6.0"
 	},
-	"packageManager": "pnpm@8.14.1+sha1.d039b38e0b20ad012ed548e44267b8d4c88b447a"
+	"packageManager": "pnpm@10.14.0"
 }
