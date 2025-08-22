@@ -3,7 +3,7 @@ import { fly } from "svelte/transition";
 import Burst from "$lib/animations/atom/Burst.svelte";
 export let count: string;
 let visible = false;
-const countInt = parseInt(count);
+const countInt = parseInt(count, 10);
 
 $: nowValue = 0;
 //アニメーションが終わるのを待ってから表示
