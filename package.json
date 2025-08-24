@@ -18,7 +18,7 @@
 		"test:i": "playwright test -c playwright.config.ts"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.2.0",
+		"@biomejs/biome": "^2.2.2",
 		"@playwright/test": "^1.55.0",
 		"@sveltejs/adapter-auto": "^6.1.0",
 		"@sveltejs/adapter-cloudflare": "^7.2.2",
