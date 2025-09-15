@@ -5,7 +5,7 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingTopPageType } from "$lib/types/works/worksProgramming";
-import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
 import { getRecentArticle } from "$lib/utils/usecase/getRecentArticle";
 import type { PageServerLoad } from "./$types";
 
@@ -36,10 +36,14 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 	/**
 	 * トップ用のデータ取得
 	 */
-	const response = (await queryDataSource(
+	const response = (await queryDataSourceCached(
 		"b8ec3c117d1b4677947153bbe44bd42d",
 		{},
-		platform?.fetch || fetch,
+		{
+			fetch: platform?.fetch || fetch,
+			kv: platform?.env?.KV,
+			cacheTtl: 3600, // 1 hour cache for info data
+		},
 	)) as unknown as NotionDatabaseResponse<InfoDatabaseRow>;
 	const dataInfo: infoType = {};
 	response.results.forEach((row: InfoDatabaseRow) => {
@@ -57,7 +61,7 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 	 * 作品データ取得
 	 * 3つだけ
 	 */
-	const worksResponse = (await queryDataSource(
+	const worksResponse = (await queryDataSourceCached(
 		"a448d280a2e840d6a4baa3a34fb853b4",
 		{
 			page_size: 3,
@@ -78,7 +82,11 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 				},
 			],
 		},
-		platform?.fetch || fetch,
+		{
+			fetch: platform?.fetch || fetch,
+			kv: platform?.env?.KV,
+			cacheTtl: 1800, // 30 minutes cache for works data
+		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 	const worksContent: worksProgrammingTopPageType[] = [];
 	worksResponse.results.forEach((row: WorksProgrammingRow) => {

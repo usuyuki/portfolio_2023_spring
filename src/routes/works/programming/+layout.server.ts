@@ -5,7 +5,7 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
-import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
 import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている
@@ -15,7 +15,7 @@ type dataType = {
 	};
 };
 export const load = (async ({ platform, fetch }) => {
-	const response = (await queryDataSource(
+	const response = (await queryDataSourceCached(
 		"a448d280a2e840d6a4baa3a34fb853b4",
 		{
 			filter: {
@@ -35,7 +35,11 @@ export const load = (async ({ platform, fetch }) => {
 				},
 			],
 		},
-		platform?.fetch || fetch,
+		{
+			fetch: platform?.fetch || fetch,
+			kv: platform?.env?.KV,
+			cacheTtl: 1800, // 30 minutes cache for programming works list
+		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 
 	const data: dataType = { data: {} };
