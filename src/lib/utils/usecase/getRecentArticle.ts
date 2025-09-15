@@ -1,5 +1,7 @@
 import type { blogContentType } from "$lib/types/blogContent";
 import { ghostAdapter } from "$lib/utils/adapter/ghostAdapter";
+import { optimizeGhostImageUrl } from "$lib/utils/optimizeGhostImages";
+
 export const getRecentArticle = async (): Promise<blogContentType[]> => {
 	const articles = await ghostAdapter.posts
 		.browse({
@@ -19,7 +21,11 @@ export const getRecentArticle = async (): Promise<blogContentType[]> => {
 			link: `https://blog.usuyuki.net/${article.slug || ""}`,
 			//ISO形式をY-m-dにする
 			date: article.created_at?.replace(/-/g, "/") || "",
-			thumbnail: article.feature_image || "",
+			// w300固定 w100もあるが、流石に小さすぎるのでratina対応も兼ねてw300で固定(元が2000とかあるのでこれでも改善でかい)
+			thumbnail: optimizeGhostImageUrl(article.feature_image || "", {
+				width: 300,
+				height: 300,
+			}),
 		};
 	});
 };
