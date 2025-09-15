@@ -21,10 +21,36 @@ interface KVCache {
 	): Promise<void>;
 }
 
-// Default cache TTL (Time To Live) in seconds
+// Cache TTL (Time To Live) constants in seconds
 // Long TTL to minimize KV writes (1000 writes/day limit)
 const DEFAULT_CACHE_TTL = 21600; // 6 hours
 const DATA_SOURCE_CACHE_TTL = 604800; // 7 days for data source IDs
+
+// Export TTL constants for different Notion database APIs
+export const CACHE_TTL = {
+	// Info database (basic site information)
+	INFO_DB: 43200, // 12 hours
+	// About database
+	ABOUT_DB: 86400, // 24 hours
+	// Tech stack database
+	TECH_STACK_DB: 43200, // 12 hours
+	// History database
+	HISTORY_DB: 86400, // 24 hours
+	// Links database
+	LINKS_DB: 21600, // 6 hours
+	// Kokosuki database
+	KOKOSUKI_DB: 86400, // 24 hours
+	// Programming works database
+	PROGRAMMING_WORKS_DB: 7200, // 2 hours
+	// Slides database
+	SLIDES_DB: 14400, // 4 hours
+	// Videos database
+	VIDEOS_DB: 14400, // 4 hours
+	// Individual page retrieval
+	PAGE_RETRIEVE: 7200, // 2 hours
+	// Default fallback
+	DEFAULT: DEFAULT_CACHE_TTL,
+} as const;
 
 export const getNotionClient = (fetch?: typeof globalThis.fetch) => {
 	return new Client({

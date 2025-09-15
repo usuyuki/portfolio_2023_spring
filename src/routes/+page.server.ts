@@ -5,7 +5,7 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingTopPageType } from "$lib/types/works/worksProgramming";
-import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
 import { getRecentArticle } from "$lib/utils/usecase/getRecentArticle";
 import type { PageServerLoad } from "./$types";
 
@@ -42,7 +42,7 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 43200, // 12 hours cache for info data (rarely changes)
+			cacheTtl: CACHE_TTL.INFO_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<InfoDatabaseRow>;
 	const dataInfo: infoType = {};
@@ -85,7 +85,7 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 7200, // 2 hours cache for works data
+			cacheTtl: CACHE_TTL.PROGRAMMING_WORKS_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 	const worksContent: worksProgrammingTopPageType[] = [];

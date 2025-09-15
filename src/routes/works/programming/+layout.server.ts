@@ -5,7 +5,7 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
-import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
 import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている
@@ -38,7 +38,7 @@ export const load = (async ({ platform, fetch }) => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 7200, // 2 hours cache for programming works list
+			cacheTtl: CACHE_TTL.PROGRAMMING_WORKS_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 
