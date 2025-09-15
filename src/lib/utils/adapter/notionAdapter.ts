@@ -22,8 +22,9 @@ interface KVCache {
 }
 
 // Default cache TTL (Time To Live) in seconds
-const DEFAULT_CACHE_TTL = 3600; // 1 hour
-const DATA_SOURCE_CACHE_TTL = 86400; // 24 hours for data source IDs
+// Long TTL to minimize KV writes (1000 writes/day limit)
+const DEFAULT_CACHE_TTL = 21600; // 6 hours
+const DATA_SOURCE_CACHE_TTL = 604800; // 7 days for data source IDs
 
 export const getNotionClient = (fetch?: typeof globalThis.fetch) => {
 	return new Client({

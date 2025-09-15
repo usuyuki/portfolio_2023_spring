@@ -3,7 +3,7 @@ import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
-import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -13,7 +13,7 @@ type dataType = {
 };
 
 export const load = (async ({ platform, fetch }) => {
-	const response = (await queryDataSource(
+	const response = (await queryDataSourceCached(
 		"d773ca5cc7a14127b45b902d6129a321",
 		{
 			filter: {
@@ -33,7 +33,11 @@ export const load = (async ({ platform, fetch }) => {
 				},
 			],
 		},
-		platform?.fetch || fetch,
+		{
+			fetch: platform?.fetch || fetch,
+			kv: platform?.env?.KV,
+			cacheTtl: 21600, // 6 hours cache for links data (occasionally updated)
+		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;
 
 	const data: dataType = { data: {} };
