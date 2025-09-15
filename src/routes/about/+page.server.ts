@@ -3,7 +3,7 @@ import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
-import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -11,21 +11,22 @@ type dataType = {
 };
 
 export const load = (async ({ platform, fetch }) => {
-	const response = (await getNotionClient(
-		platform?.fetch || fetch,
-	).databases.query({
-		database_id: "74fe901686ac47a1835e3dfdb76ecc60",
-		filter: {
-			or: [
-				{
-					property: "isPublished",
-					checkbox: {
-						equals: true,
+	const response = (await queryDataSource(
+		"74fe901686ac47a1835e3dfdb76ecc60",
+		{
+			filter: {
+				or: [
+					{
+						property: "isPublished",
+						checkbox: {
+							equals: true,
+						},
 					},
-				},
-			],
+				],
+			},
 		},
-	})) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;
+		platform?.fetch || fetch,
+	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;
 
 	const data: dataType = { data: [] };
 

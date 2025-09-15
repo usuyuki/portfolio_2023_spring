@@ -3,7 +3,7 @@ import type {
 	VideoDatabaseRow,
 } from "$lib/types/notion";
 import type { worksVideoType } from "$lib/types/works/worksVideos";
-import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -11,27 +11,28 @@ type dataType = {
 };
 
 export const load = (async ({ platform, fetch }) => {
-	const response = (await getNotionClient(
-		platform?.fetch || fetch,
-	).databases.query({
-		database_id: "dcbb3d52369d4da688bc5be120fc5db6",
-		filter: {
-			or: [
-				{
-					property: "isPublished",
-					checkbox: {
-						equals: true,
+	const response = (await queryDataSource(
+		"dcbb3d52369d4da688bc5be120fc5db6",
+		{
+			filter: {
+				or: [
+					{
+						property: "isPublished",
+						checkbox: {
+							equals: true,
+						},
 					},
+				],
+			},
+			sorts: [
+				{
+					property: "publishedAt",
+					direction: "descending",
 				},
 			],
 		},
-		sorts: [
-			{
-				property: "publishedAt",
-				direction: "descending",
-			},
-		],
-	})) as unknown as NotionDatabaseResponse<VideoDatabaseRow>;
+		platform?.fetch || fetch,
+	)) as unknown as NotionDatabaseResponse<VideoDatabaseRow>;
 
 	const data: dataType = { data: [] };
 	response.results.forEach((row: VideoDatabaseRow) => {

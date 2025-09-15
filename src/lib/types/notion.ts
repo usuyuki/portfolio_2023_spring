@@ -105,3 +105,16 @@ export interface VideoDatabaseRow extends NotionDatabaseRow {
 export interface NotionDatabaseResponse<T = NotionDatabaseRow> {
 	results: T[];
 }
+
+// New types for 2025-09-03 API upgrade
+export interface NotionDataSource {
+	id: string;
+	name: string;
+	type: string;
+}
+
+export interface NotionDatabaseInfo {
+	id: string;
+	title: NotionTitleProperty[];
+	data_sources?: NotionDataSource[];
+}

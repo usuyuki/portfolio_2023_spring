@@ -5,7 +5,7 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingTopPageType } from "$lib/types/works/worksProgramming";
-import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
 import { getRecentArticle } from "$lib/utils/usecase/getRecentArticle";
 import type { PageServerLoad } from "./$types";
 
@@ -20,7 +20,6 @@ type dataType = {
 };
 
 export const load = (async ({ platform, fetch }): Promise<dataType> => {
-	const notionAdapter = getNotionClient(platform?.fetch || fetch);
 	//
 	/**
 	 * cloudflare workers kv からアクセスカウンタの値を引っ張る
@@ -37,9 +36,11 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 	/**
 	 * トップ用のデータ取得
 	 */
-	const response = (await notionAdapter.databases.query({
-		database_id: "b8ec3c117d1b4677947153bbe44bd42d",
-	})) as unknown as NotionDatabaseResponse<InfoDatabaseRow>;
+	const response = (await queryDataSource(
+		"b8ec3c117d1b4677947153bbe44bd42d",
+		{},
+		platform?.fetch || fetch,
+	)) as unknown as NotionDatabaseResponse<InfoDatabaseRow>;
 	const dataInfo: infoType = {};
 	response.results.forEach((row: InfoDatabaseRow) => {
 		dataInfo[row.properties.key.title[0].plain_text] =
@@ -56,26 +57,29 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 	 * 作品データ取得
 	 * 3つだけ
 	 */
-	const worksResponse = (await notionAdapter.databases.query({
-		database_id: "a448d280a2e840d6a4baa3a34fb853b4",
-		page_size: 3,
-		filter: {
-			or: [
-				{
-					property: "isPublished",
-					checkbox: {
-						equals: true,
+	const worksResponse = (await queryDataSource(
+		"a448d280a2e840d6a4baa3a34fb853b4",
+		{
+			page_size: 3,
+			filter: {
+				or: [
+					{
+						property: "isPublished",
+						checkbox: {
+							equals: true,
+						},
 					},
+				],
+			},
+			sorts: [
+				{
+					property: "publishedAt",
+					direction: "descending",
 				},
 			],
 		},
-		sorts: [
-			{
-				property: "publishedAt",
-				direction: "descending",
-			},
-		],
-	})) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
+		platform?.fetch || fetch,
+	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 	const worksContent: worksProgrammingTopPageType[] = [];
 	worksResponse.results.forEach((row: WorksProgrammingRow) => {
 		worksContent.push({

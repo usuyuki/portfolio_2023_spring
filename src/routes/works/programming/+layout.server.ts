@@ -5,7 +5,7 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
-import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
 import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている
@@ -15,27 +15,28 @@ type dataType = {
 	};
 };
 export const load = (async ({ platform, fetch }) => {
-	const response = (await getNotionClient(
-		platform?.fetch || fetch,
-	).databases.query({
-		database_id: "a448d280a2e840d6a4baa3a34fb853b4",
-		filter: {
-			or: [
-				{
-					property: "isPublished",
-					checkbox: {
-						equals: true,
+	const response = (await queryDataSource(
+		"a448d280a2e840d6a4baa3a34fb853b4",
+		{
+			filter: {
+				or: [
+					{
+						property: "isPublished",
+						checkbox: {
+							equals: true,
+						},
 					},
+				],
+			},
+			sorts: [
+				{
+					property: "publishedAt",
+					direction: "descending",
 				},
 			],
 		},
-		sorts: [
-			{
-				property: "publishedAt",
-				direction: "descending",
-			},
-		],
-	})) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
+		platform?.fetch || fetch,
+	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 
 	const data: dataType = { data: {} };
 
