@@ -15,16 +15,29 @@
 		/>
 		<link rel="icon" type="image/png" href="%sveltekit.assets%/img/favicon/icon-192x192.png" />
 
-		<!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-VSEVR44V35"></script>
+		<!-- Google tag (gtag.js) - Optimized to prevent forced reflows -->
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
 				dataLayer.push(arguments);
 			}
 			gtag('js', new Date());
-
 			gtag('config', 'G-VSEVR44V35');
+
+			// Load gtag script after DOM is ready to prevent forced reflows
+			function loadGtag() {
+				const script = document.createElement('script');
+				script.async = true;
+				script.src = 'https://www.googletagmanager.com/gtag/js?id=G-VSEVR44V35';
+				document.head.appendChild(script);
+			}
+
+			// Use requestIdleCallback if available, otherwise fallback to setTimeout
+			if (typeof requestIdleCallback !== 'undefined') {
+				requestIdleCallback(loadGtag);
+			} else {
+				setTimeout(loadGtag, 0);
+			}
 		</script>
 
 		<title>%sveltekit.status% | うすゆきどっとねっと</title>
