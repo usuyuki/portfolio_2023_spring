@@ -3,7 +3,7 @@ import type {
 	VideoDatabaseRow,
 } from "$lib/types/notion";
 import type { worksVideoType } from "$lib/types/works/worksVideos";
-import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -11,7 +11,7 @@ type dataType = {
 };
 
 export const load = (async ({ platform, fetch }) => {
-	const response = (await queryDataSource(
+	const response = (await queryDataSourceCached(
 		"dcbb3d52369d4da688bc5be120fc5db6",
 		{
 			filter: {
@@ -31,7 +31,11 @@ export const load = (async ({ platform, fetch }) => {
 				},
 			],
 		},
-		platform?.fetch || fetch,
+		{
+			fetch: platform?.fetch || fetch,
+			kv: platform?.env?.KV,
+			cacheTtl: 14400, // 4 hours cache for videos data
+		},
 	)) as unknown as NotionDatabaseResponse<VideoDatabaseRow>;
 
 	const data: dataType = { data: [] };

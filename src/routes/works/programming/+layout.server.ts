@@ -38,7 +38,7 @@ export const load = (async ({ platform, fetch }) => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 1800, // 30 minutes cache for programming works list
+			cacheTtl: 7200, // 2 hours cache for programming works list
 		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 

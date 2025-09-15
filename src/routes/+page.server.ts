@@ -42,7 +42,7 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 3600, // 1 hour cache for info data
+			cacheTtl: 43200, // 12 hours cache for info data (rarely changes)
 		},
 	)) as unknown as NotionDatabaseResponse<InfoDatabaseRow>;
 	const dataInfo: infoType = {};
@@ -85,7 +85,7 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 1800, // 30 minutes cache for works data
+			cacheTtl: 7200, // 2 hours cache for works data
 		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 	const worksContent: worksProgrammingTopPageType[] = [];

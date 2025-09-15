@@ -3,7 +3,7 @@ import type {
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
 import type { worksSlideType } from "$lib/types/works/worksSlides";
-import { queryDataSource } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -13,7 +13,7 @@ type dataType = {
 };
 
 export const load = (async ({ platform, fetch }) => {
-	const response = (await queryDataSource(
+	const response = (await queryDataSourceCached(
 		"d5b6c2e74260462e97e24ed898399337",
 		{
 			filter: {
@@ -33,7 +33,11 @@ export const load = (async ({ platform, fetch }) => {
 				},
 			],
 		},
-		platform?.fetch || fetch,
+		{
+			fetch: platform?.fetch || fetch,
+			kv: platform?.env?.KV,
+			cacheTtl: 14400, // 4 hours cache for slides data
+		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;
 
 	const data: dataType = { data: {} };
