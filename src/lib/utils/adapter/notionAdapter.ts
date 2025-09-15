@@ -18,7 +18,10 @@ export const getDataSourceId = async (
 ): Promise<string> => {
 	// Check cache first
 	if (dataSourceCache.has(databaseId)) {
-		return dataSourceCache.get(databaseId)!;
+		const cachedId = dataSourceCache.get(databaseId);
+		if (cachedId) {
+			return cachedId;
+		}
 	}
 
 	const client = getNotionClient(fetch);
@@ -30,7 +33,8 @@ export const getDataSourceId = async (
 
 		// In the new API, databases have data_sources array
 		// For most cases, we'll use the first data source
-		const dataSourceId = (database as any).data_sources?.[0]?.id;
+		const dataSourceId = (database as { data_sources?: Array<{ id: string }> })
+			.data_sources?.[0]?.id;
 
 		if (dataSourceId) {
 			// Cache the result
@@ -58,7 +62,7 @@ export const getDataSourceId = async (
 // Helper function to query data source with automatic data source ID resolution
 export const queryDataSource = async (
 	databaseId: string,
-	queryOptions: any,
+	queryOptions: Record<string, unknown>,
 	fetch?: typeof globalThis.fetch,
 ) => {
 	const client = getNotionClient(fetch);
