@@ -4,7 +4,7 @@ import { APIErrorCode } from "@notionhq/client";
 import { error } from "@sveltejs/kit";
 import type { WorksProgrammingRow } from "$lib/types/notion";
 import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
-import { getNotionClient } from "$lib/utils/adapter/notionAdapter";
+import { getNotionClient, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 // id:データになっている
@@ -83,9 +83,9 @@ export const load = (async ({ params, platform, fetch }) => {
 		if (platform?.env?.KV) {
 			try {
 				await platform.env.KV.put(cacheKey, JSON.stringify(response), {
-					expirationTtl: 7200 // 2 hours cache for individual pages
+					expirationTtl: CACHE_TTL.PAGE_RETRIEVE
 				});
-				console.log(`KV cache stored for page: ${params.id} (TTL: 7200s)`);
+				console.log(`KV cache stored for page: ${params.id} (TTL: ${CACHE_TTL.PAGE_RETRIEVE}s)`);
 			} catch (cacheError) {
 				console.warn(`KV cache write failed for ${cacheKey}:`, cacheError);
 			}

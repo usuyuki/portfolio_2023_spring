@@ -3,7 +3,7 @@ import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
-import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -36,7 +36,7 @@ export const load = (async ({ platform, fetch }) => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 21600, // 6 hours cache for links data (occasionally updated)
+			cacheTtl: CACHE_TTL.LINKS_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;
 

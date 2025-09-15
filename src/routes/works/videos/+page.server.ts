@@ -3,7 +3,7 @@ import type {
 	VideoDatabaseRow,
 } from "$lib/types/notion";
 import type { worksVideoType } from "$lib/types/works/worksVideos";
-import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -34,7 +34,7 @@ export const load = (async ({ platform, fetch }) => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 14400, // 4 hours cache for videos data
+			cacheTtl: CACHE_TTL.VIDEOS_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<VideoDatabaseRow>;
 

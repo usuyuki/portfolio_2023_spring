@@ -3,7 +3,7 @@ import type {
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
 import type { techStackType } from "$lib/types/techStack";
-import { queryDataSourceCached } from "$lib/utils/adapter/notionAdapter";
+import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 // ジャンルごとに ジャンル:データ となるようにしている
@@ -37,7 +37,7 @@ export const load = (async ({ platform, fetch }) => {
 		{
 			fetch: platform?.fetch || fetch,
 			kv: platform?.env?.KV,
-			cacheTtl: 43200, // 12 hours cache for tech stack data (rarely changes)
+			cacheTtl: CACHE_TTL.TECH_STACK_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;
 
