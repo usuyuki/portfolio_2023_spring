@@ -3,7 +3,10 @@ import type {
 	VideoDatabaseRow,
 } from "$lib/types/notion";
 import type { worksVideoType } from "$lib/types/works/worksVideos";
-import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
+import {
+	queryDataSourceCached,
+	CACHE_TTL,
+} from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
