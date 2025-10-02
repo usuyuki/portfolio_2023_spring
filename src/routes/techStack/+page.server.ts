@@ -3,7 +3,10 @@ import type {
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
 import type { techStackType } from "$lib/types/techStack";
-import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
+import {
+	queryDataSourceCached,
+	CACHE_TTL,
+} from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 // ジャンルごとに ジャンル:データ となるようにしている

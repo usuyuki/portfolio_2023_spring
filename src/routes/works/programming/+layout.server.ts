@@ -5,7 +5,10 @@ import type {
 	WorksProgrammingRow,
 } from "$lib/types/notion";
 import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
-import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
+import {
+	queryDataSourceCached,
+	CACHE_TTL,
+} from "$lib/utils/adapter/notionAdapter";
 import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている

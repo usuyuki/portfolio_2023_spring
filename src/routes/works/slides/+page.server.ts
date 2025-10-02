@@ -3,7 +3,10 @@ import type {
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
 import type { worksSlideType } from "$lib/types/works/worksSlides";
-import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
+import {
+	queryDataSourceCached,
+	CACHE_TTL,
+} from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {

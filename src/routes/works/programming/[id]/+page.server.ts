@@ -43,7 +43,8 @@ export const load = (async ({ params, platform, fetch }) => {
 						gitHub: response.properties.gitHub.url,
 						link: response.properties.link.url,
 						summary: response.properties.summary.rich_text[0].plain_text,
-						whatToOffer: response.properties.whatToOffer.rich_text[0].plain_text,
+						whatToOffer:
+							response.properties.whatToOffer.rich_text[0].plain_text,
 						genre: {
 							name: response.properties.genre.select.name,
 							id: response.properties.genre.select.id,
@@ -83,9 +84,11 @@ export const load = (async ({ params, platform, fetch }) => {
 		if (platform?.env?.KV) {
 			try {
 				await platform.env.KV.put(cacheKey, JSON.stringify(response), {
-					expirationTtl: CACHE_TTL.PAGE_RETRIEVE
+					expirationTtl: CACHE_TTL.PAGE_RETRIEVE,
 				});
-				console.log(`KV cache stored for page: ${params.id} (TTL: ${CACHE_TTL.PAGE_RETRIEVE}s)`);
+				console.log(
+					`KV cache stored for page: ${params.id} (TTL: ${CACHE_TTL.PAGE_RETRIEVE}s)`,
+				);
 			} catch (cacheError) {
 				console.warn(`KV cache write failed for ${cacheKey}:`, cacheError);
 			}

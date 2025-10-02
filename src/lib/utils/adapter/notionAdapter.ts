@@ -202,7 +202,9 @@ export const queryDataSource = async (
 				await kv.put(cacheKey, JSON.stringify(result), {
 					expirationTtl: cacheTtl || DEFAULT_CACHE_TTL,
 				});
-				console.log(`KV cache stored for query: ${databaseId} (TTL: ${cacheTtl || DEFAULT_CACHE_TTL}s)`);
+				console.log(
+					`KV cache stored for query: ${databaseId} (TTL: ${cacheTtl || DEFAULT_CACHE_TTL}s)`,
+				);
 			} catch (error) {
 				console.warn(`KV cache write failed for ${cacheKey}:`, error);
 			}

@@ -3,7 +3,10 @@ import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
 } from "$lib/types/notion";
-import { queryDataSourceCached, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
+import {
+	queryDataSourceCached,
+	CACHE_TTL,
+} from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
