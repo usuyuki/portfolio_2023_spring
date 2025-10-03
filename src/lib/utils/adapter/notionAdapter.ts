@@ -40,14 +40,14 @@ export const CACHE_TTL = {
 	LINKS_DB: 21600, // 6 hours
 	// Kokosuki database
 	KOKOSUKI_DB: 86400, // 24 hours
-	// Programming works database
-	PROGRAMMING_WORKS_DB: 7200, // 2 hours
+	// Programming works database (short TTL due to Notion file URL expiration)
+	PROGRAMMING_WORKS_DB: 1800, // 30 minutes
 	// Slides database
 	SLIDES_DB: 14400, // 4 hours
 	// Videos database
 	VIDEOS_DB: 14400, // 4 hours
-	// Individual page retrieval
-	PAGE_RETRIEVE: 7200, // 2 hours
+	// Individual page retrieval (short TTL due to Notion file URL expiration)
+	PAGE_RETRIEVE: 1800, // 30 minutes
 	// Default fallback
 	DEFAULT: DEFAULT_CACHE_TTL,
 } as const;
