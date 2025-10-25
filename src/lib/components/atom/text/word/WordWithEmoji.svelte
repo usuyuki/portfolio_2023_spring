@@ -1,9 +1,9 @@
 <script lang="ts">
-export let emoji: string = "✍";
-export let content: string = "";
-export let emojiMean: string = "";
-export let bgColor: string = "black";
-export let className: string = "";
+	export let emoji: string = "✍";
+	export let content: string = "";
+	export let emojiMean: string = "";
+	export let bgColor: string = "black";
+	export let className: string = "";
 </script>
 
 <div class={className}>

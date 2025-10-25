@@ -1,16 +1,16 @@
 <script lang="ts">
-import { page } from "$app/stores";
+	import { page } from "$app/stores";
 
-const SITE_TITLE = "うすゆきどっとねっと";
-const SITE_SUB_TITLE = "うすゆきのポートフォリオです";
-const SITE_AUTHOR = "うすゆき";
-const TWITTER_ID = "@usuyuki26";
+	const SITE_TITLE = "うすゆきどっとねっと";
+	const SITE_SUB_TITLE = "うすゆきのポートフォリオです";
+	const SITE_AUTHOR = "うすゆき";
+	const TWITTER_ID = "@usuyuki26";
 
-export let title: string;
-export let description: string;
-export const ogImage: string = `${$page.url.origin}/img/ogp/ogp.png`;
+	export let title: string;
+	export let description: string;
+	export const ogImage: string = `${$page.url.origin}/img/ogp/ogp.png`;
 
-const pageTitle = `${title} | ${SITE_TITLE}`;
+	const pageTitle = `${title} | ${SITE_TITLE}`;
 </script>
 
 <svelte:head>

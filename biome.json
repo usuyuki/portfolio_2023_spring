@@ -15,6 +15,11 @@
 			"recommended": true
 		}
 	},
+	"html": {
+		"formatter": {
+			"indentScriptAndStyle": true
+		}
+	},
 	"css": {
 		"parser": {
 			"cssModules": false,
