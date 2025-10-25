@@ -15,6 +15,12 @@
 			"recommended": true
 		}
 	},
+	"css": {
+		"parser": {
+			"cssModules": false,
+			"tailwindDirectives": true
+		}
+	},
 	"overrides": [
 		{
 			"includes": ["**/*.svelte"],
@@ -26,22 +32,6 @@
 					"correctness": {
 						"noUnusedImports": "off",
 						"noUnusedVariables": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/*.css"],
-			"css": {
-				"parser": {
-					"cssModules": false,
-					"tailwindDirectives": true
-				}
-			},
-			"linter": {
-				"rules": {
-					"suspicious": {
-						"noUnknownAtRules": "off"
 					}
 				}
 			}
