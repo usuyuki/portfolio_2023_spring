@@ -17,6 +17,20 @@
 	},
 	"overrides": [
 		{
+			"includes": ["**/*.svelte"],
+			"linter": {
+				"rules": {
+					"style": {
+						"useConst": "off"
+					},
+					"correctness": {
+						"noUnusedImports": "off",
+						"noUnusedVariables": "off"
+					}
+				}
+			}
+		},
+		{
 			"includes": ["**/*.css"],
 			"css": {
 				"parser": {
@@ -28,20 +42,6 @@
 				"rules": {
 					"suspicious": {
 						"noUnknownAtRules": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/*.svelte"],
-			"linter": {
-				"rules": {
-					"style": {
-						"useConst": "off"
-					},
-					"correctness": {
-						"noUnusedImports": "off",
-						"noUnusedVariables": "off"
 					}
 				}
 			}
