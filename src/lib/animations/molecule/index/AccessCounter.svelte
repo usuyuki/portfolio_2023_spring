@@ -1,24 +1,24 @@
 <script lang="ts">
-import { fly } from "svelte/transition";
-import Burst from "$lib/animations/atom/Burst.svelte";
-export let count: string;
-let visible = false;
-const countInt = parseInt(count, 10);
+	import { fly } from "svelte/transition";
+	import Burst from "$lib/animations/atom/Burst.svelte";
+	export let count: string;
+	let visible = false;
+	const countInt = parseInt(count, 10);
 
-$: nowValue = 0;
-//アニメーションが終わるのを待ってから表示
-setTimeout(() => {
-	visible = true;
-	//2秒掛けてnowValueの値をcountの値にする
-	for (let i = 0; i <= countInt; i++) {
-		setTimeout(
-			() => {
-				nowValue = i;
-			},
-			(2000 / countInt) * i,
-		);
-	}
-}, 2700);
+	$: nowValue = 0;
+	//アニメーションが終わるのを待ってから表示
+	setTimeout(() => {
+		visible = true;
+		//2秒掛けてnowValueの値をcountの値にする
+		for (let i = 0; i <= countInt; i++) {
+			setTimeout(
+				() => {
+					nowValue = i;
+				},
+				(2000 / countInt) * i,
+			);
+		}
+	}, 2700);
 </script>
 
 <div

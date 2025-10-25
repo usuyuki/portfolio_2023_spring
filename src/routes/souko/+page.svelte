@@ -1,7 +1,7 @@
 <script lang="ts">
-import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
-import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
-import Burst from "$lib/animations/atom/Burst.svelte";
+	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
+	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
+	import Burst from "$lib/animations/atom/Burst.svelte";
 </script>
 
 <NormalHead title="カラー置き場" description="Tailwindのクラス生成のために作っているページ" />
