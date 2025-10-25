@@ -18,8 +18,8 @@
 		<!-- Google tag (gtag.js) - Optimized to prevent forced reflows -->
 		<script>
 			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
+			function gtag(...args) {
+				dataLayer.push(args);
 			}
 			gtag('js', new Date());
 			gtag('config', 'G-VSEVR44V35');
