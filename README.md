@@ -1,5 +1,6 @@
 # portfolio_2023_spring
 うすゆきどっとねっと、いわゆるポートフォリオです。
+なんだかんだ現役です。
 
 https://usuyuki.net
 
