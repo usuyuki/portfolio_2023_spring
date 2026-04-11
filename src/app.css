@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500&family=Kiwi+Maru:wght@500&display=swap");
+@import "tailwindcss";
 
 @theme {
 	--color-white: #f5f7fa;
