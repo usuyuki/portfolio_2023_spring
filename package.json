@@ -18,11 +18,11 @@
 		"test:i": "playwright test -c playwright.config.ts"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.15",
+		"@biomejs/biome": "^2.4.16",
 		"@playwright/test": "^1.60.0",
 		"@sveltejs/adapter-auto": "^7.0.1",
 		"@sveltejs/adapter-cloudflare": "^7.2.8",
-		"@sveltejs/kit": "^2.60.1",
+		"@sveltejs/kit": "^2.61.1",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/postcss": "^4.3.0",
 		"@tailwindcss/vite": "^4.3.0",
@@ -32,14 +32,14 @@
 		"autoprefixer": "^10.5.0",
 		"jsdom": "^29.1.1",
 		"postcss": "^8.5.15",
-		"svelte": "^5.55.9",
+		"svelte": "^5.56.0",
 		"svelte-check": "^4.4.8",
 		"tailwindcss": "^4.3.0",
 		"tslib": "^2.8.1",
 		"typescript": "^6.0.3",
-		"vite": "^8.0.13",
+		"vite": "^8.0.14",
 		"vitest": "^4.1.7",
-		"wrangler": "^4.93.0"
+		"wrangler": "^4.95.0"
 	},
 	"type": "module",
 	"dependencies": {
