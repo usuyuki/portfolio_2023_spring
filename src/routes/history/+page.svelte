@@ -8,10 +8,11 @@
 <NormalHead title="経歴" description="うすゆきのこれまで" />
 <NormalPageTitle title="経歴" />
 
-{#each Object.entries(data.data) as [title, histories]}
+{#each Object.entries(data.data) as [title, histories], i}
 	<div class="mb-20 relative">
 		<h2
-			class="text-2xl md:text-3xl mx-4 mt-6 bg-white z-10 absolute -top-10 md:-top-12 md:left-52"
+			id={`history-${i}`}
+			class="text-2xl md:text-3xl mx-4 mt-6 bg-white z-10 absolute -top-10 md:-top-12 md:left-52 scroll-mt-24"
 		>
 			🧃{title}🧃
 		</h2>
