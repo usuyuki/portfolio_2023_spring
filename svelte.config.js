@@ -8,7 +8,13 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			// CIではbuildとpreviewが各々workerdを起動し、.wrangler/stateのSQLiteロックが競合して
+			// SQLITE_BUSYでサーバーが落ちるため、永続化せずメモリ上でバインディングをエミュレートする
+			platformProxy: {
+				persist: process.env.CI ? false : undefined,
+			},
+		}),
 	},
 };
 
