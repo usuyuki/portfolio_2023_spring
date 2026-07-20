@@ -42,9 +42,27 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # ステータスコード確認のみでレンダリングエンジン差は見ないため、chromiumだけインストールする
+      # ブラウザ本体(約400MB)のダウンロードを避けるため、Playwrightのバージョンをキーにキャッシュする
+      - name: Get playwright version
+        id: playwright-version
+        run: echo "VERSION=$(node -e "console.log(require('@playwright/test/package.json').version)")" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup playwright cache
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.VERSION }}
+
+      # configで使うデスクトップ3ブラウザのみインストールする
       - name: Install playwright browsers
-        run: npx playwright install chromium --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium firefox webkit --with-deps
+
+      # キャッシュヒット時もOSのシステム依存パッケージ(apt)は毎回必要
+      - name: Install playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium firefox webkit
 
       - name: Generate Env 
         run: |

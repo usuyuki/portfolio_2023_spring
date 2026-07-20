@@ -14,13 +14,25 @@ const config: PlaywrightTestConfig = {
 	// サーバー起動直後の一時的な失敗に備えてCIのみリトライする
 	retries: process.env.CI ? 2 : 0,
 	// workersは増やしてもコア数が足りないと重くなるのでそのまにする
-	// ステータスコードの確認が目的でレンダリングエンジン差は見ないため、chromiumのみで実行する
-	// (UIの見た目を検証するテストを追加する場合はwebkit等を追加すること)
+	// エンジン差(chromium/gecko/webkit)は見たいのでデスクトップ3ブラウザで実行する
+	// Mobile Chrome/Mobile Safariはエンジンが重複するため省略する
 	projects: [
 		{
 			name: "chromium",
 			use: {
 				...devices["Desktop Chrome"],
+			},
+		},
+		{
+			name: "firefox",
+			use: {
+				...devices["Desktop Firefox"],
+			},
+		},
+		{
+			name: "webkit",
+			use: {
+				...devices["Desktop Safari"],
 			},
 		},
 	],
