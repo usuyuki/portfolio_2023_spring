@@ -7,6 +7,7 @@
 	import SnsMenu from "$lib/animations/molecule/index/SNSMenu.svelte";
 	import AccessCounter from "$lib/animations/molecule/index/AccessCounter.svelte";
 	import WelcomeGreeting from "$lib/animations/molecule/index/WelcomeGreeting.svelte";
+	import MisskeyRecentNotes from "$lib/animations/molecule/index/MisskeyRecentNotes.svelte";
 	import NormalButton from "$lib/components/atom/button/NormalButton.svelte";
 	import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
 	import type { PageData } from "./$types";
@@ -36,6 +37,9 @@
 <AccessCounter count={data.accessCounterValue} />
 
 <WelcomeGreeting greeting={data.info.greeting} />
+
+<!-- Misskeyの最近の投稿 -->
+<MisskeyRecentNotes notes={data.misskeyNotes} />
 
 <!-- つくったもの -->
 <div class="flex flex-wrap mt-20">

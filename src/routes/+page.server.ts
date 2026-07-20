@@ -1,4 +1,5 @@
 import type { blogContentType } from "$lib/types/blogContent";
+import type { misskeyContentType } from "$lib/types/misskeyContent";
 import type {
 	InfoDatabaseRow,
 	NotionDatabaseResponse,
@@ -10,6 +11,7 @@ import {
 	CACHE_TTL,
 } from "$lib/utils/adapter/notionAdapter";
 import { getRecentArticle } from "$lib/utils/usecase/getRecentArticle";
+import { getRecentMisskeyNotes } from "$lib/utils/usecase/getRecentMisskeyNotes";
 import type { PageServerLoad } from "./$types";
 
 type infoType = {
@@ -20,6 +22,7 @@ type dataType = {
 	blogs: blogContentType[];
 	works: worksProgrammingTopPageType[];
 	accessCounterValue: string;
+	misskeyNotes: misskeyContentType[];
 };
 
 export const load = (async ({ platform, fetch }): Promise<dataType> => {
@@ -59,6 +62,14 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 	 */
 
 	const blogContent = await getRecentArticle();
+
+	/**
+	 * Misskeyの最近の投稿を取得
+	 */
+	const misskeyNotes = await getRecentMisskeyNotes(
+		platform?.fetch || fetch,
+		platform?.env?.KV,
+	);
 
 	/**
 	 * 作品データ取得
@@ -107,5 +118,6 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 		blogs: blogContent,
 		works: worksContent,
 		accessCounterValue: nOfVisitorValue,
+		misskeyNotes,
 	};
 }) satisfies PageServerLoad;
