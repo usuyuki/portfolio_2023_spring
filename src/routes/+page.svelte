@@ -9,6 +9,7 @@
 	import WelcomeGreeting from "$lib/animations/molecule/index/WelcomeGreeting.svelte";
 	import MisskeyRecentNotes from "$lib/animations/molecule/index/MisskeyRecentNotes.svelte";
 	import NormalButton from "$lib/components/atom/button/NormalButton.svelte";
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
 	import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
 	import type { PageData } from "./$types";
 	export let data: PageData;
@@ -45,7 +46,7 @@
 <div class="flex flex-wrap mt-20">
 	<div class="w-1/2 md:w-4/5 flex items-top flex-wrap justify-center">
 		{#each data.works as article}
-			<a href={"works/programming/" + article.id} class="md:w-1/3">
+			<a href={"works/programming/" + article.id} use:pressEasing class="md:w-1/3">
 				<div class="flex flex-col justify-center items-center mx-4 my-2">
 					<img
 						src={article.thumbnail}
@@ -109,6 +110,7 @@
 					href={article.link}
 					target="_blank"
 					rel="noopener noreferrer"
+					use:pressEasing
 				>
 					<div class="flex flex-col justify-center items-center mx-4 my-2">
 						<img

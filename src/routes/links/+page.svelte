@@ -1,6 +1,7 @@
 <script lang="ts">
 	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
 	import type { PageData } from "./$types";
 	export let data: PageData;
 </script>
@@ -13,10 +14,11 @@
 	<div class="flex justify-center items-center flex-wrap">
 		{#each links as link}
 			<a
-				class="text-xl mx-4 my-2 techStackName hover:text-blue duration-500"
+				class="text-xl mx-4 my-2 techStackName hover:text-blue transition-colors duration-500"
 				href={link.url}
 				target="_blank"
-				rel="noopener noreferrer">{link.name}</a
+				rel="noopener noreferrer"
+				use:pressEasing>{link.name}</a
 			>
 		{/each}
 	</div>

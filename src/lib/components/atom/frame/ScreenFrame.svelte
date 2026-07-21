@@ -1,8 +1,12 @@
+<script lang="ts">
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
+</script>
+
 <!-- 画面の上下左右に帯を作る -->
 <!-- デフォルトのposition:staticだとzindex付けれないのでトップもfixedにしている, z-50がtailwindの最大なのでこれを超えてきたらコンポーネント側を疑う -->
 <div class="fixed z-50">
 	<header id="top" class="flex justify-center items-center">
-		<a href="/">
+		<a href="/" use:pressEasing>
 			<p class="text-sm text-center md:text-xl">うすゆきどっとねっと</p>
 		</a>
 	</header>

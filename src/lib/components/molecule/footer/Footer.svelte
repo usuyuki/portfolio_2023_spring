@@ -1,7 +1,11 @@
+<script lang="ts">
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
+</script>
+
 <footer>
 	<div class="flex justify-center my-4 mx-2">
-		<a class="p-2" href="/links">リンク</a>
-		<a class="p-2" href="/aboutThisSite">このサイトについて</a>
+		<a class="p-2" href="/links" use:pressEasing>リンク</a>
+		<a class="p-2" href="/aboutThisSite" use:pressEasing>このサイトについて</a>
 	</div>
 </footer>
 

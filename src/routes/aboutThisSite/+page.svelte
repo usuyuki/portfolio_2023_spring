@@ -2,6 +2,7 @@
 	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import AboutThisSiteFrame from "$lib/components/atom/frame/AboutThisSiteFrame.svelte";
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
 </script>
 
 <NormalHead title="このサイトについて" description="このサイトについて" />
@@ -12,7 +13,8 @@
 		href="https://github.com/usuyuki/portfolio_2023_spring"
 		class="flex items-center my-2 mx-2"
 		target="_blank"
-		rel="noopener noreferrer">github.com/usuyuki/portfolio_2023_spring</a
+		rel="noopener noreferrer"
+		use:pressEasing>github.com/usuyuki/portfolio_2023_spring</a
 	>
 </AboutThisSiteFrame>
 <AboutThisSiteFrame title="Google Analytics">
