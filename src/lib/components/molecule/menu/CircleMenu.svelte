@@ -22,7 +22,7 @@
 	<button
 		on:click={toggleCircleMenu}
 		use:pressEasing
-		class="flex flex-col justify-center items-center w-20 h-20 rounded-3xl duration-500 bg-yellow hover:bg-blue"
+		class="flex flex-col justify-center items-center w-20 h-20 rounded-3xl transition-colors duration-500 bg-yellow hover:bg-blue"
 	>
 		<p class="text-xl">🍽</p>
 		<p>Menu</p>

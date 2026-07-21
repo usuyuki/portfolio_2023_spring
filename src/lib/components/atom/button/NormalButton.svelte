@@ -13,7 +13,7 @@
 	<a href={url}>
 		<div
 			use:pressEasing
-			class="flex rounded-xl bg-{bgColorVariable} px-4 py-3 hover:bg-{textColorVariable} hover:text-{bgColorVariable} text-{textColorVariable} duration-500"
+			class="flex rounded-xl bg-{bgColorVariable} px-4 py-3 hover:bg-{textColorVariable} hover:text-{bgColorVariable} text-{textColorVariable} transition-colors duration-500"
 		>
 			<p>{title}</p>
 		</div>

@@ -14,7 +14,7 @@
 			target="_blank"
 			rel="noopener noreferrer"
 			use:pressEasing
-			class={`text-xl mx-2 my-4 rounded-2xl border-${borderColor} hover:bg-${borderColor} hover:text-white duration-300 border-2 p-2`}
+			class={`text-xl mx-2 my-4 rounded-2xl border-${borderColor} hover:bg-${borderColor} hover:text-white transition-colors duration-300 border-2 p-2`}
 		>
 			{title}
 		</a>
