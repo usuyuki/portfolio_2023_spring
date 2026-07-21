@@ -2,6 +2,7 @@
 	import * as autoplay from "embla-carousel-autoplay";
 	import emblaCarouselSvelte from "embla-carousel-svelte";
 	import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
 
 	type dataType = {
 		[key: string]: worksProgrammingShortType;
@@ -35,7 +36,7 @@
 		{#each Object.entries(works) as [id, work]}
 			<div class="embla-slide relative">
 				<div class="mb-32 mt-4">
-					<a class="block" href="/works/programming/{id}">
+					<a class="block" href="/works/programming/{id}" use:pressEasing>
 						<div class="mx-4 my-2">
 							<img
 								loading="lazy"

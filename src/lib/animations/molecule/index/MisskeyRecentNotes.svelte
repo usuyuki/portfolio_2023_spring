@@ -3,6 +3,7 @@
 	import misskeyLogo from "$lib/assets/icon/misskey-logo.png";
 	import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
 	import type { misskeyContentType } from "$lib/types/misskeyContent";
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
 
 	export let notes: misskeyContentType[] = [];
 
@@ -52,7 +53,8 @@
 					href="https://m5y.usuyuki.net/@usuyuki"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="flex items-center gap-1 text-xs text-black/50 hover:text-black/80 duration-300"
+					use:pressEasing
+					class="flex items-center gap-1 text-xs text-black/50 hover:text-black/80 transition-colors duration-300"
 				>
 					from misskey
 					<img alt="misskey logo" class="w-3 h-3" src={misskeyLogo} />
@@ -71,6 +73,7 @@
 							href={currentNote.link}
 							target="_blank"
 							rel="noopener noreferrer"
+							use:pressEasing
 							class="block"
 						>
 							<p class="note-text whitespace-pre-wrap break-words">
