@@ -1,11 +1,13 @@
 <script lang="ts">
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
+
 	export let link: string;
 	export let logo: string;
 	export let alt: string;
 	export let className: string = "";
 </script>
 
-<a href={link} target="_blank" rel="noopener noreferrer">
+<a href={link} target="_blank" rel="noopener noreferrer" use:pressEasing>
 	<img
 		{alt}
 		src={logo}
