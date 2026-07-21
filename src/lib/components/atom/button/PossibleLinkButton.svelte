@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
+
 	export let title: string = "";
 	export let link: string | null;
 	export let borderColor: string = "blue";
@@ -11,7 +13,8 @@
 			href={link}
 			target="_blank"
 			rel="noopener noreferrer"
-			class={`text-xl mx-2 my-4 rounded-2xl border-${borderColor} hover:bg-${borderColor} hover:text-white duration-300 border-2 p-2`}
+			use:pressEasing
+			class={`text-xl mx-2 my-4 rounded-2xl border-${borderColor} hover:bg-${borderColor} hover:text-white transition-colors duration-300 border-2 p-2`}
 		>
 			{title}
 		</a>

@@ -2,6 +2,7 @@
 	import { fly } from "svelte/transition";
 	import { page } from "$app/stores";
 	import { isCircleMenuOpen, toggleCircleMenu } from "$lib/stores/menus";
+	import { pressEasing } from "$lib/utils/actions/pressEasing";
 
 	type Link = {
 		icon: string;
@@ -20,7 +21,8 @@
 <div class="fixed right-6 -bottom-7 z-40 md:-bottom-7 md:right-8">
 	<button
 		on:click={toggleCircleMenu}
-		class="flex flex-col justify-center items-center w-20 h-20 rounded-3xl duration-500 bg-yellow hover:bg-blue"
+		use:pressEasing
+		class="flex flex-col justify-center items-center w-20 h-20 rounded-3xl transition-colors duration-500 bg-yellow hover:bg-blue"
 	>
 		<p class="text-xl">🍽</p>
 		<p>Menu</p>
@@ -33,8 +35,10 @@
 					aria-current={$page.url.pathname === link.path}
 					style="--index: {index};"
 				>
-					<span class="icon">{link.icon}</span>
-					<span>{link.name}</span>
+					<span class="menu-item-inner" use:pressEasing>
+						<span class="icon">{link.icon}</span>
+						<span>{link.name}</span>
+					</span>
 				</a>
 			{/each}
 		</nav>
@@ -45,7 +49,7 @@
 	.icon {
 		margin-bottom: -16px;
 	}
-	a[aria-current='true'] {
+	a[aria-current='true'] .menu-item-inner {
 		background: var(--blue);
 	}
 	div {
@@ -75,20 +79,12 @@
 		left: 140%;
 	}
 	nav a {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
 		position: absolute;
 		/* 真ん中にする */
 		top: -50%;
 		left: -50%;
 		width: 30px;
 		height: 30px;
-		background: var(--pink);
-		color: var(--black);
-		font-size: 1.1rem;
-		text-shadow: var(--yellow) 1px 0 5px;
 		border-radius: 2rem;
 		/* 円形配置 */
 		--angle: calc(180deg + (var(--perAngle) * var(--index)));
@@ -99,6 +95,22 @@
 		animation: spread 0.5s;
 		animation-delay: calc(var(--index) * 100ms);
 		animation-fill-mode: both;
+	}
+
+	/* GSAPがscale等のtransform系プロパティをインラインstyleに書き込むため、
+	   親<a>のtranslateによる円形配置と競合しないよう拡縮アニメーションはこの内側要素に閉じ込める */
+	.menu-item-inner {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		background: var(--pink);
+		color: var(--black);
+		font-size: 1.1rem;
+		text-shadow: var(--yellow) 1px 0 5px;
+		border-radius: 2rem;
 	}
 
 	@keyframes spread {
