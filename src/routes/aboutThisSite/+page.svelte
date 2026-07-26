@@ -6,7 +6,9 @@
 </script>
 
 <NormalHead title="このサイトについて" description="このサイトについて" />
-<NormalPageTitle title="このサイトについて" />
+<NormalPageTitle title="このサイトについて" tag="ABOUT THIS SITE" />
+
+<div class="max-w-2xl mx-auto px-4 pb-20">
 <AboutThisSiteFrame title="ソースコード">
 	<p>ソースコードはGitHubにて公開しています。</p>
 	<a
@@ -22,3 +24,4 @@
 		本ブログでは、Googleによるアクセス解析ツール「GoogleAnalytics」を利用しています。このGoogleAnalyticsはトラフィックデータの収集のためにクッキー（Cookie）を使用しております。トラフィックデータは匿名で収集されており、個人を特定するものではありません。この機能はCookieを無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。
 	</p>
 </AboutThisSiteFrame>
+</div>

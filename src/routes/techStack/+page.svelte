@@ -6,75 +6,102 @@
 </script>
 
 <NormalHead title="技術スタック" description="シェフのきまぐれ技術スタック" />
-<NormalPageTitle title="技術スタック" />
+<NormalPageTitle title="技術スタック" tag="STACK" />
 
-{#each Object.entries(data.data) as [genreTitle, techStacks]}
-	<h2 class="mx-4 mt-12 mb-4 text-3xl text-center">「{genreTitle}」</h2>
-	<div class="flex flex-wrap justify-center items-center mb-20">
-		{#each techStacks as techStack}
-			<div class="flex flex-wrap justify-center items-center w-full md:w-1/2">
-				<div
-					class="flex justify-center items-center m-4 w-60 h-60 rounded-full techStackPercent"
-					style="--power:{techStack.power}"
-				>
-					<h2 class="text-2xl techStackName">{techStack.name}</h2>
+<div class="sec">
+	{#each Object.entries(data.data) as [genreTitle, techStacks]}
+		<div class="skill-group">
+			<h2 class="serif">「{genreTitle}」</h2>
+			{#each techStacks as techStack}
+				<div class="skill-row">
+					<span class="skill-name">{techStack.name}</span>
+					<div class="skill-bar">
+						<div class="skill-fill" style="--power:{techStack.power}"></div>
+					</div>
+					<span class="skill-note tag">{techStack.power}</span>
 				</div>
-				<div class="flex flex-col items-center py-2 px-4 w-full md:w-1/2 jusify-center">
-					<p class="">{techStack.content}</p>
-				</div>
-			</div>
-		{/each}
-	</div>
-{/each}
+				{#if techStack.content}
+					<p class="skill-content">{techStack.content}</p>
+				{/if}
+			{/each}
+		</div>
+	{/each}
+</div>
 
 <style>
-	/* 結果となる%変数 */
-	/* @propertyはwebkit系が全滅なので使わないこと！ */
-	/* @propertyが使えると0と100の指定だけでいい感じになめらかにできるので、safariが対応したら使いたい  */
-	/* 現状これでもfirefoxが上手く動かない模様  */
-	@keyframes circleAnim {
-		0% {
-			--percent: 0;
-		}
-		10% {
-			--percent: calc(var(--power) / 10);
-		}
-		20% {
-			--percent: calc(var(--power) / 5);
-		}
-		30% {
-			--percent: calc(var(--power) / 4);
-		}
-		40% {
-			--percent: calc(var(--power) / 3);
-		}
-		50% {
-			--percent: calc(var(--power) / 2);
-		}
-		60% {
-			--percent: calc(var(--power) / 1.5);
-		}
-		70% {
-			--percent: calc(var(--power) / 1.2);
-		}
-		80% {
-			--percent: calc(var(--power) / 1.1);
-		}
-		90% {
-			--percent: calc(var(--power) / 1.05);
-		}
-		100% {
-			--percent: var(--power);
+	.sec {
+		padding: 20px 16px 90px;
+		max-width: 900px;
+		margin: 0 auto;
+	}
+	.skill-group {
+		margin-bottom: 56px;
+	}
+	.skill-group h2 {
+		font-size: 26px;
+		margin-bottom: 20px;
+	}
+	.skill-row {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		margin-bottom: 6px;
+	}
+	.skill-name {
+		flex: 0 0 140px;
+		font-weight: bold;
+		font-size: 15px;
+	}
+	.skill-bar {
+		flex: 1;
+		height: 22px;
+		background: var(--ui-bg);
+		border: 3px solid var(--black);
+		border-radius: 999px;
+		overflow: hidden;
+	}
+	.skill-fill {
+		height: 100%;
+		border-radius: 999px;
+		transform-origin: left;
+		transform: scaleX(0);
+		background: var(--blue);
+		animation: fillBar 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+	}
+	@keyframes fillBar {
+		to {
+			transform: scaleX(calc(var(--power) / 100));
 		}
 	}
-	.techStackPercent {
-		--power: 0;
-		--percent: 0;
-		animation: circleAnim 1s forwards;
-		background-image: conic-gradient(
-			var(--blue) 0%,
-			var(--blue) calc(var(--percent) * 1%),
-			gray calc(var(--percent) * 1.01%) 100%
-		);
+	.skill-row:nth-child(3n + 1) .skill-fill {
+		background: var(--pink);
+	}
+	.skill-row:nth-child(3n + 2) .skill-fill {
+		background: var(--blue);
+	}
+	.skill-row:nth-child(3n) .skill-fill {
+		background: var(--yellow);
+	}
+	.skill-note {
+		flex: 0 0 auto;
+		font-family: var(--tag-font);
+		font-size: 11px;
+		opacity: 0.6;
+		width: 30px;
+		text-align: right;
+	}
+	.skill-content {
+		font-size: 13px;
+		margin: 0 0 18px 156px;
+		opacity: 0.8;
+	}
+	@media (max-width: 640px) {
+		.skill-name {
+			flex-basis: 90px;
+			font-size: 13px;
+		}
+		.skill-content {
+			margin-left: 0;
+		}
 	}
 </style>

@@ -6,9 +6,9 @@
 
 <slot />
 
-<div class="relative mb-4 rounded-xl border-2 border-dashed border-blue">
+<div class="box relative mb-4 mt-16 pb-4 bg-ui-bg">
 	<div class="flex absolute inset-x-0 -top-6 justify-center">
-		<h4 class="px-4 font-serif text-2xl text-center bg-white rounded">つくったもの！</h4>
+		<span class="box-tag serif text-xl px-5 py-1.5">つくったもの！</span>
 	</div>
 	<ArticleTimeline works={data.data} />
 </div>

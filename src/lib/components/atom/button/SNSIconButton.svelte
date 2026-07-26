@@ -7,11 +7,12 @@
 	export let className: string = "";
 </script>
 
-<a href={link} target="_blank" rel="noopener noreferrer" use:pressEasing>
-	<img
-		{alt}
-		src={logo}
-		loading="lazy"
-		class={`${className} w-12 h-12 object-contain px-2 bg-gray-200 rounded-xl`}
-	/>
+<a
+	href={link}
+	target="_blank"
+	rel="noopener noreferrer"
+	use:pressEasing
+	class="box w-14 h-14 flex items-center justify-center rounded-2xl bg-white"
+>
+	<img {alt} src={logo} loading="lazy" class={`${className} w-6 h-6 object-contain`} />
 </a>
