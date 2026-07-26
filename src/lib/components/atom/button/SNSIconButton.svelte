@@ -1,10 +1,17 @@
 <script lang="ts">
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
 
-	export let link: string;
-	export let logo: string;
-	export let alt: string;
-	export let className: string = "";
+	let {
+		link,
+		logo,
+		alt,
+		className = "",
+	}: {
+		link: string;
+		logo: string;
+		alt: string;
+		className?: string;
+	} = $props();
 </script>
 
 <a href={link} target="_blank" rel="noopener noreferrer" use:pressEasing>

@@ -1,9 +1,17 @@
 <script lang="ts">
-	export let emoji: string = "✍";
-	export let content: string = "";
-	export let emojiMean: string = "";
-	export let bgColor: string = "black";
-	export let className: string = "";
+	let {
+		emoji = "✍",
+		content = "",
+		emojiMean = "",
+		bgColor = "black",
+		className = "",
+	}: {
+		emoji?: string;
+		content?: string;
+		emojiMean?: string;
+		bgColor?: string;
+		className?: string;
+	} = $props();
 </script>
 
 <div class={className}>

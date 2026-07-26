@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let title: string;
+	let { title }: { title: string } = $props();
 </script>
 
 <span class="px-4 py-2">

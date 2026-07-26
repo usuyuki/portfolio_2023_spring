@@ -6,10 +6,9 @@
 	const SITE_AUTHOR = "うすゆき";
 	const TWITTER_ID = "@usuyuki26";
 
-	export let title: string;
-	export let description: string;
-	export const ogImage: string = `${$page.url.origin}/img/ogp/ogp.png`;
+	let { title, description }: { title: string; description: string } = $props();
 
+	const ogImage = `${$page.url.origin}/img/ogp/ogp.png`;
 	const pageTitle = `${title} | ${SITE_TITLE}`;
 </script>
 

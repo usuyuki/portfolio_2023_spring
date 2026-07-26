@@ -1,10 +1,17 @@
 <script lang="ts">
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
 
-	export let title: string = "";
-	export let link: string | null;
-	export let borderColor: string = "blue";
-	export let className: string = "";
+	let {
+		title = "",
+		link,
+		borderColor = "blue",
+		className = "",
+	}: {
+		title?: string;
+		link: string | null;
+		borderColor?: string;
+		className?: string;
+	} = $props();
 </script>
 
 <p class={className}>

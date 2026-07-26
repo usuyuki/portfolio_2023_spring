@@ -1,8 +1,15 @@
 <script lang="ts">
-	export let title: string = "";
-	export let content: string = "";
-	export let borderColor: "black" | "pink" | "blue" | "yellow" = "black";
-	export let className: string = "";
+	let {
+		title = "",
+		content = "",
+		borderColor = "black",
+		className = "",
+	}: {
+		title?: string;
+		content?: string;
+		borderColor?: "black" | "pink" | "blue" | "yellow";
+		className?: string;
+	} = $props();
 </script>
 
 <div class={className}>
