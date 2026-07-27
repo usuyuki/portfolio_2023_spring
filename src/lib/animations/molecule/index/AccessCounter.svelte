@@ -1,27 +1,30 @@
 <script lang="ts">
 	import { fly } from "svelte/transition";
 	import Burst from "$lib/animations/atom/Burst.svelte";
+	import { onOpeningFinished } from "$lib/utils/openingEvent";
 	export let count: string;
 	let visible = false;
 	const countInt = parseInt(count, 10);
 
 	$: nowValue = 0;
-	// --after-sns-time(app.css)と同じ値(オープニング+SNSの動きが終わった時間)。CSS変数はJS側から参照できないため直値で合わせる
-	// opening-time(4000) + 700 = 4700ms
-	const SHOW_DELAY_MS = 4700;
-	//アニメーションが終わるのを待ってから表示
-	setTimeout(() => {
-		visible = true;
-		//2秒掛けてnowValueの値をcountの値にする
-		for (let i = 0; i <= countInt; i++) {
-			setTimeout(
-				() => {
-					nowValue = i;
-				},
-				(2000 / countInt) * i,
-			);
-		}
-	}, SHOW_DELAY_MS);
+	// SNSアイコンの登場演出(app.cssの--after-sns-time相当)がオープニング完了から700ms後に終わるため、
+	// カウンターはそのぶん遅らせて表示する
+	const SHOW_DELAY_MS = 700;
+	// オープニング演出が完了(またはスキップ/再訪問で不要)になったのを待ってから表示する
+	onOpeningFinished(() => {
+		setTimeout(() => {
+			visible = true;
+			//2秒掛けてnowValueの値をcountの値にする
+			for (let i = 0; i <= countInt; i++) {
+				setTimeout(
+					() => {
+						nowValue = i;
+					},
+					(2000 / countInt) * i,
+				);
+			}
+		}, SHOW_DELAY_MS);
+	});
 </script>
 
 <div

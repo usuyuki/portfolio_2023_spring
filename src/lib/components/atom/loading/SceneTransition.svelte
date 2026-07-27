@@ -1,7 +1,7 @@
 <script lang="ts">
+	import gsap from "gsap";
 	import { onDestroy, onMount, tick } from "svelte";
 	import { navigating } from "$app/stores";
-	import gsap from "gsap";
 	import WipeBars from "$lib/animations/atom/WipeBars.svelte";
 	import PageTransition from "$lib/components/atom/loading/PageTransition.svelte";
 	import { coverWithBars, revealFromBars } from "$lib/utils/actions/wipeBars";
@@ -23,11 +23,20 @@
 	let coveredAt = 0;
 	let isCovering = false;
 	let pendingReveal = false;
+	// startReveal内のsetTimeoutのID。次のstartCover()開始時にクリアしないと、
+	// 前サイクルの遅延リビールが新サイクルの途中で誤発火し、進行中のカバーアニメーションを打ち消してしまう
+	let revealTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
 	// 黒背景も帯と全く同じタイミングで動かすことで、退場時に黒背景だけが画面に取り残されるのを防ぐ
-	const bars = () => [backdrop, bar1, bar2, bar3].filter((el): el is HTMLElement => !!el);
+	const bars = () =>
+		[backdrop, bar1, bar2, bar3].filter((el): el is HTMLElement => !!el);
 
 	const startCover = async () => {
+		// 前サイクルで予約されたままの遅延リビールが新サイクルの途中で発火しないようキャンセルする
+		if (revealTimeoutId !== undefined) {
+			clearTimeout(revealTimeoutId);
+			revealTimeoutId = undefined;
+		}
 		showBars = true;
 		isCovering = true;
 		showBuildHint = false;
@@ -55,7 +64,8 @@
 
 		const elapsed = Date.now() - coveredAt;
 		const wait = Math.max(0, MIN_COVER_MS - elapsed);
-		setTimeout(() => {
+		revealTimeoutId = setTimeout(() => {
+			revealTimeoutId = undefined;
 			// ビルド待ち文言は、帯が実際に動き出す(退場を開始する)瞬間まで表示し続ける
 			showBuildHint = false;
 			revealFromBars(bars(), () => {
@@ -79,6 +89,7 @@
 	onDestroy(() => {
 		mediaQuery?.removeEventListener("change", handleMediaChange);
 		gsap.killTweensOf(bars());
+		if (revealTimeoutId !== undefined) clearTimeout(revealTimeoutId);
 	});
 
 	// $navigatingはnull⇄オブジェクトで遷移の開始/終了を表す。前回値との比較で1回だけ反応させる

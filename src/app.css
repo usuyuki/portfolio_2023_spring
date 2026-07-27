@@ -47,8 +47,6 @@
 	/* 挨拶メッセージが終わった時間 */
 	--after-greeting-message-time: calc(var(--after-access-counter-time) + 700ms);
 	/* ここまで3800ms */
-	/* circle Menuの登場アニメーションが終わった時間 */
-	--after-circle-menu-time: calc(var(--after-greeting-message-time) + 1000ms);
 }
 /* スマホ向け */
 @media screen and (max-width: 640px) {

@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { prefersReducedMotion } from "$lib/utils/motion";
 
 const HOVER_SCALE = 1.06;
 const PRESS_SCALE = 0.86;
@@ -7,19 +8,14 @@ const NORMAL_SCALE = 1;
 // タッチ操作はpointerenter/leaveが「ホバー」を意味しないため、マウス系ポインタのみホバー拡大の対象にする
 const isHoverCapable = (event: PointerEvent) => event.pointerType === "mouse";
 
-// OS側で「視差効果を減らす」等の設定がされている場合はスケール/演出アニメーションを無効化する
-const prefersReducedMotion = () =>
-	typeof window !== "undefined" &&
-	window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-// 同一要素で連打された際にスラッシュが多重生成されるのを防ぐためのin-flight管理
-const activeSlashes = new WeakSet<HTMLElement>();
+// 同一要素で連打された際にスラッシュが多重生成されるのを防ぐためのin-flight管理。
+// destroy()時にtweenをkillできるよう、生成したslash要素自体もnodeごとに保持する
+const activeSlashes = new WeakMap<HTMLElement, HTMLElement>();
 
 // 押した瞬間、要素内を左から右へ斜めに駆け抜ける白い光の帯を1つ生成し、アニメーション終了後にDOMから除去する
 const spawnSlash = (node: HTMLElement) => {
 	if (prefersReducedMotion()) return;
 	if (activeSlashes.has(node)) return;
-	activeSlashes.add(node);
 
 	const slash = document.createElement("span");
 	Object.assign(slash.style, {
@@ -43,6 +39,7 @@ const spawnSlash = (node: HTMLElement) => {
 	if (hadVisibleOverflow) node.style.overflow = "hidden";
 
 	node.appendChild(slash);
+	activeSlashes.set(node, slash);
 	gsap.fromTo(
 		slash,
 		{ x: "-140%", opacity: 1 },
@@ -61,6 +58,15 @@ const spawnSlash = (node: HTMLElement) => {
 	);
 };
 
+// destroy()時に進行中のslashアニメーションを即座に打ち切り、破棄後にDOM/styleを触るonCompleteの発火を防ぐ
+const killSlash = (node: HTMLElement) => {
+	const slash = activeSlashes.get(node);
+	if (!slash) return;
+	gsap.killTweensOf(slash);
+	slash.remove();
+	activeSlashes.delete(node);
+};
+
 // ホバーで拡大、クリック(pointerdown→pointerup/leave)で「ペルソナ風スナップ」の縮小+傾き+スラッシュ光→弾む復帰を行う
 // GSAPのイージングで駆動するSvelteアクション。既存の pressEasing と同名・同シグネチャなので差し替えのみでOK。
 export function pressEasing(node: HTMLElement) {
@@ -69,46 +75,36 @@ export function pressEasing(node: HTMLElement) {
 
 	let isHovering = false;
 
-	const toHover = () => {
+	// reduced-motion時は即座にgsap.setで反映し、そうでなければ指定のease/durationでgsap.toさせる共通処理。
+	// hover/normal/pressの3状態は values(scale, rotate) と tween設定(duration, ease) のみが異なるため、分岐自体は1箇所にまとめる
+	const applyTransform = (
+		values: { scale: number; rotate: number },
+		tweenVars: { duration: number; ease: string },
+	) => {
 		if (prefersReducedMotion()) {
-			gsap.set(node, { scale: HOVER_SCALE, rotate: 0 });
+			gsap.set(node, values);
 			return;
 		}
-		gsap.to(node, {
-			scale: HOVER_SCALE,
-			rotate: 0,
-			duration: 0.2,
-			ease: "power2.out",
-			overwrite: "auto",
-		});
+		gsap.to(node, { ...values, ...tweenVars, overwrite: "auto" });
 	};
-	const toNormal = () => {
-		if (prefersReducedMotion()) {
-			gsap.set(node, { scale: NORMAL_SCALE, rotate: 0 });
-			return;
-		}
-		gsap.to(node, {
-			scale: NORMAL_SCALE,
-			rotate: 0,
-			duration: 0.5,
-			ease: "back.out(3.5)",
-			overwrite: "auto",
-		});
-	};
+
+	const toHover = () =>
+		applyTransform(
+			{ scale: HOVER_SCALE, rotate: 0 },
+			{ duration: 0.2, ease: "power2.out" },
+		);
+	const toNormal = () =>
+		applyTransform(
+			{ scale: NORMAL_SCALE, rotate: 0 },
+			{ duration: 0.5, ease: "back.out(3.5)" },
+		);
 	// ランダムな傾き(-3degか+3deg)を付与しつつ鋭く縮小する
 	const toPress = () => {
 		const tilt = Math.random() < 0.5 ? -3 : 3;
-		if (prefersReducedMotion()) {
-			gsap.set(node, { scale: PRESS_SCALE, rotate: tilt });
-			return;
-		}
-		gsap.to(node, {
-			scale: PRESS_SCALE,
-			rotate: tilt,
-			duration: 0.07,
-			ease: "power4.out",
-			overwrite: "auto",
-		});
+		applyTransform(
+			{ scale: PRESS_SCALE, rotate: tilt },
+			{ duration: 0.07, ease: "power4.out" },
+		);
 	};
 
 	const handlePointerEnter = (event: PointerEvent) => {
@@ -128,9 +124,10 @@ export function pressEasing(node: HTMLElement) {
 		isHoverCapable(event) && isHovering ? toHover() : toNormal();
 		node.classList.remove("is-pressed");
 	};
-	const handlePointerLeave = (event: PointerEvent) => {
+	const handlePointerLeave = (_event: PointerEvent) => {
 		node.classList.remove("is-pressed");
-		if (!isHoverCapable(event)) return;
+		// タッチはpointerenterによるホバー扱いがそもそも無いため、離脱(pointerleave/pointercancel)時は
+		// マウス・タッチ問わず常にtoNormalへ戻す(以前はタッチ側で早期returnし、縮小/傾きが固着するバグがあった)
 		isHovering = false;
 		toNormal();
 	};
@@ -152,7 +149,8 @@ export function pressEasing(node: HTMLElement) {
 			gsap.killTweensOf(node);
 			gsap.set(node, { scale: NORMAL_SCALE, rotate: 0 });
 			node.classList.remove("is-pressed");
-			activeSlashes.delete(node);
+			// 進行中のslash(光の帯)アニメーションも打ち切り、破棄後にonCompleteがDOM/styleを触るのを防ぐ
+			killSlash(node);
 		},
 	};
 }

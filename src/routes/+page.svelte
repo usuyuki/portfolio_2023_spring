@@ -27,9 +27,7 @@
 
 <!-- ヒーロー: RPGのタイトル画面風 -->
 <section class="flex flex-col items-center text-center px-4 py-12">
-	<span class="box-tag mb-6">LV.∞ WEB ENGINEER</span>
 	<h1 class="hero-title">うすゆき</h1>
-	<span class="box tag mt-8 px-6 py-2.5 bg-blue">BACKEND / INFRA / たまにハード</span>
 
 	<img
 		alt="うすゆきアイコン"

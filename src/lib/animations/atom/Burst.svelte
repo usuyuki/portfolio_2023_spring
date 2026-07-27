@@ -3,10 +3,13 @@
 	export let animationDelay: string = "0";
 	export let color: "blue" | "pink" | "yellow" = "blue";
 	export let className: string = "";
+	// trueの間はCSSアニメーションを0%の状態で止めておく(親コンポーネント側で表示タイミングを制御したい場合に使う)
+	export let paused: boolean = false;
 </script>
 
 <div
 	class={`burst-wrapper ${className}`}
+	class:paused
 	style="--burst-color:var(--{color});--animation-duration:{animationDuration};--animation-delay:{animationDelay};"
 >
 	<span style="--index: 0;"></span>
@@ -51,6 +54,9 @@
 
 		animation: burst var(--animation-duration) ease-out forwards;
 		animation-delay: var(--animation-delay);
+	}
+	.burst-wrapper.paused span {
+		animation-play-state: paused;
 	}
 	/* 弾けるアニメーション */
 	@keyframes burst {

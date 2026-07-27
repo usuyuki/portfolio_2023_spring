@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
+	import { bgClasses } from "$lib/utils/bgClasses";
 
 	type Link = {
 		name: string;
@@ -14,7 +15,6 @@
 		{ name: "VIDEO", path: "/works/videos" },
 		{ name: "SLIDES", path: "/works/slides" },
 	];
-	const bgClasses = ["bg-yellow", "bg-pink", "bg-blue"];
 </script>
 
 <!-- RPGのHUDウィンドウを模した、画面上部に張り付くナビゲーションバー -->

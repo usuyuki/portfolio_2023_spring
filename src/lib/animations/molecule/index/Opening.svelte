@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import gsap from "gsap";
+	import { onMount } from "svelte";
 	import WipeBars from "$lib/animations/atom/WipeBars.svelte";
 	import { coverWithBars, revealFromBars } from "$lib/utils/actions/wipeBars";
-
-	// タブ内リロード等の同一セッション内再訪問では再生しない(初回訪問時のみ)。ページ遷移では別途スキップされるため関与しない
-	const SESSION_KEY = "opening-played";
+	import { prefersReducedMotion } from "$lib/utils/motion";
+	import {
+		OPENING_FINISHED_EVENT,
+		OPENING_SESSION_KEY,
+	} from "$lib/utils/openingEvent";
 
 	let overlayEl: HTMLElement;
 	let logoBoxEl: HTMLElement;
@@ -21,19 +23,19 @@
 	let visible = true;
 	let skipped = false;
 
-	const prefersReducedMotion = () =>
-		typeof window !== "undefined" &&
-		window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-	const bars = () => [backdrop, bar1, bar2, bar3].filter((el): el is HTMLElement => !!el);
+	const bars = () =>
+		[backdrop, bar1, bar2, bar3].filter((el): el is HTMLElement => !!el);
 
 	// ページの実読み込み(画像・フォント等を含む)が完了しているか。完了前にゲージが満タンになった場合はゲージを繰り返す
-	const isPageLoaded = () => typeof document !== "undefined" && document.readyState === "complete";
+	const isPageLoaded = () =>
+		typeof document !== "undefined" && document.readyState === "complete";
 
 	const finish = () => {
 		coverWithBars(bars(), () => {
 			visible = false;
 			revealFromBars(bars());
+			// AccessCounter/MisskeyRecentNotes/SNSMenu等、オープニング後に登場する演出へ完了を通知する
+			document.dispatchEvent(new CustomEvent(OPENING_FINISHED_EVENT));
 		});
 	};
 
@@ -107,11 +109,11 @@
 
 	onMount(() => {
 		if (typeof window === "undefined") return;
-		if (window.sessionStorage.getItem(SESSION_KEY)) {
+		if (window.sessionStorage.getItem(OPENING_SESSION_KEY)) {
 			visible = false;
 			return;
 		}
-		window.sessionStorage.setItem(SESSION_KEY, "1");
+		window.sessionStorage.setItem(OPENING_SESSION_KEY, "1");
 		playOpening();
 	});
 </script>

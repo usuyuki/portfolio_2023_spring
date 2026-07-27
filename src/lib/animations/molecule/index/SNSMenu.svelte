@@ -9,9 +9,17 @@
 	import youtube from "$lib/assets/icon/youtube_social_icon_red.png";
 	import zenn from "$lib/assets/icon/zenn-logo.svg";
 	import SnsIconButton from "$lib/components/atom/button/SNSIconButton.svelte";
+	import { onOpeningFinished } from "$lib/utils/openingEvent";
+
+	// オープニング完了前はアイコンをscale(0)のまま隠しておき、完了後にクラス付与でアニメーションを開始する
+	// (以前はCSSのanimation-delayにapp.cssの--opening-timeを直接埋め込んでおり、実際の完了とズレていた)
+	let started = false;
+	onOpeningFinished(() => {
+		started = true;
+	});
 </script>
 
-<div class="flex justify-center flex-wrap">
+<div class="flex justify-center flex-wrap" class:started>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.2s">
 			<SnsIconButton
@@ -20,23 +28,13 @@
 				logo={misskey}
 			/>
 		</div>
-		<Burst
-			color="blue"
-			className="absolute top-0"
-			animationDelay="calc(var(--opening-time) + 0.25s)"
-			animationDuration="0.5s"
-		/>
+		<Burst color="blue" className="absolute top-0" animationDelay="0.25s" animationDuration="0.5s" paused={!started} />
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.3s">
 			<SnsIconButton link="https://github.com/usuyuki" alt="github logo" logo={github} />
 		</div>
-		<Burst
-			color="pink"
-			className="absolute top-0"
-			animationDelay="calc(var(--opening-time) + 0.35s)"
-			animationDuration="0.5s"
-		/>
+		<Burst color="pink" className="absolute top-0" animationDelay="0.35s" animationDuration="0.5s" paused={!started} />
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.4s">
@@ -47,12 +45,7 @@
 				className="p-3"
 			/>
 		</div>
-		<Burst
-			color="yellow"
-			className="absolute top-0"
-			animationDelay="calc(var(--opening-time) + 0.45s)"
-			animationDuration="0.5s"
-		/>
+		<Burst color="yellow" className="absolute top-0" animationDelay="0.45s" animationDuration="0.5s" paused={!started} />
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.5s">
@@ -62,67 +55,49 @@
 				logo={youtube}
 			/>
 		</div>
-		<Burst
-			color="blue"
-			className="absolute top-0"
-			animationDelay="calc(var(--opening-time) + 0.55s)"
-			animationDuration="0.5s"
-		/>
+		<Burst color="blue" className="absolute top-0" animationDelay="0.55s" animationDuration="0.5s" paused={!started} />
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.6s">
 			<SnsIconButton link="https://qiita.com/Usuyuki" alt="qiita logo" logo={qiita} />
 		</div>
-		<Burst
-			color="pink"
-			className="absolute top-0"
-			animationDelay="calc(var(--opening-time) + 0.65s)"
-			animationDuration="0.5s"
-		/>
+		<Burst color="pink" className="absolute top-0" animationDelay="0.65s" animationDuration="0.5s" paused={!started} />
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.7s">
 			<SnsIconButton link="https://zenn.dev/usuyuki" alt="zenn logo" logo={zenn} />
 		</div>
-		<Burst
-			color="yellow"
-			className="absolute top-0"
-			animationDelay="calc(var(--opening-time) + 0.75s)"
-			animationDuration="0.5s"
-		/>
+		<Burst color="yellow" className="absolute top-0" animationDelay="0.75s" animationDuration="0.5s" paused={!started} />
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.8s">
 			<SnsIconButton link="https://keybase.io/usuyuki" alt="keybase logo" logo={keybase} />
 		</div>
-		<Burst
-			color="blue"
-			className="absolute top-0"
-			animationDelay="calc(var(--opening-time) + 0.85s)"
-			animationDuration="0.5s"
-		/>
+		<Burst color="blue" className="absolute top-0" animationDelay="0.85s" animationDuration="0.5s" paused={!started} />
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.9s">
 			<SnsIconButton link="https://blog.usuyuki.net" alt="blog logo" logo={usuyukiBlog} />
 		</div>
-		<Burst
-			color="pink"
-			className="absolute top-0"
-			animationDelay="calc(var(--opening-time) + 0.95s)"
-			animationDuration="0.5s"
-		/>
+		<Burst color="pink" className="absolute top-0" animationDelay="0.95s" animationDuration="0.5s" paused={!started} />
 	</div>
 </div>
 
 <style>
-	/* ふわっとでてくる */
+	/* ふわっとでてくる。オープニング完了前(.startedが付くまで)はplay-state:pausedで0%の状態のまま止めておく。
+	   以前はapp.cssの--opening-time(絶対時間)をanimation-delayに直接埋め込んでおり、
+	   オープニング完了が遅れる(低速回線等)とアイコンが完了前に表示され終わってしまっていた */
 	.sns-icon-wrapper {
 		animation: bigger 0.3s;
 		animation-fill-mode: forwards;
-		animation-delay: calc(var(--opening-time) + var(--delay));
+		animation-delay: var(--delay);
+		animation-play-state: paused;
 		transform: scale(0);
 		opacity: 0;
+	}
+
+	.started .sns-icon-wrapper {
+		animation-play-state: running;
 	}
 
 	@keyframes bigger {

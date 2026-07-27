@@ -162,4 +162,47 @@ describe("pressEasing", () => {
 		expect(tween).toBeDefined();
 		expect(tween.vars.scale).toBe(1);
 	});
+
+	it("異常系: タッチでpointerdown後にpointercancelが発火すると、以前はtoNormal()が呼ばれず縮小(scale0.86)したまま固着していたが、修正後はscaleが1(等倍)へ戻るtweenが登録される", () => {
+		const node = setupNode();
+		pressEasing(node);
+
+		node.dispatchEvent(
+			new PointerEvent("pointerdown", { pointerType: "touch" }),
+		);
+		node.dispatchEvent(
+			new PointerEvent("pointercancel", { pointerType: "touch" }),
+		);
+
+		const tweens = gsap.getTweensOf(node);
+		const tween = tweens[tweens.length - 1];
+		expect(tween).toBeDefined();
+		expect(tween.vars.scale).toBe(1);
+	});
+
+	it("異常系: タッチでpointerdown後にpointercancelが発火すると、is-pressedクラスが解除される", () => {
+		const node = setupNode();
+		pressEasing(node);
+
+		node.dispatchEvent(
+			new PointerEvent("pointerdown", { pointerType: "touch" }),
+		);
+		node.dispatchEvent(
+			new PointerEvent("pointercancel", { pointerType: "touch" }),
+		);
+
+		expect(node.classList.contains("is-pressed")).toBe(false);
+	});
+
+	it("正常系: destroy()を呼ぶと、pointerdown直後に生成された進行中のスラッシュ用span要素も打ち切られてDOMから除去される", () => {
+		const node = setupNode();
+		const { destroy } = pressEasing(node);
+
+		node.dispatchEvent(mousePointerEvent("pointerdown"));
+		expect(node.querySelectorAll("span").length).toBe(1);
+
+		destroy();
+
+		expect(node.querySelectorAll("span").length).toBe(0);
+	});
 });
