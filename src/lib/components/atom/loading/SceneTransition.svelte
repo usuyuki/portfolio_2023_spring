@@ -1,6 +1,6 @@
 <script lang="ts">
 	import gsap from "gsap";
-	import { onDestroy, onMount, tick } from "svelte";
+	import { onDestroy, tick } from "svelte";
 	import { navigating } from "$app/stores";
 	import WipeBars from "$lib/animations/atom/WipeBars.svelte";
 	import PageTransition from "$lib/components/atom/loading/PageTransition.svelte";
@@ -8,7 +8,6 @@
 
 	// 帯が画面を覆いきるまでの最小表示時間(仕様8.2: 遷移が速すぎて視覚的にジャンプするのを防ぐ)
 	const MIN_COVER_MS = 750;
-	const MOBILE_BREAKPOINT = "(max-width: 640px)";
 
 	let backdrop: HTMLElement | undefined;
 	let bar1: HTMLElement | undefined;
@@ -17,7 +16,6 @@
 	// showBars: 帯(+裏の黒背景)をDOMに残すかどうか。trueの間は<slot/>側で新ページに切り替わっても見えない
 	let showBars = false;
 	let showBuildHint = false;
-	let mobile = false;
 
 	// coverWithBars完了 かつ 最小表示時間経過 の両方が揃うまで抜けさせないためのフラグ
 	let coveredAt = 0;
@@ -75,19 +73,7 @@
 		}, wait);
 	};
 
-	let mediaQuery: MediaQueryList | undefined;
-	const handleMediaChange = (e: MediaQueryListEvent | MediaQueryList) => {
-		mobile = e.matches;
-	};
-
-	onMount(() => {
-		mediaQuery = window.matchMedia(MOBILE_BREAKPOINT);
-		handleMediaChange(mediaQuery);
-		mediaQuery.addEventListener("change", handleMediaChange);
-	});
-
 	onDestroy(() => {
-		mediaQuery?.removeEventListener("change", handleMediaChange);
 		gsap.killTweensOf(bars());
 		if (revealTimeoutId !== undefined) clearTimeout(revealTimeoutId);
 	});
@@ -106,7 +92,7 @@
 </script>
 
 {#if showBars}
-	<WipeBars {mobile} bind:backdrop bind:bar1 bind:bar2 bind:bar3 />
+	<WipeBars bind:backdrop bind:bar1 bind:bar2 bind:bar3 />
 {/if}
 {#if showBuildHint}
 	<PageTransition />

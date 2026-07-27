@@ -13,7 +13,7 @@
 	<p>ソースコードはGitHubにて公開しています。</p>
 	<a
 		href="https://github.com/usuyuki/portfolio_2023_spring"
-		class="flex items-center my-2 mx-2"
+		class="flex items-center my-2 mx-2 break-all"
 		target="_blank"
 		rel="noopener noreferrer"
 		use:pressEasing>github.com/usuyuki/portfolio_2023_spring</a

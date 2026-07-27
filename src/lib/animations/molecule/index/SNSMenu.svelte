@@ -38,12 +38,7 @@
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.4s">
-			<SnsIconButton
-				link="https://twitter.com/usuyuki26"
-				alt="x logo"
-				logo={twitter}
-				className="p-3"
-			/>
+			<SnsIconButton link="https://twitter.com/usuyuki26" alt="x logo" logo={twitter} />
 		</div>
 		<Burst color="yellow" className="absolute top-0" animationDelay="0.45s" animationDuration="0.5s" paused={!started} />
 	</div>

@@ -1,7 +1,6 @@
 <script lang="ts">
 	// オープニング退場・ページ遷移(シーンチェンジ)で共通利用する斜め帯。
-	// PCはpink/blue/yellowの3枚、モバイルはガタつき防止のため2枚(pink/blue)に減らす(仕様8.2)
-	export let mobile = false;
+	// PC/モバイルともpink/blue/yellowの3枚で揃える
 	export let backdrop: HTMLElement | undefined = undefined;
 	export let bar1: HTMLElement | undefined = undefined;
 	export let bar2: HTMLElement | undefined = undefined;
@@ -14,9 +13,7 @@
 	<div class="backdrop" bind:this={backdrop}></div>
 	<div class="bar bar-pink" bind:this={bar1}></div>
 	<div class="bar bar-blue" bind:this={bar2}></div>
-	{#if !mobile}
-		<div class="bar bar-yellow" bind:this={bar3}></div>
-	{/if}
+	<div class="bar bar-yellow" bind:this={bar3}></div>
 </div>
 
 <style>

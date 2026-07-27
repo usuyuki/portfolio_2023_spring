@@ -26,21 +26,26 @@
 </div>
 
 <!-- ヒーロー: RPGのタイトル画面風 -->
-<section class="flex flex-col items-center text-center px-4 py-12">
-	<h1 class="hero-title">うすゆき</h1>
+<section class="flex flex-col items-center text-center px-4 pb-12">
+	<h1 class="hero-title" aria-label="うすゆきどっとねっと">
+		{#each "うすゆきどっとねっと".split("") as char, index}
+			<span class="hero-title-char" style="--i: {index}">{char}</span>
+		{/each}
+	</h1>
 
-	<img
-		alt="うすゆきアイコン"
-		use:pressEasing
-		class="w-32 h-32 rounded-full object-cover mt-11 border-4 border-black shadow-[6px_6px_0_var(--yellow)]"
-		src={usuyukiIcon}
-	/>
+	<div class="icon-greeting">
+		<WelcomeGreeting greeting={data.info.greeting} />
+		<img
+			alt="うすゆきアイコン"
+			use:pressEasing
+			class="icon w-32 h-32 rounded-full object-cover border-4 border-black shadow-[6px_6px_0_var(--yellow)]"
+			src={usuyukiIcon}
+		/>
+	</div>
 
 	<SnsMenu />
 	<!-- アクセスカウンタ -->
 	<AccessCounter count={data.accessCounterValue} />
-
-	<WelcomeGreeting greeting={data.info.greeting} />
 
 	<!-- Misskeyの最近の投稿 -->
 	<MisskeyRecentNotes notes={data.misskeyNotes} />
@@ -132,6 +137,62 @@
 </section>
 
 <style>
+	.hero-title {
+		/* 10文字を弧状(半楕円のアーチ)に配置する。span-arc-startからspan-arc-startプラスspan-arcまでの範囲に等間隔で並べる */
+		--char-count: 10;
+		--arc-span: 130deg;
+		--arc-start: calc(-90deg - var(--arc-span) / 2);
+		--ellipse-rx: clamp(150px, 30vw, 420px);
+		--ellipse-ry: clamp(95px, 18vw, 260px);
+		position: relative;
+		width: calc(var(--ellipse-rx) * 2 + 1.2em);
+		/* 中央付近の文字が最も上に出っ張るため、その高さ(ellipse-ry)+文字半分を確保する。
+		   コンテナ下端(top:100%)を基準に全文字が上方向にのみ配置される */
+		height: calc(var(--ellipse-ry) + 0.35em);
+		margin: 0 auto;
+	}
+	.hero-title-char {
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		font-size: clamp(36px, 7.5vw, 72px);
+		/* app.cssの.hero-titleは巨大文字(220px)向けの固定px縁取り/影のため、
+		   このサイズ(最大72px)にそのまま使うと相対的に太すぎて滲んで見える。文字サイズに応じたem単位に上書きする */
+		-webkit-text-stroke: 0.04em var(--black);
+		text-shadow:
+			0.08em 0.08em 0 var(--pink),
+			0.16em 0.16em 0 var(--black);
+		--angle: calc(
+			var(--arc-start) + var(--arc-span) / (var(--char-count) - 1) * var(--i)
+		);
+		translate: calc(var(--ellipse-rx) * cos(var(--angle)))
+			calc(var(--ellipse-ry) * sin(var(--angle)));
+		transform: translate(-50%, -50%) rotate(calc(var(--angle) + 90deg));
+	}
+	.icon-greeting {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 4px;
+	}
+	/* WelcomeGreeting(吹き出し)と登場タイミングを揃えるため、同じCSS変数--after-access-counter-timeで発火する */
+	.icon-greeting .icon {
+		animation: iconFadeUp 0.5s;
+		animation-delay: var(--after-access-counter-time);
+		animation-fill-mode: forwards;
+		opacity: 0;
+	}
+	@keyframes iconFadeUp {
+		from {
+			opacity: 0;
+			transform: translateY(50px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 	.sec {
 		padding: 90px 4px;
 		max-width: 1200px;
