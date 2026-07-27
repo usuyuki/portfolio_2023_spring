@@ -23,7 +23,7 @@
 		<Burst
 			color="blue"
 			className="absolute top-0"
-			animationDelay="2.1s"
+			animationDelay="calc(var(--opening-time) + 0.25s)"
 			animationDuration="0.5s"
 		/>
 	</div>
@@ -34,7 +34,7 @@
 		<Burst
 			color="pink"
 			className="absolute top-0"
-			animationDelay="2.2s"
+			animationDelay="calc(var(--opening-time) + 0.35s)"
 			animationDuration="0.5s"
 		/>
 	</div>
@@ -50,7 +50,7 @@
 		<Burst
 			color="yellow"
 			className="absolute top-0"
-			animationDelay="2.3s"
+			animationDelay="calc(var(--opening-time) + 0.45s)"
 			animationDuration="0.5s"
 		/>
 	</div>
@@ -65,7 +65,7 @@
 		<Burst
 			color="blue"
 			className="absolute top-0"
-			animationDelay="2.4s"
+			animationDelay="calc(var(--opening-time) + 0.55s)"
 			animationDuration="0.5s"
 		/>
 	</div>
@@ -76,7 +76,7 @@
 		<Burst
 			color="pink"
 			className="absolute top-0"
-			animationDelay="2.5s"
+			animationDelay="calc(var(--opening-time) + 0.65s)"
 			animationDuration="0.5s"
 		/>
 	</div>
@@ -87,7 +87,7 @@
 		<Burst
 			color="yellow"
 			className="absolute top-0"
-			animationDelay="2.6s"
+			animationDelay="calc(var(--opening-time) + 0.75s)"
 			animationDuration="0.5s"
 		/>
 	</div>
@@ -98,7 +98,7 @@
 		<Burst
 			color="blue"
 			className="absolute top-0"
-			animationDelay="2.7s"
+			animationDelay="calc(var(--opening-time) + 0.85s)"
 			animationDuration="0.5s"
 		/>
 	</div>
@@ -109,7 +109,7 @@
 		<Burst
 			color="pink"
 			className="absolute top-0"
-			animationDelay="2.8s"
+			animationDelay="calc(var(--opening-time) + 0.95s)"
 			animationDuration="0.5s"
 		/>
 	</div>

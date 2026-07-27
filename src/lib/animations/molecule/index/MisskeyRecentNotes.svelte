@@ -19,8 +19,8 @@
 	// 回転が90度になり吹き出しが真横を向いて見えなくなる瞬間(アニメーション中間点)で中身を差し替える
 	const FLIP_MIDPOINT_MS = FLIP_DURATION_MS / 2;
 	// --after-greeting-message-time(app.css)と同じ値(挨拶メッセージが終わった時間)。CSS変数はJS側から参照できないため直値で合わせる
-	// opening-time(2000) + 700 + 3400 + 700 = 6800ms
-	const SHOW_DELAY_MS = 6800;
+	// opening-time(4000) + 700 + 3400 + 700 = 8800ms
+	const SHOW_DELAY_MS = 8800;
 
 	if (notes.length > 1) {
 		setTimeout(() => {
