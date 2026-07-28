@@ -44,7 +44,6 @@
 				link="https://twitter.com/usuyuki26"
 				alt="x logo"
 				logo={twitter}
-				className="p-3"
 			/>
 		</div>
 		<Burst color="yellow" className="absolute top-0" animationDelay="0.45s" animationDuration="0.5s" paused={!started} />
