@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
 	import { fly } from "svelte/transition";
 	import misskeyLogo from "$lib/assets/icon/misskey-logo.png";
 	import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
@@ -24,7 +25,7 @@
 	const SHOW_DELAY_MS = 700 + 3400 + 700;
 
 	// オープニング演出が完了(またはスキップ/再訪問で不要)になったのを待ってから表示する
-	onOpeningFinished(() => {
+	const unsubscribe = onOpeningFinished(() => {
 		if (notes.length > 1) {
 			setTimeout(() => {
 				visible = true;
@@ -44,6 +45,7 @@
 			}, SHOW_DELAY_MS);
 		}
 	});
+	onDestroy(unsubscribe);
 
 	$: currentNote = notes[currentIndex];
 </script>

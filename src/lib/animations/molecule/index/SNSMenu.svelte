@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
 	import Burst from "$lib/animations/atom/Burst.svelte";
 	import github from "$lib/assets/icon/github-mark.png";
 	import keybase from "$lib/assets/icon/keybase-official.svg";
@@ -14,9 +15,10 @@
 	// オープニング完了前はアイコンをscale(0)のまま隠しておき、完了後にクラス付与でアニメーションを開始する
 	// (以前はCSSのanimation-delayにapp.cssの--opening-timeを直接埋め込んでおり、実際の完了とズレていた)
 	let started = false;
-	onOpeningFinished(() => {
+	const unsubscribe = onOpeningFinished(() => {
 		started = true;
 	});
+	onDestroy(unsubscribe);
 </script>
 
 <div class="flex justify-center flex-wrap" class:started>
@@ -38,7 +40,12 @@
 	</div>
 	<div class="relative p-2">
 		<div class="sns-icon-wrapper" style="--delay:0.4s">
-			<SnsIconButton link="https://twitter.com/usuyuki26" alt="x logo" logo={twitter} />
+			<SnsIconButton
+				link="https://twitter.com/usuyuki26"
+				alt="x logo"
+				logo={twitter}
+				className="p-3"
+			/>
 		</div>
 		<Burst color="yellow" className="absolute top-0" animationDelay="0.45s" animationDuration="0.5s" paused={!started} />
 	</div>

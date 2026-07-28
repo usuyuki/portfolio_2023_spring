@@ -9,8 +9,16 @@ const NORMAL_SCALE = 1;
 const isHoverCapable = (event: PointerEvent) => event.pointerType === "mouse";
 
 // 同一要素で連打された際にスラッシュが多重生成されるのを防ぐためのin-flight管理。
-// destroy()時にtweenをkillできるよう、生成したslash要素自体もnodeごとに保持する
-const activeSlashes = new WeakMap<HTMLElement, HTMLElement>();
+// destroy()時にtweenをkillしonComplete前にposition/overflowを復元できるよう、
+// 生成したslash要素と、押下前に自分が変更したスタイルの有無をnodeごとに保持する
+const activeSlashes = new WeakMap<
+	HTMLElement,
+	{
+		slash: HTMLElement;
+		hadStaticPosition: boolean;
+		hadVisibleOverflow: boolean;
+	}
+>();
 
 // 押した瞬間、要素内を左から右へ斜めに駆け抜ける白い光の帯を1つ生成し、アニメーション終了後にDOMから除去する
 const spawnSlash = (node: HTMLElement) => {
@@ -39,7 +47,7 @@ const spawnSlash = (node: HTMLElement) => {
 	if (hadVisibleOverflow) node.style.overflow = "hidden";
 
 	node.appendChild(slash);
-	activeSlashes.set(node, slash);
+	activeSlashes.set(node, { slash, hadStaticPosition, hadVisibleOverflow });
 	gsap.fromTo(
 		slash,
 		{ x: "-140%", opacity: 1 },
@@ -58,12 +66,16 @@ const spawnSlash = (node: HTMLElement) => {
 	);
 };
 
-// destroy()時に進行中のslashアニメーションを即座に打ち切り、破棄後にDOM/styleを触るonCompleteの発火を防ぐ
+// destroy()時に進行中のslashアニメーションを即座に打ち切り、破棄後にDOM/styleを触るonCompleteの発火を防ぐ。
+// onCompleteが呼ばれない分、spawnSlashが変更したposition/overflowもここで復元する
 const killSlash = (node: HTMLElement) => {
-	const slash = activeSlashes.get(node);
-	if (!slash) return;
+	const entry = activeSlashes.get(node);
+	if (!entry) return;
+	const { slash, hadStaticPosition, hadVisibleOverflow } = entry;
 	gsap.killTweensOf(slash);
 	slash.remove();
+	if (hadStaticPosition) node.style.position = "";
+	if (hadVisibleOverflow) node.style.overflow = "";
 	activeSlashes.delete(node);
 };
 

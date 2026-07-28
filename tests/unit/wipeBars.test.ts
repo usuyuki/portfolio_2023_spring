@@ -5,6 +5,7 @@ import {
 	revealFromBars,
 	WIPE_BARS_OFFSCREEN_X,
 } from "$lib/utils/actions/wipeBars";
+import * as motion from "$lib/utils/motion";
 
 const setupBars = (count: number) =>
 	Array.from({ length: count }, () => {
@@ -99,5 +100,46 @@ describe("revealFromBars", () => {
 
 	it("異常系: 空配列を渡してもエラーにならない", () => {
 		expect(() => revealFromBars([])).not.toThrow();
+	});
+});
+
+describe("prefersReducedMotion有効時", () => {
+	afterEach(() => {
+		gsap.killTweensOf("*");
+		vi.restoreAllMocks();
+	});
+
+	it("正常系: coverWithBarsはtweenを使わずgsap.setで即座にx:0vwへ反映し、onCoveredを同期的に呼ぶ", () => {
+		vi.spyOn(motion, "prefersReducedMotion").mockReturnValue(true);
+		const bars = setupBars(1);
+		const onCovered = vi.fn();
+
+		coverWithBars(bars, onCovered);
+
+		expect(gsap.getTweensOf(bars[0]).length).toBe(0);
+		expect(onCovered).toHaveBeenCalledOnce();
+		expect(gsap.getProperty(bars[0], "x")).toBe(0);
+	});
+
+	it("異常系: 空配列を渡してもgsap.setは呼ばれずクラッシュしないが、onCoveredは同期的に呼ばれる", () => {
+		vi.spyOn(motion, "prefersReducedMotion").mockReturnValue(true);
+		const onCovered = vi.fn();
+
+		expect(() => coverWithBars([], onCovered)).not.toThrow();
+		expect(onCovered).toHaveBeenCalledOnce();
+	});
+
+	it("正常系: revealFromBarsはtweenを使わずgsap.setで即座に右端(画面外)へリセットし、onRevealedを同期的に呼ぶ", () => {
+		vi.spyOn(motion, "prefersReducedMotion").mockReturnValue(true);
+		const bars = setupBars(1);
+		const onRevealed = vi.fn();
+
+		revealFromBars(bars, onRevealed);
+
+		expect(gsap.getTweensOf(bars[0]).length).toBe(0);
+		expect(onRevealed).toHaveBeenCalledOnce();
+		expect(gsap.getProperty(bars[0], "x")).toBe(
+			Number.parseFloat(WIPE_BARS_OFFSCREEN_X),
+		);
 	});
 });

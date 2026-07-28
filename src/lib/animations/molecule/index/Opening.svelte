@@ -22,6 +22,8 @@
 	// visible: オーバーレイをDOMに残すかどうか。falseになったらこのコンポーネントごと外れる想定
 	let visible = true;
 	let skipped = false;
+	// finish()自体の再入防止(coverWithBars〜revealFromBars完了までの間、オーバーレイはまだクリック可能なため)
+	let finishing = false;
 
 	const bars = () =>
 		[backdrop, bar1, bar2, bar3].filter((el): el is HTMLElement => !!el);
@@ -31,6 +33,8 @@
 		typeof document !== "undefined" && document.readyState === "complete";
 
 	const finish = () => {
+		if (finishing) return;
+		finishing = true;
 		coverWithBars(bars(), () => {
 			visible = false;
 			revealFromBars(bars());

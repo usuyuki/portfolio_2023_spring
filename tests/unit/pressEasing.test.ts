@@ -80,7 +80,7 @@ describe("pressEasing", () => {
 		expect(tween.vars.scale).toBe(expectedScale);
 	});
 
-	it("異常系: destroy()を呼ぶとイベントリスナーが解除され、以後pointerenterしてもtweenが生成されない", () => {
+	it("正常系: destroy()を呼ぶとイベントリスナーが解除され、以後pointerenterしてもtweenが生成されない", () => {
 		const node = setupNode();
 		const { destroy } = pressEasing(node);
 
@@ -147,7 +147,7 @@ describe("pressEasing", () => {
 		expect(node.querySelectorAll("span").length).toBe(1);
 	});
 
-	it("異常系: マウスでホバーした後にタッチでpointerdown→pointerupすると、ホバー状態が残っておりtoHover()相当のscale1.06に固着せずscaleが1(等倍)へ戻るtweenが登録される", () => {
+	it("正常系: マウスでホバーした後にタッチでpointerdown→pointerupすると、ホバー状態が残っておりtoHover()相当のscale1.06に固着せずscaleが1(等倍)へ戻るtweenが登録される", () => {
 		const node = setupNode();
 		pressEasing(node);
 
@@ -163,7 +163,7 @@ describe("pressEasing", () => {
 		expect(tween.vars.scale).toBe(1);
 	});
 
-	it("異常系: タッチでpointerdown後にpointercancelが発火すると、以前はtoNormal()が呼ばれず縮小(scale0.86)したまま固着していたが、修正後はscaleが1(等倍)へ戻るtweenが登録される", () => {
+	it("正常系: タッチでpointerdown後にpointercancelが発火すると、以前はtoNormal()が呼ばれず縮小(scale0.86)したまま固着していたが、修正後はscaleが1(等倍)へ戻るtweenが登録される", () => {
 		const node = setupNode();
 		pressEasing(node);
 
@@ -180,7 +180,7 @@ describe("pressEasing", () => {
 		expect(tween.vars.scale).toBe(1);
 	});
 
-	it("異常系: タッチでpointerdown後にpointercancelが発火すると、is-pressedクラスが解除される", () => {
+	it("正常系: タッチでpointerdown後にpointercancelが発火すると、is-pressedクラスが解除される", () => {
 		const node = setupNode();
 		pressEasing(node);
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
 	import AccessCounter from "$lib/animations/molecule/index/AccessCounter.svelte";
 	import MisskeyRecentNotes from "$lib/animations/molecule/index/MisskeyRecentNotes.svelte";
 	import Opening from "$lib/animations/molecule/index/Opening.svelte";
@@ -11,11 +12,20 @@
 	import { portfolioVersionLogger } from "$lib/utils/console/portfolioVersionLogger";
 	import { snsLinkProvider } from "$lib/utils/console/snsLinkProvider";
 	import { tuyotuyoConsole } from "$lib/utils/console/tuyotuyoConsole";
+	import { onOpeningFinished } from "$lib/utils/openingEvent";
 	import type { PageData } from "./$types";
 	export let data: PageData;
 	portfolioVersionLogger();
 	tuyotuyoConsole(data.info.log);
 	snsLinkProvider();
+
+	// アイコンのフェードインをWelcomeGreetingと同じタイミングで発火させる
+	// (以前はCSSのanimation-delayにapp.cssの--after-access-counter-timeを直接埋め込んでおり、実際の完了とズレていた)
+	let iconStarted = false;
+	const unsubscribeIconStart = onOpeningFinished(() => {
+		iconStarted = true;
+	});
+	onDestroy(unsubscribeIconStart);
 </script>
 
 <NormalHead title="トップ" description="うすゆきのポートフォリオです" />
@@ -39,6 +49,7 @@
 			alt="うすゆきアイコン"
 			use:pressEasing
 			class="icon w-32 h-32 rounded-full object-cover border-4 border-black shadow-[6px_6px_0_var(--yellow)]"
+			class:started={iconStarted}
 			src={usuyukiIcon}
 		/>
 	</div>
@@ -176,12 +187,16 @@
 		justify-content: center;
 		gap: 4px;
 	}
-	/* WelcomeGreeting(吹き出し)と登場タイミングを揃えるため、同じCSS変数--after-access-counter-timeで発火する */
+	/* WelcomeGreeting(吹き出し)と登場タイミングを揃えるため、同じonOpeningFinishedイベントで発火する。
+	   .startedが付くまではplay-state:pausedで0%の状態のまま止めておく */
 	.icon-greeting .icon {
 		animation: iconFadeUp 0.5s;
-		animation-delay: var(--after-access-counter-time);
+		animation-play-state: paused;
 		animation-fill-mode: forwards;
 		opacity: 0;
+	}
+	.icon-greeting .icon.started {
+		animation-play-state: running;
 	}
 	@keyframes iconFadeUp {
 		from {

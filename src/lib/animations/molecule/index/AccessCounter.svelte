@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
 	import { fly } from "svelte/transition";
 	import Burst from "$lib/animations/atom/Burst.svelte";
 	import { onOpeningFinished } from "$lib/utils/openingEvent";
@@ -11,7 +12,7 @@
 	// カウンターはそのぶん遅らせて表示する
 	const SHOW_DELAY_MS = 700;
 	// オープニング演出が完了(またはスキップ/再訪問で不要)になったのを待ってから表示する
-	onOpeningFinished(() => {
+	const unsubscribe = onOpeningFinished(() => {
 		setTimeout(() => {
 			visible = true;
 			//2秒掛けてnowValueの値をcountの値にする
@@ -25,6 +26,7 @@
 			}
 		}, SHOW_DELAY_MS);
 	});
+	onDestroy(unsubscribe);
 </script>
 
 <div

@@ -1,7 +1,7 @@
 <script lang="ts">
+	import AboutThisSiteFrame from "$lib/components/atom/frame/AboutThisSiteFrame.svelte";
 	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
-	import AboutThisSiteFrame from "$lib/components/atom/frame/AboutThisSiteFrame.svelte";
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
 </script>
 

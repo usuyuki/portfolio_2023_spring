@@ -13,16 +13,18 @@
 		<div class="skill-group">
 			<h2 class="serif">「{genreTitle}」</h2>
 			{#each techStacks as techStack}
-				<div class="skill-row">
-					<span class="skill-name">{techStack.name}</span>
-					<div class="skill-bar">
-						<div class="skill-fill" style="--power:{techStack.power}"></div>
+				<div class="skill-entry">
+					<div class="skill-row">
+						<span class="skill-name">{techStack.name}</span>
+						<div class="skill-bar">
+							<div class="skill-fill" style="--power:{techStack.power}"></div>
+						</div>
+						<span class="skill-note tag">{techStack.power}</span>
 					</div>
-					<span class="skill-note tag">{techStack.power}</span>
+					{#if techStack.content}
+						<p class="skill-content">{techStack.content}</p>
+					{/if}
 				</div>
-				{#if techStack.content}
-					<p class="skill-content">{techStack.content}</p>
-				{/if}
 			{/each}
 		</div>
 	{/each}
@@ -73,13 +75,13 @@
 			transform: scaleX(calc(var(--power) / 100));
 		}
 	}
-	.skill-row:nth-child(3n + 1) .skill-fill {
+	.skill-entry:nth-child(3n + 1) .skill-fill {
 		background: var(--pink);
 	}
-	.skill-row:nth-child(3n + 2) .skill-fill {
+	.skill-entry:nth-child(3n + 2) .skill-fill {
 		background: var(--blue);
 	}
-	.skill-row:nth-child(3n) .skill-fill {
+	.skill-entry:nth-child(3n) .skill-fill {
 		background: var(--yellow);
 	}
 	.skill-note {
