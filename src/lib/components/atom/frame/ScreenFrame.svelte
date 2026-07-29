@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import { page } from "$app/stores";
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
 	import { bgClasses } from "$lib/utils/bgClasses";
@@ -15,13 +16,49 @@
 		{ name: "VIDEO", path: "/works/videos" },
 		{ name: "SLIDES", path: "/works/slides" },
 	];
+
+	let headerEl: HTMLElement;
+	let titleEl: HTMLElement;
+	let navEl: HTMLElement;
+	// タイトルとナビが1行に収まらず折り返された(2段組みになった)かどうか。
+	// flex-wrapの折り返し発生はCSSだけでは検知できないため、実際の高さを見て判定する
+	let wrapped = false;
+
+	const checkWrapped = () => {
+		if (!headerEl || !titleEl || !navEl) return;
+		wrapped = navEl.offsetTop > titleEl.offsetTop;
+	};
+
+	onMount(() => {
+		checkWrapped();
+		const observer = new ResizeObserver(checkWrapped);
+		observer.observe(headerEl);
+		return () => observer.disconnect();
+	});
 </script>
 
 <!-- RPGのHUDウィンドウを模した、画面上部に張り付くナビゲーションバー -->
-<header class="box hud sticky top-3.5 z-50 mx-4 mt-3.5 flex flex-wrap items-center justify-between gap-3 px-4 py-2.5">
-	<a href="/" use:pressEasing class="serif shrink-0 text-sm tracking-wide md:text-base">うすゆきどっとねっと</a>
+<header
+	bind:this={headerEl}
+	class="box hud sticky top-3.5 z-50 mx-4 mt-3.5 flex flex-wrap items-center gap-3 px-4 py-2.5"
+	class:justify-between={!wrapped}
+	class:justify-center={wrapped}
+	class:text-center={wrapped}
+>
+	<a
+		bind:this={titleEl}
+		href="/"
+		use:pressEasing
+		class="serif shrink-0 text-sm tracking-wide md:text-base"
+	>
+		うすゆきどっとねっと
+	</a>
 	<!-- PCは折り返し表示のまま、スマホ幅(860px以下)だけ2段になって表示領域を圧迫しないよう横スクロールのカルーセルにする -->
-	<nav class="nav-carousel flex flex-wrap gap-2">
+	<nav
+		bind:this={navEl}
+		class="nav-carousel flex flex-wrap gap-2"
+		class:justify-center={wrapped}
+	>
 		{#each linkList as link, index}
 			<a
 				href={link.path}
@@ -81,7 +118,8 @@
 			background-position: -30% 0;
 		}
 	}
-	@media (max-width: 860px) {
+	@media (max-width: 767px) {
+		/* スマホ幅ではタイトルとカルーセルが縦に2段積みになるため、タイトルは中央揃えにする */
 		header {
 			justify-content: center;
 			text-align: center;

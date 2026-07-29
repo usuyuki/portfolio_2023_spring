@@ -24,9 +24,11 @@
 		margin: 14px 0 0;
 		-webkit-text-stroke: 2px var(--black);
 		color: var(--white);
+		/* 影のオフセットをフォントサイズに比例させる。固定pxだとスマホで文字が縮んだ時に
+		   影が相対的に大きくなりすぎて文字と重なり、可読性が落ちるため */
 		text-shadow:
-			5px 5px 0 var(--pink),
-			10px 10px 0 var(--black);
+			0.05em 0.05em 0 var(--pink),
+			0.1em 0.1em 0 var(--black);
 	}
 
 	@keyframes fadeUp {

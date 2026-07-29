@@ -1,8 +1,6 @@
 <script lang="ts">
 	import gsap from "gsap";
 	import { onMount } from "svelte";
-	import WipeBars from "$lib/animations/atom/WipeBars.svelte";
-	import { coverWithBars, revealFromBars } from "$lib/utils/actions/wipeBars";
 	import { prefersReducedMotion } from "$lib/utils/motion";
 	import {
 		OPENING_FINISHED_EVENT,
@@ -13,33 +11,32 @@
 	let logoBoxEl: HTMLElement;
 	let loadingEl: HTMLElement;
 	let gaugeFillEl: HTMLElement;
-	let flashEl: HTMLElement;
-	let backdrop: HTMLElement | undefined;
-	let bar1: HTMLElement | undefined;
-	let bar2: HTMLElement | undefined;
-	let bar3: HTMLElement | undefined;
 
 	// visible: オーバーレイをDOMに残すかどうか。falseになったらこのコンポーネントごと外れる想定
 	let visible = true;
 	let skipped = false;
-	// finish()自体の再入防止(coverWithBars〜revealFromBars完了までの間、オーバーレイはまだクリック可能なため)
+	// finish()自体の再入防止(フェードアウト完了までの間、オーバーレイはまだクリック可能なため)
 	let finishing = false;
-
-	const bars = () =>
-		[backdrop, bar1, bar2, bar3].filter((el): el is HTMLElement => !!el);
 
 	// ページの実読み込み(画像・フォント等を含む)が完了しているか。完了前にゲージが満タンになった場合はゲージを繰り返す
 	const isPageLoaded = () =>
 		typeof document !== "undefined" && document.readyState === "complete";
 
-	const finish = () => {
+	// 退場演出はシーンチェンジ(WipeBars)とは別に、オーバーレイ自体のフェードアウトのみで済ませる
+	// delay: ゲージ満タン直後にフェードが始まると唐突なため、一呼吸置いてから抜ける(スキップ時は0で即応させる)
+	const finish = (delay = 0.2) => {
 		if (finishing) return;
 		finishing = true;
-		coverWithBars(bars(), () => {
-			visible = false;
-			revealFromBars(bars());
-			// AccessCounter/MisskeyRecentNotes/SNSMenu等、オープニング後に登場する演出へ完了を通知する
-			document.dispatchEvent(new CustomEvent(OPENING_FINISHED_EVENT));
+		gsap.to(overlayEl, {
+			opacity: 0,
+			duration: 0.5,
+			delay,
+			ease: "power1.out",
+			onComplete: () => {
+				visible = false;
+				// AccessCounter/MisskeyRecentNotes/SNSMenu等、オープニング後に登場する演出へ完了を通知する
+				document.dispatchEvent(new CustomEvent(OPENING_FINISHED_EVENT));
+			},
 		});
 	};
 
@@ -68,20 +65,13 @@
 		);
 	};
 
-	const playFlashAndFinish = () => {
-		gsap
-			.timeline()
-			.to(flashEl, { opacity: 0.3, duration: 0.08 })
-			.to(flashEl, { opacity: 0, duration: 0.2, onComplete: finish });
-	};
-
 	const playOpening = () => {
 		if (prefersReducedMotion()) {
 			// スケール/波紋演出を省略し、フェードのみで即座に表示する
 			gsap.set(logoBoxEl, { scale: 1, opacity: 1 });
 			gsap.set(loadingEl, { opacity: 1 });
 			gsap.set(gaugeFillEl, { scaleX: 1 });
-			finish();
+			finish(0);
 			return;
 		}
 		// 複数要素にまたがるgsap.timeline()の絶対位置指定は環境によってcall()コールバックの発火が安定しないため、
@@ -97,7 +87,7 @@
 					opacity: 1,
 					duration: 0.3,
 					onComplete: () => {
-						runGaugeLoop(playFlashAndFinish);
+						runGaugeLoop(finish);
 					},
 				});
 			},
@@ -107,8 +97,8 @@
 	const skipOpening = () => {
 		if (skipped) return;
 		skipped = true;
-		gsap.killTweensOf([logoBoxEl, loadingEl, gaugeFillEl, flashEl]);
-		finish();
+		gsap.killTweensOf([logoBoxEl, loadingEl, gaugeFillEl, overlayEl]);
+		finish(0);
 	};
 
 	onMount(() => {
@@ -146,9 +136,7 @@
 			</div>
 		</div>
 		<span class="skip tag">CLICK / TAP TO SKIP</span>
-		<div bind:this={flashEl} class="flash"></div>
 	</div>
-	<WipeBars bind:backdrop bind:bar1 bind:bar2 bind:bar3 />
 {/if}
 
 <style>
@@ -216,12 +204,5 @@
 		font-size: 10px;
 		opacity: 0.5;
 		margin-top: 10px;
-	}
-	.flash {
-		position: absolute;
-		inset: 0;
-		background: #fff;
-		opacity: 0;
-		pointer-events: none;
 	}
 </style>

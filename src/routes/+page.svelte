@@ -36,7 +36,7 @@
 </div>
 
 <!-- ヒーロー: RPGのタイトル画面風 -->
-<section class="flex flex-col items-center text-center px-4 pb-12">
+<section class="hero-section flex flex-col items-center text-center px-4 pb-12">
 	<h1 class="hero-title" aria-label="うすゆきどっとねっと">
 		{#each "うすゆきどっとねっと".split("") as char, index}
 			<span class="hero-title-char" style="--i: {index}">{char}</span>
@@ -142,19 +142,21 @@
 <section class="sec">
 	<div class="box about-box bg-blue">
 		<h2 class="serif">うすゆきについて</h2>
-		<p class="tag mt-2 mb-7">経歴 / スタック / 人となり、まとめて見る</p>
 		<a href="/about" use:pressEasing class="box btn-rpg bg-black text-white">もっと知る!</a>
 	</div>
 </section>
 
 <style>
+	.hero-section {
+		/* アイコン・吹き出し側(.icon-greeting)からも参照するため、両者の共通の親であるここに置く */
+		--ellipse-ry: clamp(95px, 18vw, 260px);
+	}
 	.hero-title {
 		/* 10文字を弧状(半楕円のアーチ)に配置する。span-arc-startからspan-arc-startプラスspan-arcまでの範囲に等間隔で並べる */
 		--char-count: 10;
 		--arc-span: 130deg;
 		--arc-start: calc(-90deg - var(--arc-span) / 2);
 		--ellipse-rx: clamp(150px, 30vw, 420px);
-		--ellipse-ry: clamp(95px, 18vw, 260px);
 		position: relative;
 		width: calc(var(--ellipse-rx) * 2 + 1.2em);
 		/* 中央付近の文字が最も上に出っ張るため、その高さ(ellipse-ry)+文字半分を確保する。
@@ -186,6 +188,10 @@
 		align-items: center;
 		justify-content: center;
 		gap: 4px;
+		/* 円弧テキスト(.hero-title)の下の余白ぶん、アイコンと吹き出しを上に引き寄せる。
+		   --ellipse-ryが画面幅で伸縮するのに正比例させることで、円弧が小さい(=余白も狭い)画面幅で
+		   詰めすぎて重ならないようにする */
+		margin-top: calc(var(--ellipse-ry) * -0.35);
 	}
 	/* WelcomeGreeting(吹き出し)と登場タイミングを揃えるため、同じonOpeningFinishedイベントで発火する。
 	   .startedが付くまではplay-state:pausedで0%の状態のまま止めておく */
