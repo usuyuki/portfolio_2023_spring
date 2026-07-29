@@ -21,6 +21,9 @@
 	let coveredAt = 0;
 	let isCovering = false;
 	let pendingReveal = false;
+	// 帯が画面を完全に覆いきるまでは<slot/>(新ページ本体)の描画自体を隠す。
+	// 読み込みが速いと、帯がまだ移動中で覆いきっていない領域から新ページが透けて見えてしまうため
+	let hideContent = false;
 	// startReveal内のsetTimeoutのID。次のstartCover()開始時にクリアしないと、
 	// 前サイクルの遅延リビールが新サイクルの途中で誤発火し、進行中のカバーアニメーションを打ち消してしまう
 	let revealTimeoutId: ReturnType<typeof setTimeout> | undefined;
@@ -37,6 +40,7 @@
 		}
 		showBars = true;
 		isCovering = true;
+		hideContent = true;
 		showBuildHint = false;
 
 		// {#if showBars}で追加されるWipeBarsのbind:thisはDOM更新後でないと解決されないため、
@@ -46,6 +50,9 @@
 		coverWithBars(bars(), () => {
 			isCovering = false;
 			coveredAt = Date.now();
+			// 帯が画面を完全に覆いきった後は、帯自体が新ページを隠してくれるため
+			// <slot/>の描画を止めておく必要がなくなる
+			hideContent = false;
 			// 帯が画面中央を覆いきった瞬間に初めてビルド待ち文言を出す
 			showBuildHint = true;
 			if (pendingReveal) startReveal();
@@ -91,6 +98,9 @@
 	}
 </script>
 
+<div class="contents" class:invisible={hideContent} aria-hidden={hideContent}>
+	<slot />
+</div>
 {#if showBars}
 	<WipeBars bind:backdrop bind:bar1 bind:bar2 bind:bar3 />
 {/if}

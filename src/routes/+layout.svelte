@@ -6,8 +6,9 @@
 </script>
 
 <ScreenFrame />
-<SceneTransition />
-<main>
-	<slot />
-</main>
+<SceneTransition>
+	<main>
+		<slot />
+	</main>
+</SceneTransition>
 <Footer />
