@@ -33,10 +33,13 @@
 			duration: 0.5,
 			delay,
 			ease: "power1.out",
+			onStart: () => {
+				// フェードアウトの完了(onComplete)を待つと黒画面のまま間が空くため、
+				// 消え始めと同時に次の演出(WelcomeGreeting/アイコン等)を開始してクロスフェードさせる
+				document.dispatchEvent(new CustomEvent(OPENING_FINISHED_EVENT));
+			},
 			onComplete: () => {
 				visible = false;
-				// AccessCounter/MisskeyRecentNotes/SNSMenu等、オープニング後に登場する演出へ完了を通知する
-				document.dispatchEvent(new CustomEvent(OPENING_FINISHED_EVENT));
 			},
 		});
 	};

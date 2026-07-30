@@ -1,5 +1,6 @@
-// Opening演出(オープニングロゴ〜斜め帯ワイプアウト)が完了した瞬間にdocumentへdispatchされるイベント名。
+// Opening演出(オープニングロゴ〜斜め帯ワイプアウト)のオーバーレイがフェードアウトし始めた瞬間にdocumentへdispatchされるイベント名。
 // AccessCounter/MisskeyRecentNotes/SNSMenu等、オープニング完了後に登場する演出はこのイベントを購読して開始する。
+// フェードアウト完了を待たずに発火することで、黒画面の間延びなくクロスフェードさせる
 // (以前は--opening-time等CSS変数の値をJS側にハードコード複製しており、ページ読み込みが遅いと実際の完了とズレていた)
 export const OPENING_FINISHED_EVENT = "opening:finished";
 

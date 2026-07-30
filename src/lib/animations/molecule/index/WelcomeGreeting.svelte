@@ -30,6 +30,9 @@
 		margin-bottom: 0.75rem;
 		padding: 0.75rem 1rem;
 		max-width: 260px;
+		/* greeting(Notion管理・可変長)が1行に収まる場合でも、フェードイン前後で
+		   アイコンの位置がガタつかないよう最低1行分の高さを事前に確保しておく */
+		min-height: calc(0.75rem * 2 + 1.75em);
 		background-color: var(--ui-bg);
 		border-radius: 1rem;
 	}

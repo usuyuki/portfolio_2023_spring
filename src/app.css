@@ -78,6 +78,14 @@
 	a:hover {
 		color: var(--pink);
 	}
+	/* ホバー色(--pink)が背景色と同化/コントラスト不足で読めなくなるのを防ぐため、
+	   pink/yellow背景の要素自身/配下ではホバー色を黒に変える(blackは元々白文字/黒背景なのでpinkのままで問題ない) */
+	a.bg-pink:hover,
+	.bg-pink a:hover,
+	a.bg-yellow:hover,
+	.bg-yellow a:hover {
+		color: var(--black);
+	}
 }
 
 /* Tailwind animation delayないので追加 */

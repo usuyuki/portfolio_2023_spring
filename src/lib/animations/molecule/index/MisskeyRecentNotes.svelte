@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
-	import { fly } from "svelte/transition";
 	import misskeyLogo from "$lib/assets/icon/misskey-logo.png";
 	import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
 	import type { misskeyContentType } from "$lib/types/misskeyContent";
@@ -13,16 +12,16 @@
 	let currentIndex = 0;
 	// フリップアニメーション中かどうか(trueの間だけCSSアニメーションを再生させる)
 	let flipping = false;
-	// オープニング〜挨拶メッセージのアニメーションが終わるまでは表示しない
-	let visible = false;
+	// オープニング完了前はカードをopacity:0のまま隠しておき、完了後にクラス付与でアニメーションを開始する
+	// (他の演出と同じ待ち時間だと埋もれるため、SNSMenu等より少し遅らせて最後に登場させる程度に留める)
+	let started = false;
 
 	const SWITCH_INTERVAL_MS = 5000;
 	const FLIP_DURATION_MS = 500;
 	// 回転が90度になり吹き出しが真横を向いて見えなくなる瞬間(アニメーション中間点)で中身を差し替える
 	const FLIP_MIDPOINT_MS = FLIP_DURATION_MS / 2;
-	// オープニング完了から、SNS(700ms)→アクセスカウンター(3400ms)→挨拶メッセージ(700ms)の演出が
-	// 終わるまでの合計時間(app.cssの--after-greeting-message-time相当)
-	const SHOW_DELAY_MS = 700 + 3400 + 700;
+	// オープニング完了から、SNSアイコンの登場演出が一巡するまでの時間だけ間を置いて登場させる
+	const SHOW_DELAY_MS = 900;
 
 	// setTimeout/setIntervalのIDを保持し、コンポーネント破棄時にまとめてクリアする
 	let showTimeoutId: ReturnType<typeof setTimeout>;
@@ -34,7 +33,7 @@
 	const unsubscribe = onOpeningFinished(() => {
 		if (notes.length > 1) {
 			showTimeoutId = setTimeout(() => {
-				visible = true;
+				started = true;
 				switchIntervalId = setInterval(() => {
 					flipping = true;
 					flipMidTimeoutId = setTimeout(() => {
@@ -47,7 +46,7 @@
 			}, SHOW_DELAY_MS);
 		} else if (notes.length === 1) {
 			showTimeoutId = setTimeout(() => {
-				visible = true;
+				started = true;
 			}, SHOW_DELAY_MS);
 		}
 	});
@@ -62,8 +61,8 @@
 	$: currentNote = notes[currentIndex];
 </script>
 
-{#if notes.length > 0 && visible}
-	<div class="flex justify-center mt-12" in:fly|global={{ y: 50, duration: 500 }}>
+{#if notes.length > 0}
+	<div class="flex justify-center mt-12 note-wrapper" class:started>
 		<div class="note-card mx-4 p-4 rounded-2xl bg-white shadow-md">
 			<div class="flex items-center justify-center gap-2 mb-2">
 				<p class="h2 text-center font-serif text-xl">最近のうすゆき</p>
@@ -107,6 +106,32 @@
 {/if}
 
 <style>
+	/* WelcomeGreeting等と同じく、オープニング完了前はopacity:0で止めておき
+	   .startedが付いたらfadeUpを再生する(常にDOM上にありスペースは確保済みのため、
+	   出現時にレイアウトシフトも唐突感も起きない) */
+	.note-wrapper {
+		animation: fadeUp 0.5s;
+		animation-play-state: paused;
+		animation-fill-mode: forwards;
+		opacity: 0;
+	}
+
+	.note-wrapper.started {
+		animation-play-state: running;
+	}
+
+	@keyframes fadeUp {
+		from {
+			opacity: 0;
+			transform: translateY(50px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
 	/* 投稿の長さによってカード全体の大きさがガタつかないよう、幅・高さともに固定する */
 	.note-card {
 		width: 576px;
