@@ -20,8 +20,9 @@
 	const FLIP_DURATION_MS = 500;
 	// 回転が90度になり吹き出しが真横を向いて見えなくなる瞬間(アニメーション中間点)で中身を差し替える
 	const FLIP_MIDPOINT_MS = FLIP_DURATION_MS / 2;
-	// オープニング完了から、SNSアイコンの登場演出が一巡するまでの時間だけ間を置いて登場させる
-	const SHOW_DELAY_MS = 900;
+	// オープニング完了から、SNSアイコンの登場演出(最後のアイコンはdelay 0.9s+bigger 0.3s+Burst delay 0.95s+duration 0.5sで計1450ms程度)が
+	// 一巡し終わる少し手前のタイミングで登場させる(完全に一致させる必要はなく、埋もれない程度の間があればよい)
+	const SHOW_DELAY_MS = 1200;
 
 	// setTimeout/setIntervalのIDを保持し、コンポーネント破棄時にまとめてクリアする
 	let showTimeoutId: ReturnType<typeof setTimeout>;
@@ -62,7 +63,7 @@
 </script>
 
 {#if notes.length > 0}
-	<div class="flex justify-center mt-12 note-wrapper" class:started>
+	<div class="flex justify-center mt-12 note-wrapper reveal-fade-up" class:started>
 		<div class="note-card mx-4 p-4 rounded-2xl bg-white shadow-md">
 			<div class="flex items-center justify-center gap-2 mb-2">
 				<p class="h2 text-center font-serif text-xl">最近のうすゆき</p>
@@ -106,31 +107,8 @@
 {/if}
 
 <style>
-	/* WelcomeGreeting等と同じく、オープニング完了前はopacity:0で止めておき
-	   .startedが付いたらfadeUpを再生する(常にDOM上にありスペースは確保済みのため、
-	   出現時にレイアウトシフトも唐突感も起きない) */
-	.note-wrapper {
-		animation: fadeUp 0.5s;
-		animation-play-state: paused;
-		animation-fill-mode: forwards;
-		opacity: 0;
-	}
-
-	.note-wrapper.started {
-		animation-play-state: running;
-	}
-
-	@keyframes fadeUp {
-		from {
-			opacity: 0;
-			transform: translateY(50px);
-		}
-
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+	/* フェードイン自体はapp.cssの.reveal-fade-up共通クラスに委譲(WelcomeGreeting等と同じ仕組み)。
+	   常にDOM上にありスペースは確保済みのため、出現時にレイアウトシフトも唐突感も起きない */
 
 	/* 投稿の長さによってカード全体の大きさがガタつかないよう、幅・高さともに固定する */
 	.note-card {
