@@ -24,28 +24,40 @@
 	// 終わるまでの合計時間(app.cssの--after-greeting-message-time相当)
 	const SHOW_DELAY_MS = 700 + 3400 + 700;
 
+	// setTimeout/setIntervalのIDを保持し、コンポーネント破棄時にまとめてクリアする
+	let showTimeoutId: ReturnType<typeof setTimeout>;
+	let switchIntervalId: ReturnType<typeof setInterval>;
+	let flipMidTimeoutId: ReturnType<typeof setTimeout>;
+	let flipEndTimeoutId: ReturnType<typeof setTimeout>;
+
 	// オープニング演出が完了(またはスキップ/再訪問で不要)になったのを待ってから表示する
 	const unsubscribe = onOpeningFinished(() => {
 		if (notes.length > 1) {
-			setTimeout(() => {
+			showTimeoutId = setTimeout(() => {
 				visible = true;
-				setInterval(() => {
+				switchIntervalId = setInterval(() => {
 					flipping = true;
-					setTimeout(() => {
+					flipMidTimeoutId = setTimeout(() => {
 						currentIndex = (currentIndex + 1) % notes.length;
 					}, FLIP_MIDPOINT_MS);
-					setTimeout(() => {
+					flipEndTimeoutId = setTimeout(() => {
 						flipping = false;
 					}, FLIP_DURATION_MS);
 				}, SWITCH_INTERVAL_MS);
 			}, SHOW_DELAY_MS);
 		} else if (notes.length === 1) {
-			setTimeout(() => {
+			showTimeoutId = setTimeout(() => {
 				visible = true;
 			}, SHOW_DELAY_MS);
 		}
 	});
-	onDestroy(unsubscribe);
+	onDestroy(() => {
+		unsubscribe();
+		clearTimeout(showTimeoutId);
+		clearInterval(switchIntervalId);
+		clearTimeout(flipMidTimeoutId);
+		clearTimeout(flipEndTimeoutId);
+	});
 
 	$: currentNote = notes[currentIndex];
 </script>

@@ -73,10 +73,10 @@
 		padding-top: var(--main-padding-top);
 	}
 	a {
-		color: var(--secondary);
+		color: var(--black);
 	}
 	a:hover {
-		color: var(--primary);
+		color: var(--pink);
 	}
 }
 

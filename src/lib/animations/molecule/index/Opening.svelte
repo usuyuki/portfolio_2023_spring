@@ -1,6 +1,6 @@
 <script lang="ts">
 	import gsap from "gsap";
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import { prefersReducedMotion } from "$lib/utils/motion";
 	import {
 		OPENING_FINISHED_EVENT,
@@ -109,6 +109,13 @@
 		}
 		window.sessionStorage.setItem(OPENING_SESSION_KEY, "1");
 		playOpening();
+	});
+
+	// ページ遷移等でコンポーネントが破棄される際、再帰的なrunGaugeLoopや進行中のtweenを止める
+	onDestroy(() => {
+		skipped = true;
+		if (typeof window === "undefined") return;
+		gsap.killTweensOf([logoBoxEl, loadingEl, gaugeFillEl, overlayEl]);
 	});
 </script>
 
