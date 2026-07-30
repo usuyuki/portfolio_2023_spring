@@ -61,6 +61,7 @@
 			flex-direction: column;
 		}
 		.qa-q {
+			flex: 0 0 auto;
 			border-radius: 16px 16px 0 0;
 			border-left: 4px solid var(--black);
 			border-bottom: none;
