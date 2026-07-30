@@ -14,8 +14,9 @@
 
 	// visible: オーバーレイをDOMに残すかどうか。falseになったらこのコンポーネントごと外れる想定
 	let visible = true;
-	let skipped = false;
-	// finish()自体の再入防止(フェードアウト完了までの間、オーバーレイはまだクリック可能なため)
+	// destroyed: ページ遷移等でコンポーネントが破棄された後、runGaugeLoopの再帰が復活するのを防ぐ
+	let destroyed = false;
+	// finish()自体の再入防止(フェードアウト完了までの間はまだ進行中のtweenが残っているため)
 	let finishing = false;
 
 	// ページの実読み込み(画像・フォント等を含む)が完了しているか。完了前にゲージが満タンになった場合はゲージを繰り返す
@@ -52,8 +53,8 @@
 				duration: 1.0,
 				ease: "power1.inOut",
 				onComplete: () => {
-					// skipOpening側でkillTweensOfされた後にこのコールバックが呼ばれ、ループが復活するのを防ぐ
-					if (skipped) return;
+					// onDestroy側でkillTweensOfされた後にこのコールバックが呼ばれ、ループが復活するのを防ぐ
+					if (destroyed) return;
 					if (isPageLoaded()) {
 						onceComplete();
 						return;
@@ -94,13 +95,6 @@
 		});
 	};
 
-	const skipOpening = () => {
-		if (skipped) return;
-		skipped = true;
-		gsap.killTweensOf([logoBoxEl, loadingEl, gaugeFillEl, overlayEl]);
-		finish(0);
-	};
-
 	onMount(() => {
 		if (typeof window === "undefined") return;
 		if (window.sessionStorage.getItem(OPENING_SESSION_KEY)) {
@@ -113,22 +107,14 @@
 
 	// ページ遷移等でコンポーネントが破棄される際、再帰的なrunGaugeLoopや進行中のtweenを止める
 	onDestroy(() => {
-		skipped = true;
+		destroyed = true;
 		if (typeof window === "undefined") return;
 		gsap.killTweensOf([logoBoxEl, loadingEl, gaugeFillEl, overlayEl]);
 	});
 </script>
 
 {#if visible}
-	<div
-		bind:this={overlayEl}
-		class="opening"
-		role="button"
-		tabindex="0"
-		aria-label="オープニング演出をスキップ"
-		on:click={skipOpening}
-		on:keydown={(e) => (e.key === "Enter" || e.key === " ") && skipOpening()}
-	>
+	<div bind:this={overlayEl} class="opening">
 		<div bind:this={logoBoxEl} class="box logo-box">
 			<h1 class="serif">
 				<span>う</span><span>す</span><span>ゆ</span><span>き</span><span>ど</span><span
@@ -142,7 +128,6 @@
 				<div bind:this={gaugeFillEl} class="gauge-fill"></div>
 			</div>
 		</div>
-		<span class="skip tag">CLICK / TAP TO SKIP</span>
 	</div>
 {/if}
 
@@ -157,7 +142,6 @@
 		align-items: center;
 		justify-content: center;
 		gap: 26px;
-		cursor: pointer;
 	}
 	.serif {
 		font-family: var(--heading-font);
@@ -205,11 +189,5 @@
 		border-radius: 999px;
 		transform-origin: left;
 		transform: scaleX(0);
-	}
-	.skip {
-		color: var(--white);
-		font-size: 10px;
-		opacity: 0.5;
-		margin-top: 10px;
 	}
 </style>
