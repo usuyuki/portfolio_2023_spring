@@ -41,10 +41,13 @@
 		});
 	};
 
+	// ページ読み込みが終わらない場合でもオープニングが無限に固まらないよう、ゲージの周回数に上限を設ける
+	const MAX_GAUGE_LOOPS = 5;
+
 	// NOW LOADINGゲージを1周(scaleX 0→1、1.0s)させる。満タンになった時点で判定し、
 	// まだページ読み込みが終わっていなければゲージを0へ戻してもう一周させる(仕様への追加要望: ローディングが終わるまで繰り返す)。
 	// 逆に読み込みが先に終わっていても、再生中の1周は最後まで走らせてから次へ進む(演出が唐突に途切れるのを防ぐ)
-	const runGaugeLoop = (onceComplete: () => void) => {
+	const runGaugeLoop = (onceComplete: () => void, loopCount = 0) => {
 		gsap.fromTo(
 			gaugeFillEl,
 			{ scaleX: 0 },
@@ -55,12 +58,13 @@
 				onComplete: () => {
 					// onDestroy側でkillTweensOfされた後にこのコールバックが呼ばれ、ループが復活するのを防ぐ
 					if (destroyed) return;
-					if (isPageLoaded()) {
+					// MAX_GAUGE_LOOPS周してもページ読み込みが終わらない場合は、待ち続けず強制的に次へ進む
+					if (isPageLoaded() || loopCount + 1 >= MAX_GAUGE_LOOPS) {
 						onceComplete();
 						return;
 					}
 					gsap.set(gaugeFillEl, { scaleX: 0 });
-					runGaugeLoop(onceComplete);
+					runGaugeLoop(onceComplete, loopCount + 1);
 				},
 			},
 		);
@@ -84,10 +88,13 @@
 			ease: "back.out(2.5)",
 			delay: 0.1,
 			onComplete: () => {
+				// onDestroy側でkillTweensOfされた後にこのコールバックが呼ばれ、破棄済みコンポーネントで新規tweenが走るのを防ぐ
+				if (destroyed) return;
 				gsap.to(loadingEl, {
 					opacity: 1,
 					duration: 0.3,
 					onComplete: () => {
+						if (destroyed) return;
 						runGaugeLoop(finish);
 					},
 				});
