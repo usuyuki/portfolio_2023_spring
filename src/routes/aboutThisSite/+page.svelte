@@ -1,17 +1,19 @@
 <script lang="ts">
+	import AboutThisSiteFrame from "$lib/components/atom/frame/AboutThisSiteFrame.svelte";
 	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
-	import AboutThisSiteFrame from "$lib/components/atom/frame/AboutThisSiteFrame.svelte";
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
 </script>
 
 <NormalHead title="このサイトについて" description="このサイトについて" />
-<NormalPageTitle title="このサイトについて" />
+<NormalPageTitle title="このサイトについて" tag="ABOUT THIS SITE" />
+
+<div class="max-w-2xl mx-auto px-4 pb-20">
 <AboutThisSiteFrame title="ソースコード">
 	<p>ソースコードはGitHubにて公開しています。</p>
 	<a
 		href="https://github.com/usuyuki/portfolio_2023_spring"
-		class="flex items-center my-2 mx-2"
+		class="flex items-center my-2 mx-2 break-all"
 		target="_blank"
 		rel="noopener noreferrer"
 		use:pressEasing>github.com/usuyuki/portfolio_2023_spring</a
@@ -22,3 +24,4 @@
 		本ブログでは、Googleによるアクセス解析ツール「GoogleAnalytics」を利用しています。このGoogleAnalyticsはトラフィックデータの収集のためにクッキー（Cookie）を使用しております。トラフィックデータは匿名で収集されており、個人を特定するものではありません。この機能はCookieを無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。
 	</p>
 </AboutThisSiteFrame>
+</div>

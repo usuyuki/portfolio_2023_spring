@@ -1,34 +1,54 @@
 <script lang="ts">
 	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
-	import HeadingWithBorder from "$lib/components/atom/text/sentence/HeadingWithBorder.svelte";
+	import { mediaCardVariants } from "$lib/utils/mediaCardVariants";
 	import type { PageData } from "./$types";
 	export let data: PageData;
+
+	// ジャンルをまたいでも色のローテーションが途切れないよう、全ジャンル通しの連番を先に振っておく
+	let cardIndex = 0;
+	const cardIndexByGenre = Object.fromEntries(
+		Object.entries(data.data).map(([genre, slides]) => [
+			genre,
+			slides.map(() => cardIndex++),
+		]),
+	);
 </script>
 
 <NormalHead title="スライド" description="登壇などで使用したスライドの一覧ページです" />
-
-<NormalPageTitle title="スライド" />
+<NormalPageTitle title="スライド" tag="SLIDES" />
 
 {#each Object.entries(data.data) as [title, slides]}
-	<HeadingWithBorder {title} />
-	<div class="flex justify-center items-stretch flex-wrap">
-		{#each slides as slide}
-			<div class="flex justify-center flex-col items-center px-8 py-12 w-full">
+	<h2 class="genre-title serif">{title}</h2>
+	<div class="media-grid vgrid">
+		{#each slides as slide, index}
+			{@const variant = mediaCardVariants[cardIndexByGenre[title][index] % mediaCardVariants.length]}
+			<div class="box vcard {variant.bg} {variant.text}">
 				<iframe
-					class="aspect-video mx-4 mb-2 w-full md:w-4/5 bg-gray-400 rounded-lg"
+					class="frame"
 					src={slide.slideIframe}
 					title="Speaker Deck Iframe"
 					frameborder="0"
 					allowfullscreen={false}
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 				></iframe>
-				<h2 class="text-2xl">{slide.name}</h2>
-				<p class="mt-2">{slide.publishedAt}</p>
-				<div class="flex justify-center items-center mt-8 w-5/6 md:w-2/3 mx-auto">
-					<p class="text-lg">{slide.description}</p>
+				<div class="body">
+					<span class="tag date">{slide.publishedAt}</span>
+					<h2 class="serif">{slide.name}</h2>
+					<p>{slide.description}</p>
 				</div>
 			</div>
 		{/each}
 	</div>
 {/each}
+
+<style>
+	.genre-title {
+		text-align: center;
+		font-size: 24px;
+		margin: 40px 0 24px;
+	}
+	.vgrid {
+		margin: 0 auto 60px;
+	}
+</style>

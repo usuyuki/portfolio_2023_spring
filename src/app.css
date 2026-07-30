@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500&family=Kiwi+Maru:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500&family=Kiwi+Maru:wght@500&family=Space+Mono:wght@700&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -13,6 +13,7 @@
 
 	--font-serif: "Kaisei Decol", ui-serif, serif;
 	--font-sans: "Kiwi Maru", ui-sans-serif, sans-serif;
+	--font-tag: "Space Mono", monospace;
 }
 
 :root {
@@ -29,16 +30,16 @@
 	/* ふぉんと */
 	--heading-font: "Kaisei Decol";
 	--body-font: "Kiwi Maru";
+	--tag-font: "Space Mono", monospace;
+	--box-border: 6px;
 	--heder-height: 60px;
 	--footer-height: 120px;
 	--main-padding-top: 20px;
 	--main-max-width: 1300px;
-	--tb-frame-width: 30px;
-	--lr-frame-width: 30px;
 
 	/* アニメーション */
-	/* オープニングの時間(以後送らせるためのdelay用) */
-	--opening-time: 2000ms;
+	/* オープニングの時間(斜め帯のワイプアウトまで含めた完了時刻。以後送らせるためのdelay用) */
+	--opening-time: 4000ms;
 	/* オープニング後のSNSの動きが終わった時間 */
 	--after-sns-time: calc(var(--opening-time) + 700ms);
 	/* SNSのうごきのあと、アクセスカウンタの動きが終わった時間 */
@@ -46,8 +47,6 @@
 	/* 挨拶メッセージが終わった時間 */
 	--after-greeting-message-time: calc(var(--after-access-counter-time) + 700ms);
 	/* ここまで3800ms */
-	/* circle Menuの登場アニメーションが終わった時間 */
-	--after-circle-menu-time: calc(var(--after-greeting-message-time) + 1000ms);
 }
 /* スマホ向け */
 @media screen and (max-width: 640px) {
@@ -56,29 +55,29 @@
 		--footer-height: 120px;
 		--main-padding-top: 20px;
 		--main-max-width: 1300px;
-		--tb-frame-width: 25px;
-		--lr-frame-width: 15px;
 	}
 }
 
-body {
-	scroll-behavior: smooth;
-	background-color: var(--white);
-	color: var(--black);
-}
+@layer base {
+	body {
+		scroll-behavior: smooth;
+		background-color: var(--white);
+		color: var(--black);
+	}
 
-main {
-	padding: 1rem calc(1rem + var(--lr-frame-width));
-	max-width: var(--main-max-width);
-	margin: var(--tb-frame-width) auto;
-	min-height: calc(100vh - var(--heder-height) - var(--footer-height));
-	padding-top: var(--main-padding-top);
-}
-a {
-	color: var(--secondary);
-}
-a:hover {
-	color: var(--primary);
+	main {
+		padding: 1rem;
+		max-width: var(--main-max-width);
+		margin: 0 auto;
+		min-height: calc(100vh - var(--heder-height) - var(--footer-height));
+		padding-top: var(--main-padding-top);
+	}
+	a {
+		color: var(--black);
+	}
+	a:hover {
+		color: var(--pink);
+	}
 }
 
 /* Tailwind animation delayないので追加 */
@@ -94,4 +93,114 @@ a:hover {
 
 .tategaki {
 	writing-mode: vertical-rl;
+}
+
+/* ===== RPGウィンドウ風 共通パーツ ===== */
+@layer components {
+	/* ウィンドウ枠(カード・タイル・パネル共通のベース) */
+	.box {
+		position: relative;
+		background: var(--white);
+		border: var(--box-border) solid var(--black);
+		border-radius: 22px;
+		box-shadow: 8px 8px 0 var(--black);
+	}
+
+	/* セクション見出しに添えるタグ風ラベル(QUEST 01 等) */
+	.box-tag {
+		display: inline-block;
+		font-family: var(--tag-font);
+		font-size: 13px;
+		letter-spacing: 1px;
+		background: var(--black);
+		color: var(--white);
+		padding: 6px 14px;
+		border-radius: 10px;
+	}
+
+	/* 太い黒枠+オフセット影のボタン */
+	.btn-rpg {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		font-family: var(--tag-font);
+		font-size: 15px;
+		letter-spacing: 1px;
+		padding: 18px 34px;
+		border-radius: 16px;
+		border: 4px solid var(--black);
+		box-shadow: 6px 6px 0 var(--black);
+		transition: box-shadow 0.07s ease-out;
+	}
+	.btn-rpg.small {
+		padding: 12px 22px;
+		font-size: 12px;
+	}
+
+	/* プレス中(is-pressedクラスはpressEasingアクションが付与/削除する) */
+	.box.is-pressed,
+	.btn-rpg.is-pressed {
+		box-shadow: 1px 1px 0 var(--black) !important;
+		transition: box-shadow 0.07s ease-out;
+	}
+	.box:not(.is-pressed),
+	.btn-rpg:not(.is-pressed) {
+		transition: box-shadow 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	/* 見出し用フォント(サイト内で幅広く使われる共通ユーティリティ) */
+	.serif {
+		font-family: var(--heading-font);
+	}
+
+	/* 動画/スライド一覧ページ共通のカードグリッド(works/videos, works/slides) */
+	.media-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 26px;
+		max-width: 1200px;
+		padding: 0 16px;
+	}
+	.media-grid .vcard {
+		overflow: hidden;
+	}
+	.media-grid .frame {
+		aspect-ratio: 16 / 9;
+		width: 100%;
+		display: block;
+		border-bottom: var(--box-border) solid var(--black);
+	}
+	.media-grid .body {
+		padding: 20px;
+	}
+	.media-grid .tag.date {
+		font-family: var(--tag-font);
+		font-size: 11px;
+		opacity: 0.7;
+	}
+	.media-grid .body h2 {
+		font-size: 19px;
+		margin: 8px 0;
+	}
+	.media-grid .body p {
+		font-size: 13px;
+		margin: 0;
+	}
+	@media (max-width: 860px) {
+		.media-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* ヒーロー見出し(トップページの巨大タイトル用) */
+	.hero-title {
+		font-family: var(--heading-font);
+		font-size: clamp(64px, 16vw, 220px);
+		line-height: 0.86;
+		-webkit-text-stroke: 3px var(--black);
+		color: var(--white);
+		text-shadow:
+			6px 6px 0 var(--pink),
+			12px 12px 0 var(--black);
+	}
 }

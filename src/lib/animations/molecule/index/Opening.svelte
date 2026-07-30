@@ -1,303 +1,215 @@
-<div class="animation-wrapper">
-	<p>
-		<!-- うすゆきどっとねっと -->
-		<span>う</span>
-		<span>す</span>
-		<span>ゆ</span>
-		<span>き</span>
-		<span>ど</span>
-		<span>っ</span>
-		<span>と</span>
-		<span>ね</span>
-		<span>っ</span>
-		<span>と</span>
-	</p>
-	<div class="rhombus"></div>
-	<div class="ripples"></div>
-	<div class="ripples-dotted"></div>
-</div>
+<script lang="ts">
+	import gsap from "gsap";
+	import { onDestroy, onMount } from "svelte";
+	import { prefersReducedMotion } from "$lib/utils/motion";
+	import {
+		OPENING_FINISHED_EVENT,
+		OPENING_SESSION_KEY,
+	} from "$lib/utils/openingEvent";
+
+	let overlayEl: HTMLElement;
+	let logoBoxEl: HTMLElement;
+	let loadingEl: HTMLElement;
+	let gaugeFillEl: HTMLElement;
+
+	// visible: オーバーレイをDOMに残すかどうか。falseになったらこのコンポーネントごと外れる想定
+	let visible = true;
+	let skipped = false;
+	// finish()自体の再入防止(フェードアウト完了までの間、オーバーレイはまだクリック可能なため)
+	let finishing = false;
+
+	// ページの実読み込み(画像・フォント等を含む)が完了しているか。完了前にゲージが満タンになった場合はゲージを繰り返す
+	const isPageLoaded = () =>
+		typeof document !== "undefined" && document.readyState === "complete";
+
+	// 退場演出はシーンチェンジ(WipeBars)とは別に、オーバーレイ自体のフェードアウトのみで済ませる
+	// delay: ゲージ満タン直後にフェードが始まると唐突なため、一呼吸置いてから抜ける(スキップ時は0で即応させる)
+	const finish = (delay = 0.2) => {
+		if (finishing) return;
+		finishing = true;
+		gsap.to(overlayEl, {
+			opacity: 0,
+			duration: 0.5,
+			delay,
+			ease: "power1.out",
+			onComplete: () => {
+				visible = false;
+				// AccessCounter/MisskeyRecentNotes/SNSMenu等、オープニング後に登場する演出へ完了を通知する
+				document.dispatchEvent(new CustomEvent(OPENING_FINISHED_EVENT));
+			},
+		});
+	};
+
+	// NOW LOADINGゲージを1周(scaleX 0→1、1.0s)させる。満タンになった時点で判定し、
+	// まだページ読み込みが終わっていなければゲージを0へ戻してもう一周させる(仕様への追加要望: ローディングが終わるまで繰り返す)。
+	// 逆に読み込みが先に終わっていても、再生中の1周は最後まで走らせてから次へ進む(演出が唐突に途切れるのを防ぐ)
+	const runGaugeLoop = (onceComplete: () => void) => {
+		gsap.fromTo(
+			gaugeFillEl,
+			{ scaleX: 0 },
+			{
+				scaleX: 1,
+				duration: 1.0,
+				ease: "power1.inOut",
+				onComplete: () => {
+					// skipOpening側でkillTweensOfされた後にこのコールバックが呼ばれ、ループが復活するのを防ぐ
+					if (skipped) return;
+					if (isPageLoaded()) {
+						onceComplete();
+						return;
+					}
+					gsap.set(gaugeFillEl, { scaleX: 0 });
+					runGaugeLoop(onceComplete);
+				},
+			},
+		);
+	};
+
+	const playOpening = () => {
+		if (prefersReducedMotion()) {
+			// スケール/波紋演出を省略し、フェードのみで即座に表示する
+			gsap.set(logoBoxEl, { scale: 1, opacity: 1 });
+			gsap.set(loadingEl, { opacity: 1 });
+			gsap.set(gaugeFillEl, { scaleX: 1 });
+			finish(0);
+			return;
+		}
+		// 複数要素にまたがるgsap.timeline()の絶対位置指定は環境によってcall()コールバックの発火が安定しないため、
+		// 要素ごとのtween → onCompleteでの逐次実行に分けて確実性を優先する
+		gsap.to(logoBoxEl, {
+			scale: 1,
+			opacity: 1,
+			duration: 0.5,
+			ease: "back.out(2.5)",
+			delay: 0.1,
+			onComplete: () => {
+				gsap.to(loadingEl, {
+					opacity: 1,
+					duration: 0.3,
+					onComplete: () => {
+						runGaugeLoop(finish);
+					},
+				});
+			},
+		});
+	};
+
+	const skipOpening = () => {
+		if (skipped) return;
+		skipped = true;
+		gsap.killTweensOf([logoBoxEl, loadingEl, gaugeFillEl, overlayEl]);
+		finish(0);
+	};
+
+	onMount(() => {
+		if (typeof window === "undefined") return;
+		if (window.sessionStorage.getItem(OPENING_SESSION_KEY)) {
+			visible = false;
+			return;
+		}
+		window.sessionStorage.setItem(OPENING_SESSION_KEY, "1");
+		playOpening();
+	});
+
+	// ページ遷移等でコンポーネントが破棄される際、再帰的なrunGaugeLoopや進行中のtweenを止める
+	onDestroy(() => {
+		skipped = true;
+		if (typeof window === "undefined") return;
+		gsap.killTweensOf([logoBoxEl, loadingEl, gaugeFillEl, overlayEl]);
+	});
+</script>
+
+{#if visible}
+	<div
+		bind:this={overlayEl}
+		class="opening"
+		role="button"
+		tabindex="0"
+		aria-label="オープニング演出をスキップ"
+		on:click={skipOpening}
+		on:keydown={(e) => (e.key === "Enter" || e.key === " ") && skipOpening()}
+	>
+		<div bind:this={logoBoxEl} class="box logo-box">
+			<h1 class="serif">
+				<span>う</span><span>す</span><span>ゆ</span><span>き</span><span>ど</span><span
+					>っ</span
+				><span>と</span><span>ね</span><span>っ</span><span>と</span>
+			</h1>
+		</div>
+		<div bind:this={loadingEl} class="loading">
+			<span class="label tag">NOW LOADING</span>
+			<div class="gauge">
+				<div bind:this={gaugeFillEl} class="gauge-fill"></div>
+			</div>
+		</div>
+		<span class="skip tag">CLICK / TAP TO SKIP</span>
+	</div>
+{/if}
 
 <style>
-	/* 広がる波紋 */
-	.ripples {
-		width: 5%;
-		aspect-ratio: 1/1;
-		border-radius: 50%;
-		position: absolute;
-		top: 40%;
-		left: 50%;
-		z-index: 3;
-		opacity: 0;
-		background-color: var(--white);
-		border: 1px solid var(--blue);
-		animation: ripples 2s;
-		animation-delay: 1.1s;
-		animation-iteration-count: 1;
-		animation-fill-mode: forwards;
-	}
-	@keyframes ripples {
-		0% {
-			transform: scale(0);
-			opacity: 1;
-		}
-		99% {
-			transform: scale(30);
-		}
-		/* 戻さないとサイトのwidthがぶっ壊れ倒す */
-		100% {
-			opacity: 0;
-			transform: scale(0);
-		}
-	}
-
-	.ripples-dotted {
-		width: 5%;
-		aspect-ratio: 1/1;
-		border-radius: 50%;
-		position: absolute;
-		top: 40%;
-		left: 50%;
-		z-index: 3;
-		opacity: 0;
-		border: 1px dotted var(--yellow);
-		animation: ripples-dotted 1s;
-		animation-delay: 2s;
-		animation-iteration-count: 1;
-		animation-fill-mode: forwards;
-	}
-	@keyframes ripples-dotted {
-		0% {
-			transform: scale(30);
-			opacity: 1;
-		}
-		100% {
-			transform: scale(0);
-			opacity: 0;
-		}
-	}
-	/* 文字を取り巻く図形 */
-
-	/* ひし形 */
-	.rhombus {
-		position: absolute;
-		top: 40%;
-		left: 50%;
-		width: 40px;
-		height: 40px;
-		background: var(--pink);
-		transform: skew(30deg, 30deg);
-	}
-	/** 文字関連 */
-	p {
-		/* font読み込みで崩れるので、ユーザーの端末で持つフォントを指定する */
-		font-family:
-			'MS UI Gothic', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', sans-serif;
-		color: var(--white);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		text-shadow: 0 2px 5px rgba(46, 46, 196, 0.8);
-	}
-	p > span {
-		font-size: 3rem;
-		margin: 0.2em 0.3rem;
-	}
-	/* スマホ向けはサイズ落とす */
-	@media screen and (max-width: 768px) {
-		p > span {
-			font-size: 1.5rem;
-		}
-	}
-
-	/* 文字を1つずつカクカクと動かして整列させる */
-	span {
-		animation-duration: 1s;
-		animation-iteration-count: 1;
-		animation-fill-mode: forwards;
-	}
-	span:nth-of-type(1) {
-		animation-name: span1;
-	}
-	span:nth-of-type(2) {
-		animation-name: span2;
-	}
-	span:nth-of-type(3) {
-		animation-name: span3;
-	}
-	span:nth-of-type(4) {
-		animation-name: span4;
-	}
-	span:nth-of-type(5) {
-		animation-name: span5;
-	}
-	span:nth-of-type(6) {
-		animation-name: span6;
-	}
-	span:nth-of-type(7) {
-		animation-name: span7;
-	}
-	span:nth-of-type(8) {
-		animation-name: span8;
-	}
-	span:nth-of-type(9) {
-		animation-name: span9;
-	}
-	span:nth-of-type(10) {
-		animation-name: span10;
-	}
-
-	@keyframes span1 {
-		0% {
-			transform: translate(70%, 40%);
-		}
-		20% {
-			transform: translate(40%, 30%);
-		}
-		50% {
-			transform: translate(10%, 30%);
-		}
-		80% {
-			transform: translate(8%, 10%);
-		}
-		90% {
-			transform: translate(5%, 5%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span2 {
-		0% {
-			transform: translate(30%, 40%);
-		}
-		50% {
-			transform: translate(20%, 30%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span3 {
-		0% {
-			transform: translate(40%, 20%);
-		}
-		50% {
-			transform: translate(30%, 40%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span4 {
-		0% {
-			transform: translate(50%, 50%);
-		}
-		50% {
-			transform: translate(40%, 20%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span5 {
-		0% {
-			transform: translate(60%, 30%);
-		}
-		50% {
-			transform: translate(50%, 50%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span6 {
-		0% {
-			transform: translate(70%, 60%);
-		}
-		50% {
-			transform: translate(60%, 30%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span7 {
-		0% {
-			transform: translate(80%, 10%);
-		}
-		50% {
-			transform: translate(70%, 60%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span8 {
-		0% {
-			transform: translate(90%, 70%);
-		}
-		50% {
-			transform: translate(80%, 10%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span9 {
-		0% {
-			transform: translate(100%, 40%);
-		}
-		50% {
-			transform: translate(90%, 70%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-	@keyframes span10 {
-		0% {
-			transform: translate(110%, 80%);
-		}
-		50% {
-			transform: translate(100%, 40%);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-
-	/* ラッパー自体のAnimation */
-	.animation-wrapper {
+	.opening {
+		position: fixed;
+		inset: 0;
 		z-index: 1000;
-		overflow: hidden;
+		background: var(--black);
 		display: flex;
 		flex-direction: column;
-		position: fixed;
-		top: 0;
-		left: 0;
-		background-color: var(--black);
-		/* 100%だと、スクロールバーの幅分が引かれてしまうので、calcで調整 */
-		width: calc(100% - calc(100% - 100%));
-		height: 100vh;
-		animation: fadeout 0.5s;
-		animation-delay: 1.5s;
-		animation-iteration-count: 1;
-		animation-fill-mode: forwards;
+		align-items: center;
+		justify-content: center;
+		gap: 26px;
+		cursor: pointer;
 	}
-	@keyframes fadeout {
-		0% {
-			opacity: 1;
-			--overflow-rule: 'hidden';
-		}
-		99% {
-			opacity: 0;
-			height: 100%;
-		}
-		100% {
-			height: 0;
-			visibility: hidden;
-		}
+	.serif {
+		font-family: var(--heading-font);
+	}
+	.tag {
+		font-family: var(--tag-font);
+	}
+	.logo-box {
+		padding: 26px 44px;
+		box-shadow: 8px 8px 0 var(--pink);
+		transform: scale(0.4);
+		opacity: 0;
+	}
+	.logo-box h1 {
+		font-size: clamp(28px, 6vw, 56px);
+		margin: 0;
+		letter-spacing: 2px;
+		line-height: 1.2;
+		text-align: center;
+	}
+	.loading {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+		opacity: 0;
+	}
+	.loading .label {
+		color: var(--white);
+		font-size: 12px;
+		letter-spacing: 3px;
+	}
+	.gauge {
+		width: 260px;
+		height: 18px;
+		background: var(--ui-bg);
+		border: 3px solid var(--white);
+		border-radius: 999px;
+		overflow: hidden;
+	}
+	.gauge-fill {
+		height: 100%;
+		background: var(--pink);
+		width: 100%;
+		border-radius: 999px;
+		transform-origin: left;
+		transform: scaleX(0);
+	}
+	.skip {
+		color: var(--white);
+		font-size: 10px;
+		opacity: 0.5;
+		margin-top: 10px;
 	}
 </style>

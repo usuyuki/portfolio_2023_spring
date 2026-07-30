@@ -2,7 +2,7 @@
 	export let title: string;
 </script>
 
-<div class="px-2 mt-4">
-	<h2 class="text-xl">{title}</h2>
+<div class="box p-6 mb-6 bg-white">
+	<h2 class="serif text-xl mb-2">{title}</h2>
 	<slot />
 </div>

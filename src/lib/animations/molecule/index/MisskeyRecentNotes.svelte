@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
 	import { fly } from "svelte/transition";
 	import misskeyLogo from "$lib/assets/icon/misskey-logo.png";
 	import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
 	import type { misskeyContentType } from "$lib/types/misskeyContent";
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
+	import { onOpeningFinished } from "$lib/utils/openingEvent";
 
 	export let notes: misskeyContentType[] = [];
 
@@ -18,35 +20,51 @@
 	const FLIP_DURATION_MS = 500;
 	// 回転が90度になり吹き出しが真横を向いて見えなくなる瞬間(アニメーション中間点)で中身を差し替える
 	const FLIP_MIDPOINT_MS = FLIP_DURATION_MS / 2;
-	// --after-greeting-message-time(app.css)と同じ値(挨拶メッセージが終わった時間)。CSS変数はJS側から参照できないため直値で合わせる
-	// opening-time(2000) + 700 + 3400 + 700 = 6800ms
-	const SHOW_DELAY_MS = 6800;
+	// オープニング完了から、SNS(700ms)→アクセスカウンター(3400ms)→挨拶メッセージ(700ms)の演出が
+	// 終わるまでの合計時間(app.cssの--after-greeting-message-time相当)
+	const SHOW_DELAY_MS = 700 + 3400 + 700;
 
-	if (notes.length > 1) {
-		setTimeout(() => {
-			visible = true;
-			setInterval(() => {
-				flipping = true;
-				setTimeout(() => {
-					currentIndex = (currentIndex + 1) % notes.length;
-				}, FLIP_MIDPOINT_MS);
-				setTimeout(() => {
-					flipping = false;
-				}, FLIP_DURATION_MS);
-			}, SWITCH_INTERVAL_MS);
-		}, SHOW_DELAY_MS);
-	} else if (notes.length === 1) {
-		setTimeout(() => {
-			visible = true;
-		}, SHOW_DELAY_MS);
-	}
+	// setTimeout/setIntervalのIDを保持し、コンポーネント破棄時にまとめてクリアする
+	let showTimeoutId: ReturnType<typeof setTimeout>;
+	let switchIntervalId: ReturnType<typeof setInterval>;
+	let flipMidTimeoutId: ReturnType<typeof setTimeout>;
+	let flipEndTimeoutId: ReturnType<typeof setTimeout>;
+
+	// オープニング演出が完了(またはスキップ/再訪問で不要)になったのを待ってから表示する
+	const unsubscribe = onOpeningFinished(() => {
+		if (notes.length > 1) {
+			showTimeoutId = setTimeout(() => {
+				visible = true;
+				switchIntervalId = setInterval(() => {
+					flipping = true;
+					flipMidTimeoutId = setTimeout(() => {
+						currentIndex = (currentIndex + 1) % notes.length;
+					}, FLIP_MIDPOINT_MS);
+					flipEndTimeoutId = setTimeout(() => {
+						flipping = false;
+					}, FLIP_DURATION_MS);
+				}, SWITCH_INTERVAL_MS);
+			}, SHOW_DELAY_MS);
+		} else if (notes.length === 1) {
+			showTimeoutId = setTimeout(() => {
+				visible = true;
+			}, SHOW_DELAY_MS);
+		}
+	});
+	onDestroy(() => {
+		unsubscribe();
+		clearTimeout(showTimeoutId);
+		clearInterval(switchIntervalId);
+		clearTimeout(flipMidTimeoutId);
+		clearTimeout(flipEndTimeoutId);
+	});
 
 	$: currentNote = notes[currentIndex];
 </script>
 
 {#if notes.length > 0 && visible}
 	<div class="flex justify-center mt-12" in:fly|global={{ y: 50, duration: 500 }}>
-		<div class="max-w-xl w-full mx-4 p-4 rounded-2xl bg-white shadow-md">
+		<div class="note-card mx-4 p-4 rounded-2xl bg-white shadow-md">
 			<div class="flex items-center justify-center gap-2 mb-2">
 				<p class="h2 text-center font-serif text-xl">最近のうすゆき</p>
 				<a
@@ -60,7 +78,7 @@
 					<img alt="misskey logo" class="w-3 h-3" src={misskeyLogo} />
 				</a>
 			</div>
-			<div class="flex items-start">
+			<div class="flex items-start flex-1 min-h-0">
 				<img
 					alt="うすゆきアイコン"
 					class="w-12 h-12 rounded-full flex-shrink-0"
@@ -89,6 +107,15 @@
 {/if}
 
 <style>
+	/* 投稿の長さによってカード全体の大きさがガタつかないよう、幅・高さともに固定する */
+	.note-card {
+		width: 576px;
+		max-width: calc(100vw - 2rem);
+		height: 208px;
+		display: flex;
+		flex-direction: column;
+	}
+
 	.balloon {
 		background-color: var(--ui-bg);
 		border-radius: 1rem;

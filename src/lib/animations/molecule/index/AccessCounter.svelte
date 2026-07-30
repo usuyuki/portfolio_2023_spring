@@ -1,24 +1,44 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
 	import { fly } from "svelte/transition";
 	import Burst from "$lib/animations/atom/Burst.svelte";
+	import { onOpeningFinished } from "$lib/utils/openingEvent";
 	export let count: string;
 	let visible = false;
 	const countInt = parseInt(count, 10);
 
 	$: nowValue = 0;
-	//アニメーションが終わるのを待ってから表示
-	setTimeout(() => {
-		visible = true;
-		//2秒掛けてnowValueの値をcountの値にする
-		for (let i = 0; i <= countInt; i++) {
-			setTimeout(
-				() => {
-					nowValue = i;
-				},
-				(2000 / countInt) * i,
-			);
+	// SNSアイコンの登場演出(app.cssの--after-sns-time相当)がオープニング完了から700ms後に終わるため、
+	// カウンターはそのぶん遅らせて表示する
+	const SHOW_DELAY_MS = 700;
+	// setTimeoutのIDを保持し、コンポーネント破棄時にまとめてクリアする
+	let showTimeoutId: ReturnType<typeof setTimeout>;
+	const countUpTimeoutIds: ReturnType<typeof setTimeout>[] = [];
+
+	// オープニング演出が完了(またはスキップ/再訪問で不要)になったのを待ってから表示する
+	const unsubscribe = onOpeningFinished(() => {
+		showTimeoutId = setTimeout(() => {
+			visible = true;
+			//2秒掛けてnowValueの値をcountの値にする
+			for (let i = 0; i <= countInt; i++) {
+				countUpTimeoutIds.push(
+					setTimeout(
+						() => {
+							nowValue = i;
+						},
+						(2000 / countInt) * i,
+					),
+				);
+			}
+		}, SHOW_DELAY_MS);
+	});
+	onDestroy(() => {
+		unsubscribe();
+		clearTimeout(showTimeoutId);
+		for (const id of countUpTimeoutIds) {
+			clearTimeout(id);
 		}
-	}, 2700);
+	});
 </script>
 
 <div
