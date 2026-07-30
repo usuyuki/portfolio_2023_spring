@@ -38,6 +38,9 @@
 			clearTimeout(revealTimeoutId);
 			revealTimeoutId = undefined;
 		}
+		// 前サイクルのpendingRevealが残っていると、今回のcoverWithBars完了時に
+		// 無関係な古い遷移分のstartReveal()が誤発火してしまうためリセットする
+		pendingReveal = false;
 		showBars = true;
 		isCovering = true;
 		hideContent = true;
