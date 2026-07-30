@@ -48,7 +48,7 @@
 		<img
 			alt="うすゆきアイコン"
 			use:pressEasing
-			class="icon w-32 h-32 rounded-full object-cover border-4 border-black shadow-[6px_6px_0_var(--yellow)]"
+			class="icon reveal-fade-up w-32 h-32 rounded-full object-cover border-4 border-black shadow-[6px_6px_0_var(--yellow)]"
 			class:started={iconStarted}
 			src={usuyukiIcon}
 		/>
@@ -193,27 +193,8 @@
 		   詰めすぎて重ならないようにする */
 		margin-top: calc(var(--ellipse-ry) * -0.35);
 	}
-	/* WelcomeGreeting(吹き出し)と登場タイミングを揃えるため、同じonOpeningFinishedイベントで発火する。
-	   .startedが付くまではplay-state:pausedで0%の状態のまま止めておく */
-	.icon-greeting .icon {
-		animation: iconFadeUp 0.5s;
-		animation-play-state: paused;
-		animation-fill-mode: forwards;
-		opacity: 0;
-	}
-	.icon-greeting .icon.started {
-		animation-play-state: running;
-	}
-	@keyframes iconFadeUp {
-		from {
-			opacity: 0;
-			transform: translateY(50px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+	/* フェードイン自体はapp.cssの.reveal-fade-up共通クラスに委譲。
+	   WelcomeGreeting(吹き出し)と登場タイミングを揃えるため、同じonOpeningFinishedイベントで発火する */
 	.sec {
 		padding: 90px 4px;
 		max-width: 1200px;
