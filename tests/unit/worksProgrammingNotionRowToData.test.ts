@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { WorksProgrammingRow } from "$lib/types/notion";
-import { notionRowToData } from "../../src/routes/works/programming/[id]/+page.server";
+import { notionRowToData } from "../../src/lib/utils/adapter/worksProgrammingNotionRowToData";
 
 // テストで使い回す最小限のNotionレスポンス。各テストケースでpropertiesを部分的に上書きする
 const baseRow: WorksProgrammingRow = {
