@@ -12,7 +12,7 @@ import {
 import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている
-type dataType = {
+type allWorksDataType = {
 	allWorks: {
 		[key: string]: worksProgrammingShortType;
 	};
@@ -45,7 +45,7 @@ export const load = (async ({ platform, fetch }) => {
 		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 
-	const data: dataType = { allWorks: {} };
+	const data: allWorksDataType = { allWorks: {} };
 
 	response.results.forEach((row: WorksProgrammingRow) => {
 		//ここですべてのデータはとれる

@@ -38,10 +38,10 @@
 	/>
 </div>
 
-<div class="media-grid works-grid vgrid">
+<div class="media-grid works-grid">
 	{#each works as [id, work], index}
 		{@const variant = mediaCardVariants[index % mediaCardVariants.length]}
-		<a class="work-card-link {variant.bg}" href="/works/programming/{id}" use:pressEasing>
+		<a class="work-card-link" href="/works/programming/{id}" use:pressEasing>
 			<div class="box vcard {variant.bg} {variant.text}">
 				<img
 					loading="lazy"
@@ -90,6 +90,8 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		/* flexアイテムはmin-width:autoが既定でellipsisが効かないためリセットする */
+		min-width: 0;
 	}
 	.works-grid .body p {
 		display: -webkit-box;
@@ -104,6 +106,7 @@
 		}
 	}
 	@media (max-width: 860px) {
+		/* app.cssの.media-gridも同じ860pxで1カラムに上書きするが、このページは4→3→2カラムの段階的な縮小にしたいため.works-gridで再上書きする */
 		.works-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}

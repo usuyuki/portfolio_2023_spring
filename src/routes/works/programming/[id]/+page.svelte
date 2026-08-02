@@ -114,6 +114,7 @@
 	<div class="flex absolute inset-x-0 -top-6 justify-center">
 		<span class="box-tag serif text-xl px-5 py-1.5">つくったもの！</span>
 	</div>
+	<!-- data.data(このページの作品)ではなくdata.allWorks(+layout.server.tsから来る全作品一覧)を渡す -->
 	<ArticleTimeline works={data.allWorks} />
 </div>
 
