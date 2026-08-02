@@ -4,73 +4,51 @@ import { APIErrorCode } from "@notionhq/client";
 import { error } from "@sveltejs/kit";
 import type { WorksProgrammingRow } from "$lib/types/notion";
 import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
-import { getNotionClient, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
+import { CACHE_TTL, getNotionClient } from "$lib/utils/adapter/notionAdapter";
+import { notionRowToData } from "$lib/utils/adapter/worksProgrammingNotionRowToData";
 import type { PageServerLoad } from "./$types";
 
 // id:データになっている
 type dataType = {
 	data: worksProgrammingType;
 };
-export const load = (async ({ params, platform, fetch }) => {
-	const cacheKey = `notion:page:${params.id}`;
 
-	// Check KV cache first
-	if (platform?.env?.KV) {
-		try {
-			const cached = await platform.env.KV.get(cacheKey, { type: "json" });
-			if (cached) {
-				console.log(`KV cache hit for page: ${params.id}`);
-				const response = cached as WorksProgrammingRow;
-				// Same logic as below but with cached data
-				if (!response.properties.isPublished.checkbox) {
-					error(403);
-				}
-				const data: dataType = {
-					data: {
-						slug: response.id,
-						background: response.properties.background.rich_text[0].plain_text,
-						content:
-							response.properties.content.rich_text.length === 0
-								? null
-								: response.properties.content.rich_text[0].plain_text,
-						tech: response.properties.tech.multi_select.map((item) => {
-							return { name: item.name, id: item.id };
-						}),
-						logo:
-							response.properties.logo.files.length !== 0
-								? response.properties.logo.files[0].file.url
-								: false,
-						gitHub: response.properties.gitHub.url,
-						link: response.properties.link.url,
-						summary: response.properties.summary.rich_text[0].plain_text,
-						whatToOffer:
-							response.properties.whatToOffer.rich_text[0].plain_text,
-						genre: {
-							name: response.properties.genre.select.name,
-							id: response.properties.genre.select.id,
-						},
-						publishedAt: response.properties.publishedAt.date.start.replace(
-							/-/g,
-							"/",
-						),
-						toWhom: response.properties.toWhom.rich_text[0].plain_text,
-						form: {
-							name: response.properties.form.select.name,
-							id: response.properties.form.select.id,
-						},
-						kodawari: response.properties.kodawari.rich_text[0].plain_text,
-						kana: response.properties.kana.rich_text[0].plain_text,
-						gallery: response.properties.gallery.files.map((item) => {
-							return item.file.url;
-						}),
-						name: response.properties.name.title[0].plain_text,
+export const load = (async ({ params, platform, fetch, parent }) => {
+	// +layout.server.tsが一覧取得時に個別ページの全フィールドも一緒に持ってきているため、
+	// そこにヒットすればNotionへの追加リクエスト(pages.retrieve)を省略できる
+	// parent()はlayout側のNotionクエリ完了を待つため、KVキャッシュ読み取りと並列に走らせて待ち時間を短縮する
+	const cacheKey = `notion:page:${params.id}`;
+	const cachedPromise =
+		platform?.env?.KV != null
+			? platform.env.KV.get(cacheKey, { type: "json" }).catch(
+					(cacheError: unknown) => {
+						console.warn(`KV cache read failed for ${cacheKey}:`, cacheError);
+						return null;
 					},
-				};
-				return data;
-			}
-		} catch (cacheError) {
-			console.warn(`KV cache read failed for ${cacheKey}:`, cacheError);
+				)
+			: Promise.resolve(null);
+
+	const [{ allWorks }, cached] = await Promise.all([parent(), cachedPromise]);
+	const fromLayout = allWorks[params.id];
+	if (fromLayout) {
+		// allWorksはisPublished=trueのみを抽出したクエリ結果から作られるため、
+		// ここに存在する時点で必ずisPublished===trueであり、この分岐は理論上通らない
+		const {
+			thumbnail: _thumbnail,
+			isPublished: _isPublished,
+			...data
+		} = fromLayout;
+		return { data } satisfies dataType;
+	}
+
+	// layoutのデータに無いid(非公開ページの直接アクセスなど)の場合のみ、
+	// Notionへ個別に問い合わせるフォールバック
+	if (cached) {
+		const response = cached as WorksProgrammingRow;
+		if (!response.properties.isPublished.checkbox) {
+			error(403);
 		}
+		return { data: notionRowToData(response) } satisfies dataType;
 	}
 
 	try {
@@ -80,15 +58,11 @@ export const load = (async ({ params, platform, fetch }) => {
 			page_id: params.id,
 		})) as unknown as WorksProgrammingRow;
 
-		// Cache the response
 		if (platform?.env?.KV) {
 			try {
 				await platform.env.KV.put(cacheKey, JSON.stringify(response), {
 					expirationTtl: CACHE_TTL.PAGE_RETRIEVE,
 				});
-				console.log(
-					`KV cache stored for page: ${params.id} (TTL: ${CACHE_TTL.PAGE_RETRIEVE}s)`,
-				);
 			} catch (cacheError) {
 				console.warn(`KV cache write failed for ${cacheKey}:`, cacheError);
 			}
@@ -98,49 +72,7 @@ export const load = (async ({ params, platform, fetch }) => {
 			error(403);
 			//処理はtry catchのcatchで続く
 		}
-		const data: dataType = {
-			data: {
-				slug: response.id,
-				background: response.properties.background.rich_text[0].plain_text,
-				content:
-					response.properties.content.rich_text.length === 0
-						? null
-						: response.properties.content.rich_text[0].plain_text,
-				tech: response.properties.tech.multi_select.map((item) => {
-					return { name: item.name, id: item.id };
-				}),
-				// ファイル&メディアは値なしだと空配列になる
-				logo:
-					response.properties.logo.files.length !== 0
-						? response.properties.logo.files[0].file.url
-						: false,
-				// URLは値入れていない場合はnullになるのでそのまま処理不要
-				gitHub: response.properties.gitHub.url,
-				link: response.properties.link.url,
-				summary: response.properties.summary.rich_text[0].plain_text,
-				whatToOffer: response.properties.whatToOffer.rich_text[0].plain_text,
-				genre: {
-					name: response.properties.genre.select.name,
-					id: response.properties.genre.select.id,
-				},
-				publishedAt: response.properties.publishedAt.date.start.replace(
-					/-/g,
-					"/",
-				),
-				toWhom: response.properties.toWhom.rich_text[0].plain_text,
-				form: {
-					name: response.properties.form.select.name,
-					id: response.properties.form.select.id,
-				},
-				kodawari: response.properties.kodawari.rich_text[0].plain_text,
-				kana: response.properties.kana.rich_text[0].plain_text,
-				gallery: response.properties.gallery.files.map((item) => {
-					return item.file.url;
-				}),
-				name: response.properties.name.title[0].plain_text,
-			},
-		};
-		return data;
+		return { data: notionRowToData(response) } satisfies dataType;
 	} catch (e: unknown) {
 		console.log(e);
 		//notionSdkでなくこちらで吐かせたエラーの処理
