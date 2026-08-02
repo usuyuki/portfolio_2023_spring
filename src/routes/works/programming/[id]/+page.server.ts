@@ -4,7 +4,7 @@ import { APIErrorCode } from "@notionhq/client";
 import { error } from "@sveltejs/kit";
 import type { WorksProgrammingRow } from "$lib/types/notion";
 import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
-import { getNotionClient, CACHE_TTL } from "$lib/utils/adapter/notionAdapter";
+import { CACHE_TTL, getNotionClient } from "$lib/utils/adapter/notionAdapter";
 import type { PageServerLoad } from "./$types";
 
 // id:データになっている
@@ -12,7 +12,7 @@ type dataType = {
 	data: worksProgrammingType;
 };
 
-const notionRowToData = (
+export const notionRowToData = (
 	response: WorksProgrammingRow,
 ): worksProgrammingType => ({
 	slug: response.id,
@@ -53,53 +53,39 @@ const notionRowToData = (
 export const load = (async ({ params, platform, fetch, parent }) => {
 	// +layout.server.tsが一覧取得時に個別ページの全フィールドも一緒に持ってきているため、
 	// そこにヒットすればNotionへの追加リクエスト(pages.retrieve)を省略できる
-	const { allWorks } = await parent();
+	// parent()はlayout側のNotionクエリ完了を待つため、KVキャッシュ読み取りと並列に走らせて待ち時間を短縮する
+	const cacheKey = `notion:page:${params.id}`;
+	const cachedPromise =
+		platform?.env?.KV != null
+			? platform.env.KV.get(cacheKey, { type: "json" }).catch(
+					(cacheError: unknown) => {
+						console.warn(`KV cache read failed for ${cacheKey}:`, cacheError);
+						return null;
+					},
+				)
+			: Promise.resolve(null);
+
+	const [{ allWorks }, cached] = await Promise.all([parent(), cachedPromise]);
 	const fromLayout = allWorks[params.id];
 	if (fromLayout) {
-		if (!fromLayout.isPublished) {
-			error(403, "403 今は公開してないよ。");
-		}
-		const data: dataType = {
-			data: {
-				slug: fromLayout.slug,
-				background: fromLayout.background,
-				content: fromLayout.content,
-				tech: fromLayout.tech,
-				logo: fromLayout.logo,
-				gitHub: fromLayout.gitHub,
-				link: fromLayout.link,
-				summary: fromLayout.summary,
-				whatToOffer: fromLayout.whatToOffer,
-				genre: fromLayout.genre,
-				publishedAt: fromLayout.publishedAt,
-				toWhom: fromLayout.toWhom,
-				form: fromLayout.form,
-				kodawari: fromLayout.kodawari,
-				kana: fromLayout.kana,
-				gallery: fromLayout.gallery,
-				name: fromLayout.name,
-			},
-		};
-		return data;
+		// allWorksはisPublished=trueのみを抽出したクエリ結果から作られるため、
+		// ここに存在する時点で必ずisPublished===trueであり、この分岐は理論上通らない
+		const {
+			thumbnail: _thumbnail,
+			isPublished: _isPublished,
+			...data
+		} = fromLayout;
+		return { data } satisfies dataType;
 	}
 
 	// layoutのデータに無いid(非公開ページの直接アクセスなど)の場合のみ、
 	// Notionへ個別に問い合わせるフォールバック
-	const cacheKey = `notion:page:${params.id}`;
-
-	if (platform?.env?.KV) {
-		try {
-			const cached = await platform.env.KV.get(cacheKey, { type: "json" });
-			if (cached) {
-				const response = cached as WorksProgrammingRow;
-				if (!response.properties.isPublished.checkbox) {
-					error(403);
-				}
-				return { data: notionRowToData(response) } satisfies dataType;
-			}
-		} catch (cacheError) {
-			console.warn(`KV cache read failed for ${cacheKey}:`, cacheError);
+	if (cached) {
+		const response = cached as WorksProgrammingRow;
+		if (!response.properties.isPublished.checkbox) {
+			error(403);
 		}
+		return { data: notionRowToData(response) } satisfies dataType;
 	}
 
 	try {
