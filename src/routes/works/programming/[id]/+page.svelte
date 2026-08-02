@@ -99,7 +99,7 @@
 		<div class="sec-head">
 			<h2 class="serif">ギャラリー</h2>
 		</div>
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
 			{#each data.data.gallery as image, index}
 				<div class="box gallery-item {bgClasses[index % bgClasses.length]}">
 					<img src={image} alt={data.data.name} loading="lazy" />
@@ -174,7 +174,7 @@
 	}
 	.gallery-item img {
 		width: 100%;
+		height: auto;
 		display: block;
-		object-fit: cover;
 	}
 </style>

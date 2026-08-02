@@ -127,14 +127,25 @@
 		/* スマホ幅では折り返して2段になると表示領域を圧迫するため、横スクロールのカルーセルにする */
 		.nav-carousel {
 			flex-wrap: nowrap;
-			width: 100%;
+			/* headerのpx-4(16px)の内側にさらに左右の余白を作り、hoverで拡大(scale 1.06)したタブが
+			   スクロールコンテナのoverflow-xで左右をクリップされて見切れないようにする。
+			   上下はheader自体のpy-2.5(10px)で拡大分を吸収できるため触らない */
+			width: calc(100% + 2rem);
+			margin-left: -1rem;
+			margin-right: -1rem;
+			padding: 2px 1rem 4px;
 			justify-content: flex-start;
 			overflow-x: auto;
 			scrollbar-width: thin;
 			-webkit-overflow-scrolling: touch;
-			padding-bottom: 2px;
-			/* 左端(HOME)は常に全体を見せたいので、フェードは右端(スクロール可能であることの示唆)だけに付ける */
-			mask-image: linear-gradient(to right, black calc(100% - 12px), transparent);
+			/* 左右どちらも枠の内側で自然にフェードさせ、中途半端に文字が切れて見切れるのを防ぐ */
+			mask-image: linear-gradient(
+				to right,
+				transparent,
+				black 1rem,
+				black calc(100% - 1rem),
+				transparent
+			);
 		}
 	}
 </style>
