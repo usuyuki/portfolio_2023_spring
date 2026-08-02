@@ -11,6 +11,33 @@ export type worksProgrammingShortType = {
 	publishedAt: string;
 	logo: string | false;
 };
+// +layout.server.tsで全作品を一括取得する際に、個別ページ用の全フィールドも一緒に持たせておくための型。
+// これにより[id]/+page.server.tsが個別にNotion pages.retrieveを呼ぶ必要がなくなる。
+export type worksProgrammingFullType = worksProgrammingShortType & {
+	slug: string;
+	background: string;
+	content: string | null;
+	tech: {
+		name: string;
+		id: string;
+	}[];
+	gitHub: string | null;
+	link: string | null;
+	whatToOffer: string;
+	genre: {
+		name: string;
+		id: string;
+	};
+	toWhom: string;
+	form: {
+		name: string;
+		id: string;
+	};
+	kodawari: string;
+	kana: string;
+	gallery: string[];
+	isPublished: boolean;
+};
 export type worksProgrammingType = {
 	slug: string;
 	background: string;

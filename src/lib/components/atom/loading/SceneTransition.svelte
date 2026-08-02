@@ -7,7 +7,7 @@
 	import { coverWithBars, revealFromBars } from "$lib/utils/actions/wipeBars";
 
 	// 帯が画面を覆いきるまでの最小表示時間(仕様8.2: 遷移が速すぎて視覚的にジャンプするのを防ぐ)
-	const MIN_COVER_MS = 750;
+	const MIN_COVER_MS = 400;
 
 	let backdrop: HTMLElement | undefined;
 	let bar1: HTMLElement | undefined;

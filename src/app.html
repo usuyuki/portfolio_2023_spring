@@ -28,6 +28,14 @@
       href="%sveltekit.assets%/img/favicon/icon-192x192.png"
     />
 
+    <!-- Google Fontsをapp.cssの@importでなくlinkタグで読み込み、preconnectで名前解決/TLSのラウンドトリップを事前に済ませる -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@500&family=Kiwi+Maru:wght@500&family=Space+Mono:wght@700&display=swap"
+    />
+
     %sveltekit.head%
 
     <!-- Google tag (gtag.js) - Optimized to prevent forced reflows -->

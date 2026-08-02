@@ -183,7 +183,10 @@
 	}
 	.gallery-item img {
 		width: 100%;
-		height: auto;
+		/* Notion由来の画像は実サイズが不明で幅/高さを事前指定できないため、
+		   aspect-ratioで暫定領域を確保しCLS(読み込み完了までのレイアウトシフト)を防ぐ */
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
 		display: block;
 	}
 </style>
