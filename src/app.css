@@ -76,6 +76,14 @@
 	.bg-blue a:hover {
 		color: var(--black);
 	}
+	/* works/programmingのカードは<a>が親でbg-xxxを持つ.vcardが子(他ページと逆構造)のため、
+	   上記の子孫セレクタが効かずa:hoverの--pinkがそのまま背景と同化して文字が消えていた。
+	   .vcardが子孫にある場合もカバーする */
+	a:has(.bg-pink):hover,
+	a:has(.bg-yellow):hover,
+	a:has(.bg-blue):hover {
+		color: var(--black);
+	}
 }
 
 /* Tailwind animation delayないので追加 */
