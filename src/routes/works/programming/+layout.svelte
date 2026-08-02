@@ -10,5 +10,5 @@
 	<div class="flex absolute inset-x-0 -top-6 justify-center">
 		<span class="box-tag serif text-xl px-5 py-1.5">つくったもの！</span>
 	</div>
-	<ArticleTimeline works={data.data} />
+	<ArticleTimeline works={data.allWorks} />
 </div>

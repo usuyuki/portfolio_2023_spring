@@ -13,7 +13,7 @@ import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている
 type dataType = {
-	data: {
+	allWorks: {
 		[key: string]: worksProgrammingShortType;
 	};
 };
@@ -45,12 +45,11 @@ export const load = (async ({ platform, fetch }) => {
 		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;
 
-	const data: dataType = { data: {} };
+	const data: dataType = { allWorks: {} };
 
 	response.results.forEach((row: WorksProgrammingRow) => {
 		//ここですべてのデータはとれる
-		/** @todo 個別ページはlayoutから渡すようにするとAPI叩く回数減らせる(本来の使い方と反するので、エラーハンドリングが面倒で保留にしている) */
-		data.data[row.id] = {
+		data.allWorks[row.id] = {
 			name: row.properties.name.title[0].plain_text,
 			//galleryの1枚目をサムネイルとして使う
 			thumbnail: row.properties.gallery.files[0].file.url,
