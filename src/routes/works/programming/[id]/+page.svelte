@@ -4,19 +4,19 @@
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
 	import { bgClasses } from "$lib/utils/bgClasses";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	let { data }: { data: PageData } = $props();
 
-	const metaList = [
+	const metaList = $derived([
 		{ emoji: "🚀", label: "ローンチ日", value: data.data.publishedAt },
 		{ emoji: "🙎", label: "開発形態", value: data.data.form.name },
 		{ emoji: "🍽", label: "ジャンル", value: data.data.genre.name },
 		{ emoji: "🏹", label: "誰のために作った？", value: data.data.toWhom },
-	];
-	const sentenceList = [
+	]);
+	const sentenceList = $derived([
 		{ title: "目的", content: data.data.whatToOffer, bg: "bg-pink" },
 		{ title: "背景", content: data.data.background, bg: "bg-blue" },
 		{ title: "こだわり", content: data.data.kodawari, bg: "bg-yellow" },
-	];
+	]);
 </script>
 
 <NormalHead title={data.data.name} description={data.data.summary} ogImage={data.data.gallery[0]} />
@@ -183,10 +183,8 @@
 	}
 	.gallery-item img {
 		width: 100%;
-		/* Notion由来の画像は実サイズが不明で幅/高さを事前指定できないため、
-		   aspect-ratioで暫定領域を確保しCLS(読み込み完了までのレイアウトシフト)を防ぐ */
-		aspect-ratio: 16 / 9;
-		object-fit: cover;
+		height: auto;
+		object-fit: contain;
 		display: block;
 	}
 </style>
