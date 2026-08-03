@@ -100,7 +100,7 @@
 		<div class="sec-head">
 			<h2 class="serif">ギャラリー</h2>
 		</div>
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+		<div class="gallery-grid">
 			{#each data.data.gallery as image, index}
 				<div class="box gallery-item {bgClasses[index % bgClasses.length]}">
 					<img src={image} alt={data.data.name} loading="lazy" />
@@ -177,9 +177,20 @@
 	.content-box {
 		padding: 30px;
 	}
+	.gallery-grid {
+		column-count: 1;
+		column-gap: 24px;
+	}
+	@media (min-width: 768px) {
+		.gallery-grid {
+			column-count: 2;
+		}
+	}
 	.gallery-item {
 		padding: 0;
 		overflow: hidden;
+		break-inside: avoid;
+		margin-bottom: 24px;
 	}
 	.gallery-item img {
 		width: 100%;
