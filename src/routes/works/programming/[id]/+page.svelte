@@ -327,6 +327,12 @@
 		overflow: hidden;
 		break-inside: avoid;
 		margin-bottom: 24px;
+		/* iOS Safariのcolumnレイアウトはbreak-inside:avoidの要素をレイヤー分割することがあり、
+		   box-shadowが隣のカラムにはみ出て別の枠の切れ端のように見えるバグがある。
+		   isolateで独立したスタッキングコンテキストにし、transformで専用のコンポジットレイヤーに
+		   分離することではみ出し描画を防ぐ */
+		isolation: isolate;
+		transform: translateZ(0);
 	}
 	.gallery-item img {
 		width: 100%;
