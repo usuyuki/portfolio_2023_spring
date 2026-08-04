@@ -25,26 +25,63 @@
 	// はみ出た余白をクリックしてもオーバーレイの外側クリック扱いにならないため、
 	// 画像の実サイズに合わせてaspect-ratioを設定し当たり判定を実描画サイズに一致させる
 	let expandedImageAspectRatio: string | undefined = $state(undefined);
+	// 拡大表示を開いたときのトリガー要素。閉じたときにフォーカスを戻すために保持する
+	let expandedImageTrigger: HTMLElement | null = null;
+	let overlayCloseButton: HTMLButtonElement | undefined = $state();
+
+	// SvelteKitは[id]ページのコンポーネントインスタンスを再利用するため、
+	// 別作品への遷移時にライトボックスの開閉状態を引き継がないようリセットする
+	$effect(() => {
+		data;
+		closeExpandedImage();
+	});
+
+	function openExpandedImage(image: string, trigger: HTMLElement) {
+		expandedImage = image;
+		expandedImageTrigger = trigger;
+	}
 
 	function closeExpandedImage() {
 		expandedImage = null;
 		expandedImageAspectRatio = undefined;
+		expandedImageTrigger?.focus();
+		expandedImageTrigger = null;
 	}
 
-	function handleExpandedImageLoad(event: Event) {
-		const img = event.currentTarget as HTMLImageElement;
-		expandedImageAspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
-	}
-
-	// キャッシュ済み画像はDOM挿入時に既にcomplete済みでloadイベントが発火しないため、マウント時点でも判定する
-	function setInitialAspectRatio(img: HTMLImageElement) {
-		if (img.complete && img.naturalWidth > 0) {
+	// naturalWidth/naturalHeightからaspect-ratio文字列を作る共通処理。
+	// 読み込み失敗時(naturalWidth === 0)はCSSのaspect-ratioを未設定のままにする
+	function applyAspectRatioFromImage(img: HTMLImageElement) {
+		if (img.naturalWidth > 0) {
 			expandedImageAspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
 		}
 	}
 
+	function handleExpandedImageLoad(event: Event) {
+		applyAspectRatioFromImage(event.currentTarget as HTMLImageElement);
+	}
+
+	// キャッシュ済み画像はDOM挿入時に既にcomplete済みでloadイベントが発火しないため、マウント時点でも判定する
+	function setInitialAspectRatio(img: HTMLImageElement) {
+		if (img.complete) applyAspectRatioFromImage(img);
+	}
+
+	// Escapeに加えEnter/Spaceでも閉じられるようにする(role="button"を名乗る以上、ボタンの活性化キーに応答する必要がある)
 	function handleOverlayKeydown(event: KeyboardEvent) {
-		if (event.key === "Escape") closeExpandedImage();
+		if (event.key === "Escape" || event.key === "Enter" || event.key === " ") {
+			event.preventDefault();
+			closeExpandedImage();
+		}
+	}
+
+	$effect(() => {
+		if (expandedImage !== null) overlayCloseButton?.focus();
+	});
+
+	function handleOverlayFocusTrap(event: KeyboardEvent) {
+		if (event.key !== "Tab" || !overlayCloseButton) return;
+		// オーバーレイ内でフォーカス可能な要素は閉じるボタンのみのため、常にそこへ留める
+		event.preventDefault();
+		overlayCloseButton.focus();
 	}
 </script>
 
@@ -135,7 +172,7 @@
 					<button
 						type="button"
 						class="gallery-item-btn"
-						onclick={() => (expandedImage = image)}
+						onclick={(e) => openExpandedImage(image, e.currentTarget)}
 						aria-label="画像を拡大表示"
 					>
 						<img src={image} alt={data.data.name} loading="lazy" />
@@ -161,13 +198,17 @@
 		role="button"
 		tabindex="0"
 		onclick={closeExpandedImage}
-		onkeydown={handleOverlayKeydown}
+		onkeydown={(e) => {
+			handleOverlayKeydown(e);
+			handleOverlayFocusTrap(e);
+		}}
 		aria-label="拡大表示を閉じる"
 		transition:fade={{ duration: 180 }}
 	>
 		<!-- 画像クリックでオーバーレイの閉じる処理が発火しないようにするための伝播停止ラッパー。バツボタンは画像の右上角に追随させる -->
 		<div
 			class="image-overlay-img-wrap"
+			class:image-overlay-img-wrap-fallback={expandedImageAspectRatio === undefined}
 			role="presentation"
 			onclick={(e) => e.stopPropagation()}
 			transition:scale={{ duration: 220, start: 0.9, opacity: 0 }}
@@ -178,10 +219,12 @@
 				alt={data.data.name}
 				class="image-overlay-img"
 				onload={handleExpandedImageLoad}
+				onerror={() => (expandedImageAspectRatio = undefined)}
 				use:setInitialAspectRatio
 			/>
 			<button
 				type="button"
+				bind:this={overlayCloseButton}
 				class="image-overlay-close"
 				onclick={closeExpandedImage}
 				aria-label="拡大表示を閉じる"
@@ -288,6 +331,7 @@
 	.gallery-item img {
 		width: 100%;
 		height: auto;
+		aspect-ratio: 16 / 9;
 		object-fit: contain;
 		display: block;
 	}
@@ -299,6 +343,13 @@
 		border: none;
 		background: none;
 		cursor: pointer;
+		/* column-countのmasonryはタブ順と視覚順がずれるため、Tab移動時に対象が画面内に入るようスクロール余白を確保する */
+		scroll-margin: 24px;
+	}
+	.gallery-item-btn:focus-visible {
+		outline: 3px solid var(--black);
+		outline-offset: 2px;
+		z-index: 1;
 	}
 	.gallery-item-hover-dim {
 		position: absolute;
@@ -341,6 +392,11 @@
 		max-width: 100%;
 		max-height: 100%;
 		cursor: default;
+	}
+	/* aspect-ratio未確定時(読込中/読込失敗)のフォールバック。閉じるボタンが極端な位置にならない最低サイズを確保する */
+	.image-overlay-img-wrap-fallback {
+		width: min(320px, 80vw);
+		height: min(320px, 80vh);
 	}
 	.image-overlay-img {
 		display: block;
