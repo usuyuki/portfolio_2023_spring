@@ -3,6 +3,7 @@
 	import ArticleTimeline from "$lib/components/molecule/works/programming/ArticleTimeline.svelte";
 	import { pressEasing } from "$lib/utils/actions/pressEasing";
 	import { bgClasses } from "$lib/utils/bgClasses";
+	import { fade, scale } from "svelte/transition";
 	import type { PageData } from "./$types";
 	let { data }: { data: PageData } = $props();
 
@@ -17,6 +18,34 @@
 		{ title: "背景", content: data.data.background, bg: "bg-blue" },
 		{ title: "こだわり", content: data.data.kodawari, bg: "bg-yellow" },
 	]);
+
+	// ギャラリー画像の拡大表示用。nullなら非表示
+	let expandedImage: string | null = $state(null);
+	// object-fit:containだと画像要素の当たり判定が実描画サイズより大きくなり、
+	// はみ出た余白をクリックしてもオーバーレイの外側クリック扱いにならないため、
+	// 画像の実サイズに合わせてaspect-ratioを設定し当たり判定を実描画サイズに一致させる
+	let expandedImageAspectRatio: string | undefined = $state(undefined);
+
+	function closeExpandedImage() {
+		expandedImage = null;
+		expandedImageAspectRatio = undefined;
+	}
+
+	function handleExpandedImageLoad(event: Event) {
+		const img = event.currentTarget as HTMLImageElement;
+		expandedImageAspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+	}
+
+	// キャッシュ済み画像はDOM挿入時に既にcomplete済みでloadイベントが発火しないため、マウント時点でも判定する
+	function setInitialAspectRatio(img: HTMLImageElement) {
+		if (img.complete && img.naturalWidth > 0) {
+			expandedImageAspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+		}
+	}
+
+	function handleOverlayKeydown(event: KeyboardEvent) {
+		if (event.key === "Escape") closeExpandedImage();
+	}
 </script>
 
 <NormalHead title={data.data.name} description={data.data.summary} ogImage={data.data.gallery[0]} />
@@ -100,14 +129,70 @@
 		<div class="sec-head">
 			<h2 class="serif">ギャラリー</h2>
 		</div>
-		<div class="gallery-grid">
+		<div class="gallery-grid" class:gallery-grid-single={data.data.gallery.length === 1}>
 			{#each data.data.gallery as image, index}
 				<div class="box gallery-item {bgClasses[index % bgClasses.length]}">
-					<img src={image} alt={data.data.name} loading="lazy" />
+					<button
+						type="button"
+						class="gallery-item-btn"
+						onclick={() => (expandedImage = image)}
+						aria-label="画像を拡大表示"
+					>
+						<img src={image} alt={data.data.name} loading="lazy" />
+						<span class="gallery-item-hover-dim" aria-hidden="true"></span>
+						<span class="gallery-item-zoom-icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M9 4H5a1 1 0 0 0-1 1v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<path d="M15 4h4a1 1 0 0 1 1 1v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<path d="M9 20H5a1 1 0 0 1-1-1v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<path d="M15 20h4a1 1 0 0 0 1-1v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</span>
+					</button>
 				</div>
 			{/each}
 		</div>
 	</section>
+{/if}
+
+{#if expandedImage !== null}
+	<div
+		class="image-overlay"
+		role="button"
+		tabindex="0"
+		onclick={closeExpandedImage}
+		onkeydown={handleOverlayKeydown}
+		aria-label="拡大表示を閉じる"
+		transition:fade={{ duration: 180 }}
+	>
+		<!-- 画像クリックでオーバーレイの閉じる処理が発火しないようにするための伝播停止ラッパー。バツボタンは画像の右上角に追随させる -->
+		<div
+			class="image-overlay-img-wrap"
+			role="presentation"
+			onclick={(e) => e.stopPropagation()}
+			transition:scale={{ duration: 220, start: 0.9, opacity: 0 }}
+			style:aspect-ratio={expandedImageAspectRatio}
+		>
+			<img
+				src={expandedImage}
+				alt={data.data.name}
+				class="image-overlay-img"
+				onload={handleExpandedImageLoad}
+				use:setInitialAspectRatio
+			/>
+			<button
+				type="button"
+				class="image-overlay-close"
+				onclick={closeExpandedImage}
+				aria-label="拡大表示を閉じる"
+			>
+				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+					<line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+				</svg>
+			</button>
+		</div>
+	</div>
 {/if}
 
 <div class="box relative mb-4 mt-16 pb-4 bg-ui-bg">
@@ -178,13 +263,21 @@
 		padding: 30px;
 	}
 	.gallery-grid {
-		column-count: 1;
+		column-count: 2;
 		column-gap: 24px;
 	}
 	@media (min-width: 768px) {
 		.gallery-grid {
-			column-count: 2;
+			column-count: 3;
 		}
+	}
+	.gallery-grid-single {
+		column-count: 1;
+	}
+	.gallery-grid-single .gallery-item {
+		max-width: 500px;
+		margin-left: auto;
+		margin-right: auto;
 	}
 	.gallery-item {
 		padding: 0;
@@ -197,5 +290,85 @@
 		height: auto;
 		object-fit: contain;
 		display: block;
+	}
+	.gallery-item-btn {
+		position: relative;
+		display: block;
+		width: 100%;
+		padding: 0;
+		border: none;
+		background: none;
+		cursor: pointer;
+	}
+	.gallery-item-hover-dim {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.35);
+		opacity: 0;
+		transition: opacity 0.15s ease-out;
+	}
+	.gallery-item-btn:hover .gallery-item-hover-dim,
+	.gallery-item-btn:focus-visible .gallery-item-hover-dim {
+		opacity: 1;
+	}
+	.gallery-item-zoom-icon {
+		position: absolute;
+		right: 12px;
+		bottom: 12px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.gallery-item-zoom-icon svg {
+		width: 28px;
+		height: 28px;
+		color: var(--white);
+		filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+	}
+	.image-overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 1000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 40px;
+		background: rgba(0, 0, 0, 0.85);
+		cursor: zoom-out;
+	}
+	.image-overlay-img-wrap {
+		position: relative;
+		max-width: 100%;
+		max-height: 100%;
+		cursor: default;
+	}
+	.image-overlay-img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+	}
+	.image-overlay-close {
+		position: absolute;
+		top: -20px;
+		right: -20px;
+		z-index: 1001;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.9);
+		cursor: pointer;
+	}
+	.image-overlay-close svg {
+		width: 22px;
+		height: 22px;
+		color: var(--black);
 	}
 </style>
