@@ -152,6 +152,8 @@
 		align-items: center;
 		justify-content: center;
 		gap: 26px;
+		padding: 0 16px;
+		box-sizing: border-box;
 	}
 	.serif {
 		font-family: var(--heading-font);
@@ -160,13 +162,15 @@
 		font-family: var(--tag-font);
 	}
 	.logo-box {
-		padding: 26px 44px;
+		max-width: 100%;
+		padding: clamp(14px, 4vw, 26px) clamp(16px, 8vw, 44px);
+		box-sizing: border-box;
 		box-shadow: 8px 8px 0 var(--pink);
 		transform: scale(0.4);
 		opacity: 0;
 	}
 	.logo-box h1 {
-		font-size: clamp(28px, 6vw, 56px);
+		font-size: clamp(22px, 6vw, 56px);
 		margin: 0;
 		letter-spacing: 2px;
 		line-height: 1.2;
@@ -185,7 +189,7 @@
 		letter-spacing: 3px;
 	}
 	.gauge {
-		width: 260px;
+		width: min(260px, 100%);
 		height: 18px;
 		background: var(--ui-bg);
 		border: 3px solid var(--white);
