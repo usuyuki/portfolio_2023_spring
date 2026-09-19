@@ -7,17 +7,17 @@ updates:
       timezone: "Asia/Tokyo"
     groups:
       npm-dependencies:
-        applies-to: all
+        applies-to: version-updates
         patterns:
           - "*"
 
   - package-ecosystem: "github-actions"
-    directory: "/.github"
+    directory: "/"
     schedule:
       interval: "monthly"
       timezone: "Asia/Tokyo"
     groups:
       github-actions:
-        applies-to: all
+        applies-to: version-updates
         patterns:
           - "*"
