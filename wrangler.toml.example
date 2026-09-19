@@ -3,7 +3,7 @@ account_id = "ACCOUNT_ID"
 
 main = ".cloudflare/worker.js"
 
-compatibility_date = "2025-08-02"
+compatibility_date = "2026-09-18"
 compatibility_flags = ["nodejs_compat"]
 
 [assets]
