@@ -107,6 +107,21 @@ export const isValidDataSourceId = (
 	return normalize(dataSourceId) !== normalize(databaseId);
 };
 
+// 個別ページのレスポンスをKVキャッシュに載せてよいかを判定する
+// 非公開ページや不正なレスポンスをキャッシュすると、公開へ切り替えてもTTLが切れるまで
+// 古い状態(403や壊れたデータ)を返し続けてしまうため除外する
+export const shouldCachePage = (response: unknown): boolean => {
+	if (response === null || typeof response !== "object") {
+		return false;
+	}
+	const properties = (response as { properties?: Record<string, unknown> })
+		.properties;
+	const isPublished = (
+		properties?.isPublished as { checkbox?: unknown } | undefined
+	)?.checkbox;
+	return isPublished === true;
+};
+
 // Get data source ID for a given database ID with KV caching
 export const getDataSourceId = async (
 	databaseId: string,

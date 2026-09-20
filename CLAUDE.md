@@ -53,6 +53,16 @@ pnpm wrangler publish --dry-run          # Dry run deployment
 pnpm wrangler tail usuyuki-portfolio-v6  # Tail production logs
 ```
 
+### KV Cache Purge
+Notion content is cached in Cloudflare KV (TTL up to 7 days). Purge it manually when stale or broken data is stuck:
+```bash
+./scripts/purge-cache.sh              # Purge all notion:* keys in production
+./scripts/purge-cache.sh --dry-run    # List target keys without deleting
+./scripts/purge-cache.sh --local      # Purge local (wrangler dev) KV
+./scripts/purge-cache.sh --prefix notion:datasource:   # Narrow by prefix
+```
+The access counter (`counter`) is outside the `notion:` prefix and is never deleted. Requires `wrangler login` for production.
+
 ## Architecture Overview
 
 This is a **SvelteKit portfolio application** deployed on **Cloudflare Workers** with SSR. The site showcases personal work and integrates with external content sources.
