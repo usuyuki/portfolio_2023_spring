@@ -59,9 +59,7 @@ export const getNotionClient = (fetch?: typeof globalThis.fetch) => {
 	});
 };
 
-// オブジェクトのキーを再帰的にソートして、キーの順序が違うだけの同内容パラメータを同一表現にする
-// JSON.stringifyの第2引数(replacer配列)はトップレベル以外のキーも絞り込んでしまい、
-// filterやsortsの中身が空になってキーが衝突するため使わない
+// JSON.stringifyのreplacer配列はネストしたキーまで絞り込みキーが衝突するため、自前でソートする
 const sortObjectKeys = (value: unknown): unknown => {
 	if (Array.isArray(value)) {
 		return value.map(sortObjectKeys);
@@ -84,7 +82,7 @@ export const generateCacheKey = (
 	params: Record<string, unknown>,
 ): string => {
 	const paramsString = JSON.stringify(sortObjectKeys(params));
-	// btoaはLatin-1しか扱えないため、日本語などの非ASCII文字が含まれても落ちないようUTF-8バイト列へ変換してから渡す
+	// btoaはLatin-1しか扱えないためUTF-8バイト列に変換する
 	const latin1 = Array.from(new TextEncoder().encode(paramsString), (byte) =>
 		String.fromCharCode(byte),
 	).join("");
@@ -92,9 +90,7 @@ export const generateCacheKey = (
 	return `notion:${prefix}:${btoa(latin1)}`;
 };
 
-// 解決済みのdata_source_idが正規の値かどうかを判定する
-// data_sources取得に失敗した際はdatabaseId自体をフォールバックとして使うが、
-// これはdata_source_idとしては無効でクエリが404になるため、キャッシュに載せてはいけない
+// data_sources取得失敗時のフォールバック値(databaseId)はクエリが404になるため弾く
 export const isValidDataSourceId = (
 	dataSourceId: string,
 	databaseId: string,
@@ -102,14 +98,11 @@ export const isValidDataSourceId = (
 	if (!dataSourceId) {
 		return false;
 	}
-	// ハイフンの有無だけが異なる場合も同一IDとみなす
 	const normalize = (id: string) => id.replace(/-/g, "").toLowerCase();
 	return normalize(dataSourceId) !== normalize(databaseId);
 };
 
-// 個別ページのレスポンスをKVキャッシュに載せてよいかを判定する
-// 非公開ページや不正なレスポンスをキャッシュすると、公開へ切り替えてもTTLが切れるまで
-// 古い状態(403や壊れたデータ)を返し続けてしまうため除外する
+// 非公開ページを載せると公開に切り替えてもTTLが切れるまで403を返し続けるため弾く
 export const shouldCachePage = (response: unknown): boolean => {
 	if (response === null || typeof response !== "object") {
 		return false;
@@ -134,8 +127,7 @@ export const getDataSourceId = async (
 	if (kv) {
 		try {
 			const cached = await kv.get(cacheKey);
-			// 過去にフォールバック値(databaseId)がキャッシュされていた場合、そのまま使うとクエリが404になる
-			// 古い実装が書き込んだ不正な値を無視して、APIから正規のIDを引き直す
+			// 旧実装が書き込んだフォールバック値は無視してAPIから引き直す
 			if (cached && isValidDataSourceId(cached, databaseId)) {
 				console.log(`KV cache hit for data source: ${databaseId}`);
 				return cached;
@@ -187,8 +179,7 @@ export const getDataSourceId = async (
 			console.info(
 				`No data sources found for database ${databaseId}, using database_id as data_source_id`,
 			);
-			// フォールバック値はdata_source_idとして無効なためキャッシュしない
-			// キャッシュすると次回以降もAPIを叩かずに404を出し続けてしまう
+			// キャッシュすると次回以降もAPIを叩かず404を出し続けるため載せない
 			return databaseId;
 		}
 	} catch (error) {
@@ -196,7 +187,7 @@ export const getDataSourceId = async (
 			`Failed to get data source for database ${databaseId}, using database_id as fallback:`,
 			error,
 		);
-		// 一時的なAPI障害でフォールバック値をキャッシュすると、復旧後もTTLが切れるまで404が続くためキャッシュしない
+		// 一時障害をキャッシュすると復旧後もTTLが切れるまで404が続くため載せない
 		return databaseId;
 	}
 };

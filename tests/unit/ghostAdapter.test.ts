@@ -13,9 +13,7 @@ describe("toBlogContent", () => {
 		const result = toBlogContent(basePost);
 		expect(result.title).toBe("テスト記事");
 		expect(result.link).toBe("https://blog.usuyuki.net/test-article");
-		// ISO形式のハイフンをスラッシュに変換している
 		expect(result.date).toBe("2026/09/20T05:18:00.000Z");
-		// サムネイルはw300にリサイズされる
 		expect(result.thumbnail).toContain("size/w300");
 	});
 
@@ -25,7 +23,6 @@ describe("toBlogContent", () => {
 		expected: { title: string; link: string; date: string; thumbnail: string };
 	}[] = [
 		{
-			// titleが無い記事でも落とさず空文字で表示する
 			name: "異常系: titleがundefinedの記事を渡すと、空文字に変換される",
 			post: { ...basePost, title: undefined },
 			expected: {
@@ -36,7 +33,6 @@ describe("toBlogContent", () => {
 			},
 		},
 		{
-			// slugが無いとリンク先が作れないが、ブログトップへのリンクとして成立させる
 			name: "異常系: slugがundefinedの記事を渡すと、リンクがブログのルートになる",
 			post: { ...basePost, slug: undefined },
 			expected: {
@@ -47,7 +43,6 @@ describe("toBlogContent", () => {
 			},
 		},
 		{
-			// 日付が無い記事でも表示自体は継続させる
 			name: "異常系: created_atがundefinedの記事を渡すと、日付が空文字になる",
 			post: { ...basePost, created_at: undefined },
 			expected: {
@@ -58,7 +53,6 @@ describe("toBlogContent", () => {
 			},
 		},
 		{
-			// アイキャッチ未設定の記事はサムネイルを空にする
 			name: "異常系: feature_imageがundefinedの記事を渡すと、サムネイルが空文字になる",
 			post: { ...basePost, feature_image: undefined },
 			expected: {
