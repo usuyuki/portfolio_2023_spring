@@ -59,14 +59,52 @@ export const getNotionClient = (fetch?: typeof globalThis.fetch) => {
 	});
 };
 
+// オブジェクトのキーを再帰的にソートして、キーの順序が違うだけの同内容パラメータを同一表現にする
+// JSON.stringifyの第2引数(replacer配列)はトップレベル以外のキーも絞り込んでしまい、
+// filterやsortsの中身が空になってキーが衝突するため使わない
+const sortObjectKeys = (value: unknown): unknown => {
+	if (Array.isArray(value)) {
+		return value.map(sortObjectKeys);
+	}
+	if (value !== null && typeof value === "object") {
+		const source = value as Record<string, unknown>;
+		return Object.keys(source)
+			.sort()
+			.reduce<Record<string, unknown>>((acc, key) => {
+				acc[key] = sortObjectKeys(source[key]);
+				return acc;
+			}, {});
+	}
+	return value;
+};
+
 // Generate cache key for Notion API requests
-const generateCacheKey = (
+export const generateCacheKey = (
 	prefix: string,
 	params: Record<string, unknown>,
 ): string => {
-	const paramsString = JSON.stringify(params, Object.keys(params).sort());
+	const paramsString = JSON.stringify(sortObjectKeys(params));
+	// btoaはLatin-1しか扱えないため、日本語などの非ASCII文字が含まれても落ちないようUTF-8バイト列へ変換してから渡す
+	const latin1 = Array.from(new TextEncoder().encode(paramsString), (byte) =>
+		String.fromCharCode(byte),
+	).join("");
 	// Use btoa for base64 encoding in browser/Worker environment
-	return `notion:${prefix}:${btoa(paramsString)}`;
+	return `notion:${prefix}:${btoa(latin1)}`;
+};
+
+// 解決済みのdata_source_idが正規の値かどうかを判定する
+// data_sources取得に失敗した際はdatabaseId自体をフォールバックとして使うが、
+// これはdata_source_idとしては無効でクエリが404になるため、キャッシュに載せてはいけない
+export const isValidDataSourceId = (
+	dataSourceId: string,
+	databaseId: string,
+): boolean => {
+	if (!dataSourceId) {
+		return false;
+	}
+	// ハイフンの有無だけが異なる場合も同一IDとみなす
+	const normalize = (id: string) => id.replace(/-/g, "").toLowerCase();
+	return normalize(dataSourceId) !== normalize(databaseId);
 };
 
 // Get data source ID for a given database ID with KV caching
@@ -81,9 +119,16 @@ export const getDataSourceId = async (
 	if (kv) {
 		try {
 			const cached = await kv.get(cacheKey);
-			if (cached) {
+			// 過去にフォールバック値(databaseId)がキャッシュされていた場合、そのまま使うとクエリが404になる
+			// 古い実装が書き込んだ不正な値を無視して、APIから正規のIDを引き直す
+			if (cached && isValidDataSourceId(cached, databaseId)) {
 				console.log(`KV cache hit for data source: ${databaseId}`);
 				return cached;
+			}
+			if (cached) {
+				console.warn(
+					`Ignoring invalid cached data source for ${databaseId} (fallback value was cached)`,
+				);
 			}
 		} catch (error) {
 			console.warn(`KV cache read failed for ${cacheKey}:`, error);
@@ -91,11 +136,9 @@ export const getDataSourceId = async (
 	}
 
 	// Check in-memory cache second
-	if (dataSourceCache.has(databaseId)) {
-		const cachedId = dataSourceCache.get(databaseId);
-		if (cachedId) {
-			return cachedId;
-		}
+	const memoryCachedId = dataSourceCache.get(databaseId);
+	if (memoryCachedId && isValidDataSourceId(memoryCachedId, databaseId)) {
+		return memoryCachedId;
 	}
 
 	const client = getNotionClient(fetch);
@@ -129,37 +172,17 @@ export const getDataSourceId = async (
 			console.info(
 				`No data sources found for database ${databaseId}, using database_id as data_source_id`,
 			);
-			const fallbackId = databaseId;
-			dataSourceCache.set(databaseId, fallbackId);
-			if (kv) {
-				try {
-					await kv.put(cacheKey, fallbackId, {
-						expirationTtl: DATA_SOURCE_CACHE_TTL,
-					});
-				} catch (error) {
-					console.warn(`KV cache write failed for ${cacheKey}:`, error);
-				}
-			}
-			return fallbackId;
+			// フォールバック値はdata_source_idとして無効なためキャッシュしない
+			// キャッシュすると次回以降もAPIを叩かずに404を出し続けてしまう
+			return databaseId;
 		}
 	} catch (error) {
 		console.warn(
 			`Failed to get data source for database ${databaseId}, using database_id as fallback:`,
 			error,
 		);
-		// Fallback to database_id
-		const fallbackId = databaseId;
-		dataSourceCache.set(databaseId, fallbackId);
-		if (kv) {
-			try {
-				await kv.put(cacheKey, fallbackId, {
-					expirationTtl: DATA_SOURCE_CACHE_TTL,
-				});
-			} catch (error) {
-				console.warn(`KV cache write failed for ${cacheKey}:`, error);
-			}
-		}
-		return fallbackId;
+		// 一時的なAPI障害でフォールバック値をキャッシュすると、復旧後もTTLが切れるまで404が続くためキャッシュしない
+		return databaseId;
 	}
 };
 
