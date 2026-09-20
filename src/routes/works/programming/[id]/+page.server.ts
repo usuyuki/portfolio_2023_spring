@@ -4,7 +4,11 @@ import { APIErrorCode } from "@notionhq/client";
 import { error } from "@sveltejs/kit";
 import type { WorksProgrammingRow } from "$lib/types/notion";
 import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
-import { CACHE_TTL, getNotionClient } from "$lib/utils/adapter/notionAdapter";
+import {
+	CACHE_TTL,
+	getNotionClient,
+	shouldCachePage,
+} from "$lib/utils/adapter/notionAdapter";
 import { notionRowToData } from "$lib/utils/adapter/worksProgrammingNotionRowToData";
 import type { PageServerLoad } from "./$types";
 
@@ -58,7 +62,8 @@ export const load = (async ({ params, platform, fetch, parent }) => {
 			page_id: params.id,
 		})) as unknown as WorksProgrammingRow;
 
-		if (platform?.env?.KV) {
+		// 非公開ページをキャッシュすると、公開に切り替えてもTTLが切れるまで403を返し続けるため公開済みのみ載せる
+		if (platform?.env?.KV && shouldCachePage(response)) {
 			try {
 				await platform.env.KV.put(cacheKey, JSON.stringify(response), {
 					expirationTtl: CACHE_TTL.PAGE_RETRIEVE,
