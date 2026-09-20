@@ -76,7 +76,8 @@ This is a **SvelteKit portfolio application** deployed on **Cloudflare Workers**
 - **pnpm** as package manager
 
 ### Content Integration
-- **Ghost CMS** integration via `@tryghost/content-api` for blog content
+- **Ghost CMS** integration via the Content API, called with native `fetch` for blog content
+  - The official `@tryghost/content-api` SDK is intentionally NOT used: it depends on axios, whose fetch adapter sends `cache: 'default'`, which Cloudflare Workers rejects with `Unsupported cache mode: default`. The failure is silent (the error is swallowed and the section renders empty), so do not reintroduce the SDK.
 - **Notion API** integration via `@notionhq/client` for dynamic content
 - Both adapters are in `src/lib/utils/adapter/`
 

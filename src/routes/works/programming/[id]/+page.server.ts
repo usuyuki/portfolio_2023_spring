@@ -62,7 +62,6 @@ export const load = (async ({ params, platform, fetch, parent }) => {
 			page_id: params.id,
 		})) as unknown as WorksProgrammingRow;
 
-		// 非公開ページをキャッシュすると、公開に切り替えてもTTLが切れるまで403を返し続けるため公開済みのみ載せる
 		if (platform?.env?.KV && shouldCachePage(response)) {
 			try {
 				await platform.env.KV.put(cacheKey, JSON.stringify(response), {
