@@ -55,7 +55,7 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 			/**
 			 * ブログデータ取得
 			 */
-			getRecentArticle(),
+			getRecentArticle(platform?.fetch || fetch),
 
 			/**
 			 * Misskeyの最近の投稿を取得
