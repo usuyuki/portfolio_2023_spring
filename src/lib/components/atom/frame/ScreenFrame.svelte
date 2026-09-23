@@ -15,6 +15,7 @@
 		{ name: "WORKS", path: "/works/programming" },
 		{ name: "VIDEO", path: "/works/videos" },
 		{ name: "SLIDES", path: "/works/slides" },
+		{ name: "EVENTS", path: "/events" },
 	];
 
 	let headerEl: HTMLElement;

@@ -8,5 +8,7 @@ export default defineConfig({
 		include: ["tests/unit/**/*.{test,spec}.{js,ts}"],
 		globals: true,
 		environment: "jsdom",
+		// 本番のWorkersと同じUTCに固定し、JSTの開発機でだけ通るテストを防ぐ
+		env: { TZ: "UTC" },
 	},
 });

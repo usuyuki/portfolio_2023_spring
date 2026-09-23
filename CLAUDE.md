@@ -26,16 +26,12 @@ pnpm build            # Production build
 pnpm check            # Type checking with svelte-check
 pnpm lint             # Biome lint checks
 pnpm format           # Auto-format code with Biome
-pnpm format:check     # Check formatting without writing
-pnpm biome:check      # Comprehensive Biome check (format + lint + organize imports)
-pnpm biome:fix        # Auto-fix Biome issues
 pnpm 1                # Quick quality check: format + (lint & check)
 ```
 
 ### Testing
 The project follows a comprehensive testing strategy:
 - **Unit tests**: Vitest (`pnpm test:u`)
-- **Component tests**: Playwright (`pnpm test:c`) 
 - **E2E integration tests**: Playwright (`pnpm test:i`)
 - **All tests**: `pnpm tests` (runs all test suites in parallel)
 
@@ -100,9 +96,43 @@ src/routes/
 ├── works/programming/       # Programming portfolio with dynamic [id] routes
 ├── works/slides/            # Presentation portfolio
 ├── works/videos/            # Video portfolio
+├── events/                  # Event pages (see "Event Pages" below)
 ├── api/counter/             # API endpoint for access counting
 └── [other pages]/           # Additional static/dynamic pages
 ```
+
+### Event Pages
+Pages for events the author attends (Comiket, 技術書典, etc.).
+
+Listing metadata and page content are deliberately split, because the listing needs a uniform card
+structure while each event's detail page (お品書き etc.) does not generalize:
+
+| Concern | Location |
+| --- | --- |
+| Listing metadata (slug / name / dates / thumbnail) | `src/lib/data/events.ts` |
+| Listing page (hero + これから + これまで) | `src/routes/events/+page.svelte` |
+| Listing classification (computed server-side only) | `src/routes/events/+page.server.ts` |
+| Per-event detail page | `src/routes/events/{slug}/+page.svelte` |
+| `/events/now` redirect | `src/routes/events/now/+page.server.ts` |
+
+The listing picks the event closest to today as the hero, then splits the rest into これから /
+これまで; a section with no events is omitted entirely (`classifyEvents`). Detail pages are static
+directories rather than a `[slug]` dynamic route, so each event's layout can be written freely.
+
+`/events/now` 302-redirects to whichever event is closest to today, past or future
+(`findNearestEvent`) — a stable link that never needs updating per event. Note this differs from the
+listing's hero, which prefers upcoming events over nearer past ones. With no events it returns 404.
+
+**Dates are always JST.** Event dates (`YYYY/MM/DD`) are parsed as JST midnight in `parseEventDate`,
+never with `new Date("YYYY/MM/DD")`, because Workers run in UTC and day boundaries would shift to
+09:00 JST. Do not call `classifyEvents` inside the component: SSR and hydration would evaluate it at
+different times/timezones and cause a hydration mismatch. Vitest pins `TZ=UTC` (same as Workers) so
+timezone-dependent tests fail locally too.
+
+**To add an event**: append an entry to `src/lib/data/events.ts` AND create
+`src/routes/events/{slug}/+page.svelte`. `tests/unit/events.test.ts` fails if the two get out of
+sync in either direction. Thumbnails go in `static/img/events/`; `thumbnail: null` renders a
+placeholder. `now` is a reserved slug and cannot be used for an event.
 
 ### State Management
 - Uses SvelteKit's built-in stores
