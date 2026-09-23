@@ -7,15 +7,15 @@
 
 	const info = [
 		{ emoji: "📅", label: "会期", value: "2026/11/21 〜 2026/12/06" },
-		{ emoji: "🏢", label: "オフライン開催日", value: "2026/11/23" },
 		{ emoji: "🎪", label: "サークル名", value: "うすゆきスタジオ" },
 	];
 
-	// オンライン/オフラインの2会場があるので情報タグとは分けて並記する
+	// オンラインとオフラインで開催日が違うので、会場ごとに日付を持たせる
 	const venues = [
 		{
 			emoji: "💻",
 			label: "オンライン",
+			date: "2026/11/21 〜 2026/12/06",
 			name: "技術書典オンラインマーケット",
 			link: "https://techbookfest.org/market",
 			bg: "bg-blue",
@@ -23,8 +23,9 @@
 		{
 			emoji: "📍",
 			label: "オフライン",
+			date: "2026/11/23",
 			name: "池袋・サンシャインシティ 展示ホールD（文化会館ビル2F）",
-			link: null,
+			link: "https://maps.app.goo.gl/Jv1TPHVebEDhiPtu5",
 			bg: "bg-yellow",
 		},
 	];
@@ -43,7 +44,7 @@
 <NormalHead title="技術書典21" description="技術書典21の参加情報とお品書き" />
 <NormalPageTitle title="技術書典21" tag="EVENT" />
 
-<p class="text-center text-xl mt-4 mb-10">
+<p class="text-center text-2xl mt-4 mb-10">
 	技術書典21に<br class="md:hidden" />「うすゆきスタジオ」で参加します。
 </p>
 
@@ -63,16 +64,13 @@
 		{#each venues as venue}
 			<div class="box venue-box {venue.bg}">
 				<span class="tag venue-label">{venue.emoji} {venue.label}</span>
-				<p class="venue-name">{venue.name}</p>
-				{#if venue.link !== null}
-					<a
-						href={venue.link}
-						target="_blank"
-						rel="noopener noreferrer"
-						use:pressEasing
-						class="btn-rpg small bg-white mt-3">マーケットへ🔗</a
-					>
-				{/if}
+				<p class="venue-date">{venue.date}</p>
+				<a
+					href={venue.link}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="venue-name venue-link">{venue.name}</a
+				>
 			</div>
 		{/each}
 	</div>
@@ -121,7 +119,8 @@
 	}
 	.info-tag {
 		font-family: var(--tag-font);
-		font-size: 12px;
+		font-size: 15px;
+		padding: 8px 18px;
 	}
 	.venue-box {
 		display: flex;
@@ -131,16 +130,27 @@
 	}
 	.tag.venue-label {
 		font-family: var(--tag-font);
-		font-size: 12px;
+		font-size: 14px;
 		color: var(--pink);
 		background: var(--black);
 		display: inline-block;
 		padding: 3px 10px;
 		border-radius: 999px;
 	}
+	.venue-date {
+		font-family: var(--tag-font);
+		font-size: 16px;
+		margin: 12px 0 0;
+	}
 	.venue-name {
-		font-size: 15px;
-		margin: 10px 0 0;
+		font-size: 18px;
+		margin: 6px 0 0;
+	}
+	/* ボタンをやめた分、リンクであることが見た目で分かるよう下線を引く */
+	.venue-link {
+		display: inline-block;
+		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 	/* 1点のときにカードが横長に伸びないよう幅の上限を決めて中央に寄せる */
 	.items-grid {
@@ -155,20 +165,20 @@
 	/* 金額タグ(塗り)と役割が違うので枠線にして見分けられるようにする */
 	.tag.genre {
 		font-family: var(--tag-font);
-		font-size: 11px;
+		font-size: 13px;
 		display: inline-block;
-		padding: 2px 10px;
+		padding: 4px 12px;
 		border: 2px solid var(--black);
 		border-radius: 999px;
 		background: var(--white);
 	}
 	.item-box h3 {
-		font-size: 18px;
-		margin: 8px 0 0;
+		font-size: 21px;
+		margin: 10px 0 0;
 	}
 	.tag.price {
 		font-family: var(--tag-font);
-		font-size: 12px;
+		font-size: 15px;
 		color: var(--pink);
 		background: var(--black);
 		display: inline-block;
@@ -177,7 +187,7 @@
 		margin-top: 8px;
 	}
 	.item-box p {
-		font-size: 14px;
+		font-size: 16px;
 		margin: 0;
 	}
 </style>
