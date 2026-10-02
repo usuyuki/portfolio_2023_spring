@@ -27,7 +27,6 @@ describe("speakerDeckThumbnail", () => {
 			"",
 			// スライドページのURLにはIDが含まれない
 			"https://speakerdeck.com/usuyuki/some-slide",
-			// Speaker Deck以外の埋め込み
 			"https://docs.google.com/presentation/d/xxx/embed",
 		];
 		for (const url of urls) {

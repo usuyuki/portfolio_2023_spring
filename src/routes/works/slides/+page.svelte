@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick } from "svelte";
 	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import { pressPulse } from "$lib/utils/actions/pressEasing";
@@ -16,14 +17,14 @@
 		]),
 	);
 
-	// 検索結果にはスライド名などページ自体の情報だけを出したいので、
-	// iframeは初期表示では読み込まず、表紙のサムネイルを出しておき、クリックされたスライドだけ読み込む。
-	// クローラーはクリックしないので、ユーザーと同じHTMLのままiframeの中身を読まれずに済む
+	// iframeの中身が検索結果に出ないよう、クリックされるまではサムネイルにしておく(クローラーはクリックしない)
 	let loadedSlides = new Set<string>();
-	// 読み込み時にカード全体を一瞬拡縮させ、押したことが伝わるようにする
-	const loadSlide = (url: string, card: HTMLElement | null) => {
+	// 押したボタンはiframeに置き換わって消えるので、キーボード操作が途切れないようフォーカスを移す
+	const loadSlide = async (url: string, card: HTMLElement | null) => {
 		if (card) pressPulse(card);
 		loadedSlides = new Set(loadedSlides).add(url);
+		await tick();
+		card?.querySelector("iframe")?.focus();
 	};
 </script>
 

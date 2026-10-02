@@ -79,8 +79,7 @@ const killSlash = (node: HTMLElement) => {
 	activeSlashes.delete(node);
 };
 
-// pressEasingのプレス→復帰と同じ動き(鋭く縮小+傾き→弾んで等倍へ)を、イベントに依らず1回だけ再生する。
-// ホバー拡大などを常時付けたくない要素で、特定のタイミングにだけ「押した」手応えを出したいときに使う
+// ホバー拡大を付けたくない要素で、任意のタイミングに押した手応えだけを出すために使う
 export function pressPulse(node: HTMLElement) {
 	if (prefersReducedMotion()) return;
 	node.style.transformOrigin = "center";
