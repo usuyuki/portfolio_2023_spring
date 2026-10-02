@@ -79,6 +79,28 @@ const killSlash = (node: HTMLElement) => {
 	activeSlashes.delete(node);
 };
 
+// pressEasingのプレス→復帰と同じ動き(鋭く縮小+傾き→弾んで等倍へ)を、イベントに依らず1回だけ再生する。
+// ホバー拡大などを常時付けたくない要素で、特定のタイミングにだけ「押した」手応えを出したいときに使う
+export function pressPulse(node: HTMLElement) {
+	if (prefersReducedMotion()) return;
+	node.style.transformOrigin = "center";
+	const tilt = Math.random() < 0.5 ? -3 : 3;
+	const pressDuration = 0.07;
+	gsap.to(node, {
+		scale: PRESS_SCALE,
+		rotate: tilt,
+		duration: pressDuration,
+		ease: "power4.out",
+	});
+	gsap.to(node, {
+		scale: NORMAL_SCALE,
+		rotate: 0,
+		delay: pressDuration,
+		duration: 0.5,
+		ease: "back.out(3.5)",
+	});
+}
+
 // ホバーで拡大、クリック(pointerdown→pointerup/leave)で「ペルソナ風スナップ」の縮小+傾き+スラッシュ光→弾む復帰を行う
 // GSAPのイージングで駆動するSvelteアクション。既存の pressEasing と同名・同シグネチャなので差し替えのみでOK。
 export function pressEasing(node: HTMLElement) {

@@ -1,7 +1,9 @@
 <script lang="ts">
 	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
+	import { pressPulse } from "$lib/utils/actions/pressEasing";
 	import { mediaCardVariants } from "$lib/utils/mediaCardVariants";
+	import { speakerDeckThumbnail } from "$lib/utils/speakerDeckThumbnail";
 	import type { PageData } from "./$types";
 	export let data: PageData;
 
@@ -15,9 +17,12 @@
 	);
 
 	// 検索結果にはスライド名などページ自体の情報だけを出したいので、
-	// iframeは初期表示では読み込まず、クリックされたスライドだけ読み込む
+	// iframeは初期表示では読み込まず、表紙のサムネイルを出しておき、クリックされたスライドだけ読み込む。
+	// クローラーはクリックしないので、ユーザーと同じHTMLのままiframeの中身を読まれずに済む
 	let loadedSlides = new Set<string>();
-	const loadSlide = (url: string) => {
+	// 読み込み時にカード全体を一瞬拡縮させ、押したことが伝わるようにする
+	const loadSlide = (url: string, card: HTMLElement | null) => {
+		if (card) pressPulse(card);
 		loadedSlides = new Set(loadedSlides).add(url);
 	};
 </script>
@@ -41,13 +46,17 @@
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 					></iframe>
 				{:else}
+					{@const thumbnail = speakerDeckThumbnail(slide.slideIframe)}
 					<button
 						type="button"
 						class="frame slide-placeholder"
-						on:click={() => loadSlide(slide.slideIframe)}
+						aria-label="{slide.name}のスライドを表示"
+						on:click={(event) =>
+							loadSlide(slide.slideIframe, event.currentTarget.closest(".vcard"))}
 					>
-						<span class="play">▶</span>
-						<span class="tag">スライドを表示</span>
+						{#if thumbnail}
+							<img class="thumbnail" src={thumbnail} alt="" loading="lazy" />
+						{/if}
 					</button>
 				{/if}
 				<div class="body">
@@ -70,24 +79,18 @@
 		margin: 0 auto 60px;
 	}
 	.slide-placeholder {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
+		position: relative;
+		display: block;
+		padding: 0;
+		overflow: hidden;
 		background: rgba(0, 0, 0, 0.08);
-		color: inherit;
 		cursor: pointer;
 	}
-	.slide-placeholder:hover {
-		background: rgba(0, 0, 0, 0.16);
-	}
-	.slide-placeholder .play {
-		font-size: 40px;
-		line-height: 1;
-	}
-	.slide-placeholder .tag {
-		font-family: var(--tag-font);
-		font-size: 12px;
+	.slide-placeholder .thumbnail {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 </style>

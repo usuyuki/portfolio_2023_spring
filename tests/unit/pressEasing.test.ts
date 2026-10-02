@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { describe, expect, it } from "vitest";
-import { pressEasing } from "$lib/utils/actions/pressEasing";
+import { pressEasing, pressPulse } from "$lib/utils/actions/pressEasing";
 
 // pointerType未指定のEventだとpressEasing側のisHoverCapable判定に引っかからないため、マウス操作を模したPointerEventを都度生成する
 const mousePointerEvent = (type: string) =>
@@ -204,5 +204,18 @@ describe("pressEasing", () => {
 		destroy();
 
 		expect(node.querySelectorAll("span").length).toBe(0);
+	});
+});
+
+describe("pressPulse", () => {
+	it("正常系: 呼ぶとscaleが0.86(スナップ縮小)へ向かうtweenと、その後scaleが1(等倍)へ弾んで戻るtweenが順に登録される", () => {
+		const node = setupNode();
+
+		pressPulse(node);
+
+		const tweens = gsap.getTweensOf(node);
+		expect(tweens.map((tween) => tween.vars.scale)).toEqual([0.86, 1]);
+		// 縮小しきってから戻り始めるよう、戻りのtweenは縮小の長さだけ遅らせる
+		expect(tweens[1].vars.delay).toBe(tweens[0].vars.duration);
 	});
 });
