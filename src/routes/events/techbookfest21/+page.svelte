@@ -24,7 +24,7 @@
 			emoji: "📍",
 			label: "オフライン",
 			date: "2026/11/23",
-			name: "池袋・サンシャインシティ 展示ホールD（文化会館ビル2F）",
+			name: "池袋・サンシャインシティ 展示ホールD（文化会館ビル2F） そ16",
 			link: "https://maps.app.goo.gl/Jv1TPHVebEDhiPtu5",
 			bg: "bg-yellow",
 		},
@@ -34,7 +34,7 @@
 	const items = [
 		{
 			genre: "本",
-			name: "がんばるスマートホーム(仮称)",
+			name: "『スマートホームをもう一歩進める技術』既製品と少しの自作で始める快適生活",
 			price: "500円(仮)",
 			description: "",
 		},
@@ -51,7 +51,9 @@
 <section class="sec">
 	<div class="flex justify-center flex-wrap gap-3">
 		{#each info as item}
-			<span class="box-tag info-tag">{item.emoji} {item.label}: {item.value}</span>
+			<span class="box-tag info-tag"
+				>{item.emoji} {item.label}: {item.value}</span
+			>
 		{/each}
 	</div>
 </section>
@@ -99,7 +101,9 @@
 </section>
 
 <div class="flex justify-center mb-16">
-	<a href="/events" use:pressEasing class="box btn-rpg bg-yellow">イベント一覧へ</a>
+	<a href="/events" use:pressEasing class="box btn-rpg bg-yellow"
+		>イベント一覧へ</a
+	>
 </div>
 
 <style>
