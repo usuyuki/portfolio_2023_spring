@@ -4,8 +4,8 @@ import {
 	coverWithBars,
 	revealFromBars,
 	WIPE_BARS_OFFSCREEN_X,
-} from "$lib/utils/actions/wipeBars";
-import * as motion from "$lib/utils/motion";
+} from "#lib/utils/actions/wipeBars.ts";
+import * as motion from "#lib/utils/motion.ts";
 
 const setupBars = (count: number) =>
 	Array.from({ length: count }, () => {

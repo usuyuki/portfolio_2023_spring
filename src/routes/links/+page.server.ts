@@ -1,12 +1,13 @@
-import type { linkType } from "$lib/types/link";
+import type { linkType } from "#lib/types/link.ts";
 import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
-} from "$lib/types/notion";
+} from "#lib/types/notion.ts";
+import { env } from "cloudflare:workers";
 import {
 	queryDataSourceCached,
 	CACHE_TTL,
-} from "$lib/utils/adapter/notionAdapter";
+} from "#lib/utils/adapter/notionAdapter.ts";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -15,7 +16,7 @@ type dataType = {
 	};
 };
 
-export const load = (async ({ platform, fetch }) => {
+export const load = (async ({ fetch }) => {
 	const response = (await queryDataSourceCached(
 		"d773ca5cc7a14127b45b902d6129a321",
 		{
@@ -37,8 +38,8 @@ export const load = (async ({ platform, fetch }) => {
 			],
 		},
 		{
-			fetch: platform?.fetch || fetch,
-			kv: platform?.env?.KV,
+			fetch,
+			kv: env.KV,
 			cacheTtl: CACHE_TTL.LINKS_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;

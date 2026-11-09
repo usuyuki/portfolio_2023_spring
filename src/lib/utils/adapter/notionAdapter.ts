@@ -1,5 +1,5 @@
 import { Client } from "@notionhq/client";
-import { NOTION_API_KEY } from "$env/static/private";
+import { NOTION_API_KEY } from "$app/env/private";
 
 // Cache for data source IDs to avoid repeated API calls
 const dataSourceCache = new Map<string, string>();

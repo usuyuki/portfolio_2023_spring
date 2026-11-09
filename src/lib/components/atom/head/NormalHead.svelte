@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 
 	const SITE_TITLE = "うすゆきどっとねっと";
 	const SITE_SUB_TITLE = "うすゆきのポートフォリオです";
 	const SITE_AUTHOR = "うすゆき";
 	const TWITTER_ID = "@usuyuki26";
 
-	export let title: string;
-	export let description: string;
-	export const ogImage: string = `${$page.url.origin}/img/ogp/ogp.png`;
-
-	const pageTitle = `${title} | ${SITE_TITLE}`;
+	let { title, description }: { title: string; description: string } = $props();
+	const ogImage = $derived(`${page.url.origin}/img/ogp/ogp.png`);
+	const pageTitle = $derived(`${title} | ${SITE_TITLE}`);
 </script>
 
 <svelte:head>
@@ -24,7 +22,7 @@
 	<meta property="og:site_name" content={`${SITE_TITLE} - ${SITE_SUB_TITLE}`} />
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={pageTitle} />
-	<meta property="og:url" content={$page.url.href} />
+	<meta property="og:url" content={page.url.href} />
 	<meta property="og:image" content={ogImage} />
 	<meta property="og:image:secure_url" content={ogImage} />
 

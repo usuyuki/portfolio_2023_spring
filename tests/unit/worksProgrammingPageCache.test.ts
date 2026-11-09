@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { WorksProgrammingRow } from "$lib/types/notion";
-import { shouldCachePage } from "$lib/utils/adapter/notionAdapter";
+import type { WorksProgrammingRow } from "#lib/types/notion.ts";
+import { shouldCachePage } from "#lib/utils/adapter/notionAdapter.ts";
 
 const rowWith = (isPublished: boolean): WorksProgrammingRow =>
 	({

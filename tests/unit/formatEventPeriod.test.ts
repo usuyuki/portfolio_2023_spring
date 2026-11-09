@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatEventPeriod } from "$lib/utils/formatEventPeriod";
+import { formatEventPeriod } from "#lib/utils/formatEventPeriod.ts";
 
 describe("formatEventPeriod", () => {
 	it("正常系: 開催日の組み合わせに応じて、一覧カード向けの期間表記に整形される", () => {

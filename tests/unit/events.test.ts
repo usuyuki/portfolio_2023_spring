@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { events } from "$lib/data/events";
+import { events } from "#lib/data/events.ts";
 
 // リダイレクト専用なのでevents.tsには載らないパス
 const RESERVED_SLUGS = new Set(["now"]);

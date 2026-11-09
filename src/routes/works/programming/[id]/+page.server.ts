@@ -2,14 +2,15 @@
 
 import { APIErrorCode } from "@notionhq/client";
 import { error } from "@sveltejs/kit";
-import type { WorksProgrammingRow } from "$lib/types/notion";
-import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
+import { env } from "cloudflare:workers";
+import type { WorksProgrammingRow } from "#lib/types/notion.ts";
+import type { worksProgrammingType } from "#lib/types/works/worksProgramming.ts";
 import {
 	CACHE_TTL,
 	getNotionClient,
 	shouldCachePage,
-} from "$lib/utils/adapter/notionAdapter";
-import { notionRowToData } from "$lib/utils/adapter/worksProgrammingNotionRowToData";
+} from "#lib/utils/adapter/notionAdapter.ts";
+import { notionRowToData } from "#lib/utils/adapter/worksProgrammingNotionRowToData.ts";
 import type { PageServerLoad } from "./$types";
 
 // id:データになっている
@@ -17,19 +18,17 @@ type dataType = {
 	data: worksProgrammingType;
 };
 
-export const load = (async ({ params, platform, fetch, parent }) => {
+export const load = (async ({ params, fetch, parent }) => {
 	// +layout.server.tsが一覧取得時に個別ページの全フィールドも一緒に持ってきているため、
 	// そこにヒットすればNotionへの追加リクエスト(pages.retrieve)を省略できる
 	// parent()はlayout側のNotionクエリ完了を待つため、KVキャッシュ読み取りと並列に走らせて待ち時間を短縮する
 	const cacheKey = `notion:page:${params.id}`;
 	const cachedPromise =
-		platform?.env?.KV != null
-			? platform.env.KV.get(cacheKey, { type: "json" }).catch(
-					(cacheError: unknown) => {
-						console.warn(`KV cache read failed for ${cacheKey}:`, cacheError);
-						return null;
-					},
-				)
+		env.KV != null
+			? env.KV.get(cacheKey, { type: "json" }).catch((cacheError: unknown) => {
+					console.warn(`KV cache read failed for ${cacheKey}:`, cacheError);
+					return null;
+				})
 			: Promise.resolve(null);
 
 	const [{ allWorks }, cached] = await Promise.all([parent(), cachedPromise]);
@@ -56,15 +55,13 @@ export const load = (async ({ params, platform, fetch, parent }) => {
 	}
 
 	try {
-		const response = (await getNotionClient(
-			platform?.fetch || fetch,
-		).pages.retrieve({
+		const response = (await getNotionClient(fetch).pages.retrieve({
 			page_id: params.id,
 		})) as unknown as WorksProgrammingRow;
 
-		if (platform?.env?.KV && shouldCachePage(response)) {
+		if (env.KV && shouldCachePage(response)) {
 			try {
-				await platform.env.KV.put(cacheKey, JSON.stringify(response), {
+				await env.KV.put(cacheKey, JSON.stringify(response), {
 					expirationTtl: CACHE_TTL.PAGE_RETRIEVE,
 				});
 			} catch (cacheError) {

@@ -1,4 +1,4 @@
-import type { eventType } from "$lib/types/event";
+import type { eventType } from "#lib/types/event.ts";
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
-	import misskeyLogo from "$lib/assets/icon/misskey-logo.png";
-	import usuyukiIcon from "$lib/assets/icon/usuyukiIcon.png";
-	import type { misskeyContentType } from "$lib/types/misskeyContent";
-	import { pressEasing } from "$lib/utils/actions/pressEasing";
-	import { onOpeningFinished } from "$lib/utils/openingEvent";
+	import misskeyLogo from "#lib/assets/icon/misskey-logo.png";
+	import usuyukiIcon from "#lib/assets/icon/usuyukiIcon.png";
+	import type { misskeyContentType } from "#lib/types/misskeyContent.ts";
+	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
+	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
 
 	export let notes: misskeyContentType[] = [];
 

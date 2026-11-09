@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
-import type { eventType } from "$lib/types/event";
-import { endOfEvent, isUpcoming, parseEventDate } from "$lib/utils/eventDate";
+import type { eventType } from "#lib/types/event.ts";
+import {
+	endOfEvent,
+	isUpcoming,
+	parseEventDate,
+} from "#lib/utils/eventDate.ts";
 
 // 検証に関係ないフィールドは固定値でよい
 const makeEvent = (

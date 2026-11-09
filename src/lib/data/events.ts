@@ -1,4 +1,4 @@
-import type { eventType } from "$lib/types/event";
+import type { eventType } from "#lib/types/event.ts";
 
 // 追加時は src/routes/events/{slug}/+page.svelte も作る。"now"はリダイレクト用に予約済み
 export const events: eventType[] = [

@@ -1,9 +1,9 @@
-import type { misskeyContentType } from "$lib/types/misskeyContent";
+import type { misskeyContentType } from "#lib/types/misskeyContent.ts";
 import {
 	fetchRecentNotes,
 	misskeyNoteUrl,
 	type MisskeyNote,
-} from "$lib/utils/adapter/misskeyAdapter";
+} from "#lib/utils/adapter/misskeyAdapter.ts";
 
 interface KVCache {
 	get(

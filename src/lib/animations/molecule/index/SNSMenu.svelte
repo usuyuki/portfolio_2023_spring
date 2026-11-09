@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
-	import Burst from "$lib/animations/atom/Burst.svelte";
-	import github from "$lib/assets/icon/github-mark.png";
-	import keybase from "$lib/assets/icon/keybase-official.svg";
-	import misskey from "$lib/assets/icon/misskey-logo.png";
-	import qiita from "$lib/assets/icon/qiita-icon.png";
-	import usuyukiBlog from "$lib/assets/icon/usuyukiBlog-icon.png";
-	import twitter from "$lib/assets/icon/x-logo.png";
-	import youtube from "$lib/assets/icon/youtube_social_icon_red.png";
-	import zenn from "$lib/assets/icon/zenn-logo.svg";
-	import SnsIconButton from "$lib/components/atom/button/SNSIconButton.svelte";
-	import { onOpeningFinished } from "$lib/utils/openingEvent";
+	import Burst from "#lib/animations/atom/Burst.svelte";
+	import github from "#lib/assets/icon/github-mark.png";
+	import keybase from "#lib/assets/icon/keybase-official.svg";
+	import misskey from "#lib/assets/icon/misskey-logo.png";
+	import qiita from "#lib/assets/icon/qiita-icon.png";
+	import usuyukiBlog from "#lib/assets/icon/usuyukiBlog-icon.png";
+	import twitter from "#lib/assets/icon/x-logo.png";
+	import youtube from "#lib/assets/icon/youtube_social_icon_red.png";
+	import zenn from "#lib/assets/icon/zenn-logo.svg";
+	import SnsIconButton from "#lib/components/atom/button/SNSIconButton.svelte";
+	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
 
 	// オープニング完了前はアイコンをscale(0)のまま隠しておき、完了後にクラス付与でアニメーションを開始する
 	// (以前はCSSのanimation-delayにapp.cssの--opening-timeを直接埋め込んでおり、実際の完了とズレていた)

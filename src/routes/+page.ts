@@ -1,4 +1,4 @@
-import { browser } from "$app/environment";
+import { browser } from "$app/env";
 
 // ブラウザでのみカウントさせることで機械的なアクセスでのカウントを防ぐ(KVのgetの無料枠をできる限り使わないようにするため)
 if (browser) {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { eventType } from "$lib/types/event";
-import { classifyEvents } from "$lib/utils/usecase/classifyEvents";
+import type { eventType } from "#lib/types/event.ts";
+import { classifyEvents } from "#lib/utils/usecase/classifyEvents.ts";
 
 // 検証に関係ないフィールドは固定値でよい
 const makeEvent = (

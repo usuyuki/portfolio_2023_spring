@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { page } from "$app/stores";
-	import { pressEasing } from "$lib/utils/actions/pressEasing";
-	import { bgClasses } from "$lib/utils/bgClasses";
+	import { page } from "$app/state";
+	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
+	import { bgClasses } from "#lib/utils/bgClasses.ts";
 
 	type Link = {
 		name: string;
@@ -64,7 +64,7 @@
 			<a
 				href={link.path}
 				use:pressEasing
-				aria-current={$page.url.pathname === link.path}
+				aria-current={page.url.pathname === link.path}
 				class="tab tag shrink-0 {bgClasses[index % bgClasses.length]}"
 			>
 				{link.name}
@@ -88,12 +88,12 @@
 	}
 	/* 現在地のタブは枠で囲むのではなく、発光+斜めのシャインが走る光沢で示す。
 	   タブごとに背景色(pink/blue/yellow)が異なるため、グローは色を持たない白系にして背景色と衝突させない */
-	.tab[aria-current='true'] {
-		box-shadow:
-			0 0 0 1px var(--white),
+
+	.tab[aria-current="true"] {
+		box-shadow: 0 0 0 1px var(--white),
 			0 0 10px 3px rgba(255, 255, 255, 0.9);
 	}
-	.tab[aria-current='true']::after {
+	.tab[aria-current="true"]::after {
 		content: '';
 		position: absolute;
 		inset: 0;

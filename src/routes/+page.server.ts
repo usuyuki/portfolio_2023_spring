@@ -1,17 +1,18 @@
-import type { blogContentType } from "$lib/types/blogContent";
-import type { misskeyContentType } from "$lib/types/misskeyContent";
+import { env } from "cloudflare:workers";
+import type { blogContentType } from "#lib/types/blogContent.ts";
+import type { misskeyContentType } from "#lib/types/misskeyContent.ts";
 import type {
 	InfoDatabaseRow,
 	NotionDatabaseResponse,
 	WorksProgrammingRow,
-} from "$lib/types/notion";
-import type { worksProgrammingTopPageType } from "$lib/types/works/worksProgramming";
+} from "#lib/types/notion.ts";
+import type { worksProgrammingTopPageType } from "#lib/types/works/worksProgramming.ts";
 import {
 	queryDataSourceCached,
 	CACHE_TTL,
-} from "$lib/utils/adapter/notionAdapter";
-import { getRecentArticle } from "$lib/utils/usecase/getRecentArticle";
-import { getRecentMisskeyNotes } from "$lib/utils/usecase/getRecentMisskeyNotes";
+} from "#lib/utils/adapter/notionAdapter.ts";
+import { getRecentArticle } from "#lib/utils/usecase/getRecentArticle.ts";
+import { getRecentMisskeyNotes } from "#lib/utils/usecase/getRecentMisskeyNotes.ts";
 import type { PageServerLoad } from "./$types";
 
 type infoType = {
@@ -25,7 +26,7 @@ type dataType = {
 	misskeyNotes: misskeyContentType[];
 };
 
-export const load = (async ({ platform, fetch }): Promise<dataType> => {
+export const load = (async ({ fetch }): Promise<dataType> => {
 	/**
 	 * トップページに必要な5つの外部データ取得はお互い依存関係がないため、
 	 * 直列awaitだと各APIのレイテンシが単純合算されてしまう。Promise.allで並列化する。
@@ -35,9 +36,7 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 			/**
 			 * cloudflare workers kv からアクセスカウンタの値を引っ張る
 			 */
-			platform?.env?.KV !== undefined
-				? platform.env.KV.get("counter")
-				: Promise.resolve("7777"), //ローカルでは使えないのでこの値を出す
+			env.KV !== undefined ? env.KV.get("counter") : Promise.resolve("7777"), //ローカルでは使えないのでこの値を出す
 
 			/**
 			 * トップ用のデータ取得
@@ -46,8 +45,8 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 				"b8ec3c117d1b4677947153bbe44bd42d",
 				{},
 				{
-					fetch: platform?.fetch || fetch,
-					kv: platform?.env?.KV,
+					fetch,
+					kv: env.KV,
 					cacheTtl: CACHE_TTL.INFO_DB,
 				},
 			) as unknown as Promise<NotionDatabaseResponse<InfoDatabaseRow>>,
@@ -55,12 +54,12 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 			/**
 			 * ブログデータ取得
 			 */
-			getRecentArticle(platform?.fetch || fetch),
+			getRecentArticle(fetch),
 
 			/**
 			 * Misskeyの最近の投稿を取得
 			 */
-			getRecentMisskeyNotes(platform?.fetch || fetch, platform?.env?.KV),
+			getRecentMisskeyNotes(fetch, env.KV),
 
 			/**
 			 * 作品データ取得
@@ -88,8 +87,8 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 					],
 				},
 				{
-					fetch: platform?.fetch || fetch,
-					kv: platform?.env?.KV,
+					fetch,
+					kv: env.KV,
 					cacheTtl: CACHE_TTL.PROGRAMMING_WORKS_DB,
 				},
 			) as unknown as Promise<NotionDatabaseResponse<WorksProgrammingRow>>,
@@ -116,7 +115,8 @@ export const load = (async ({ platform, fetch }): Promise<dataType> => {
 		info: dataInfo,
 		blogs: blogContent,
 		works: worksContent,
-		accessCounterValue: nOfVisitorValue,
+		// KVにcounterキーが未作成の場合はnullが返るため0扱いにする
+		accessCounterValue: nOfVisitorValue ?? "0",
 		misskeyNotes,
 	};
 }) satisfies PageServerLoad;

@@ -1,19 +1,20 @@
-import type { kokosukiType } from "$lib/types/kokosuki";
+import type { kokosukiType } from "#lib/types/kokosuki.ts";
 import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
-} from "$lib/types/notion";
+} from "#lib/types/notion.ts";
+import { env } from "cloudflare:workers";
 import {
 	queryDataSourceCached,
 	CACHE_TTL,
-} from "$lib/utils/adapter/notionAdapter";
+} from "#lib/utils/adapter/notionAdapter.ts";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
 	data: kokosukiType[];
 };
 
-export const load = (async ({ platform, fetch }) => {
+export const load = (async ({ fetch }) => {
 	const response = (await queryDataSourceCached(
 		"7d8c09c593ed4e0fb025044dab034a42",
 		{
@@ -29,8 +30,8 @@ export const load = (async ({ platform, fetch }) => {
 			},
 		},
 		{
-			fetch: platform?.fetch || fetch,
-			kv: platform?.env?.KV,
+			fetch,
+			kv: env.KV,
 			cacheTtl: CACHE_TTL.KOKOSUKI_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;

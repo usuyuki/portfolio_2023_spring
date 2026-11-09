@@ -1,29 +1,34 @@
 <script lang="ts">
 	import gsap from "gsap";
-	import { onDestroy, tick } from "svelte";
-	import { navigating } from "$app/stores";
-	import WipeBars from "$lib/animations/atom/WipeBars.svelte";
-	import PageTransition from "$lib/components/atom/loading/PageTransition.svelte";
-	import { coverWithBars, revealFromBars } from "$lib/utils/actions/wipeBars";
+	import { onDestroy, type Snippet, tick, untrack } from "svelte";
+	import { navigating } from "$app/state";
+	import WipeBars from "#lib/animations/atom/WipeBars.svelte";
+	import PageTransition from "#lib/components/atom/loading/PageTransition.svelte";
+	import {
+		coverWithBars,
+		revealFromBars,
+	} from "#lib/utils/actions/wipeBars.ts";
 
 	// 帯が画面を覆いきるまでの最小表示時間(仕様8.2: 遷移が速すぎて視覚的にジャンプするのを防ぐ)
 	const MIN_COVER_MS = 400;
 
-	let backdrop: HTMLElement | undefined;
-	let bar1: HTMLElement | undefined;
-	let bar2: HTMLElement | undefined;
-	let bar3: HTMLElement | undefined;
-	// showBars: 帯(+裏の黒背景)をDOMに残すかどうか。trueの間は<slot/>側で新ページに切り替わっても見えない
-	let showBars = false;
-	let showBuildHint = false;
+	let { children }: { children?: Snippet } = $props();
+
+	let backdrop: HTMLElement | undefined = $state();
+	let bar1: HTMLElement | undefined = $state();
+	let bar2: HTMLElement | undefined = $state();
+	let bar3: HTMLElement | undefined = $state();
+	// showBars: 帯(+裏の黒背景)をDOMに残すかどうか。trueの間はchildren側で新ページに切り替わっても見えない
+	let showBars = $state(false);
+	let showBuildHint = $state(false);
 
 	// coverWithBars完了 かつ 最小表示時間経過 の両方が揃うまで抜けさせないためのフラグ
 	let coveredAt = 0;
 	let isCovering = false;
 	let pendingReveal = false;
-	// 帯が画面を完全に覆いきるまでは<slot/>(新ページ本体)の描画自体を隠す。
+	// 帯が画面を完全に覆いきるまではchildren(新ページ本体)の描画自体を隠す。
 	// 読み込みが速いと、帯がまだ移動中で覆いきっていない領域から新ページが透けて見えてしまうため
-	let hideContent = false;
+	let hideContent = $state(false);
 	// startReveal内のsetTimeoutのID。次のstartCover()開始時にクリアしないと、
 	// 前サイクルの遅延リビールが新サイクルの途中で誤発火し、進行中のカバーアニメーションを打ち消してしまう
 	let revealTimeoutId: ReturnType<typeof setTimeout> | undefined;
@@ -88,22 +93,29 @@
 		if (revealTimeoutId !== undefined) clearTimeout(revealTimeoutId);
 	});
 
-	// $navigatingはnull⇄オブジェクトで遷移の開始/終了を表す。前回値との比較で1回だけ反応させる
+	// navigating.typeはnull⇄遷移種別で遷移の開始/終了を表す。前回値との比較で1回だけ反応させる
 	let wasNavigating = false;
-	$: {
-		const isNavigating = !!$navigating;
-		if (isNavigating && !wasNavigating) {
-			startCover();
-		} else if (!isNavigating && wasNavigating) {
-			startReveal();
-		}
-		wasNavigating = isNavigating;
-	}
+	$effect(() => {
+		const isNavigating = navigating.type !== null;
+		// startCover/startRevealの中で読み書きする$stateをこのeffectの依存に含めると、
+		// 自分の書き込みで再実行されてしまうため、遷移状態だけを依存として追跡する
+		untrack(() => {
+			if (isNavigating && !wasNavigating) {
+				startCover();
+			} else if (!isNavigating && wasNavigating) {
+				startReveal();
+			}
+			wasNavigating = isNavigating;
+		});
+	});
 </script>
 
-<div class="contents" class:invisible={hideContent} aria-hidden={hideContent}>
-	<slot />
-</div>
+<div
+	class="contents"
+	class:invisible={hideContent}
+	aria-hidden={hideContent}
+>{@render children?.()}</div>
+
 {#if showBars}
 	<WipeBars bind:backdrop bind:bar1 bind:bar2 bind:bar3 />
 {/if}
