@@ -59,7 +59,7 @@
 			isCovering = false;
 			coveredAt = Date.now();
 			// 帯が画面を完全に覆いきった後は、帯自体が新ページを隠してくれるため
-			// <slot/>の描画を止めておく必要がなくなる
+			// childrenの描画を止めておく必要がなくなる
 			hideContent = false;
 			// 帯が画面中央を覆いきった瞬間に初めてビルド待ち文言を出す
 			showBuildHint = true;
@@ -82,7 +82,7 @@
 			// ビルド待ち文言は、帯が実際に動き出す(退場を開始する)瞬間まで表示し続ける
 			showBuildHint = false;
 			revealFromBars(bars(), () => {
-				// 帯(+黒背景)が抜けきった後、初めて裏の新ページ(<slot/>の中身)を見せる
+				// 帯(+黒背景)が抜けきった後、初めて裏の新ページ(childrenの中身)を見せる
 				showBars = false;
 			});
 		}, wait);
