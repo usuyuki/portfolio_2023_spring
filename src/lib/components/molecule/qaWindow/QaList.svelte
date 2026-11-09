@@ -1,8 +1,12 @@
 <script lang="ts">
-	// RPGのセリフウィンドウ風に「ラベル+説明文」の組を並べる共通コンポーネント。about/kokosukiで共用する
-	export let items: { name: string; content: string }[];
-	// ラベル側の背景色。about(黒)/kokosuki(pink)で使い分ける
-	export let labelColorVariable: "black" | "pink" = "black";
+	interface Props {
+		// RPGのセリフウィンドウ風に「ラベル+説明文」の組を並べる共通コンポーネント。about/kokosukiで共用する
+		items: { name: string; content: string }[];
+		// ラベル側の背景色。about(黒)/kokosuki(pink)で使い分ける
+		labelColorVariable?: "black" | "pink";
+	}
+
+	let { items, labelColorVariable = "black" }: Props = $props();
 </script>
 
 <div class="qa-list">

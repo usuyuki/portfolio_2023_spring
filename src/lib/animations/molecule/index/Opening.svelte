@@ -7,13 +7,14 @@
 		OPENING_SESSION_KEY,
 	} from "#lib/utils/openingEvent.ts";
 
-	let overlayEl: HTMLElement;
-	let logoBoxEl: HTMLElement;
-	let loadingEl: HTMLElement;
-	let gaugeFillEl: HTMLElement;
+	// {#if visible}内の要素なので$stateで受け取る。GSAPはnullを渡しても何もしないため初期値はnullにする
+	let overlayEl = $state<HTMLElement | null>(null);
+	let logoBoxEl = $state<HTMLElement | null>(null);
+	let loadingEl = $state<HTMLElement | null>(null);
+	let gaugeFillEl = $state<HTMLElement | null>(null);
 
 	// visible: オーバーレイをDOMに残すかどうか。falseになったらこのコンポーネントごと外れる想定
-	let visible = true;
+	let visible = $state(true);
 	// destroyed: ページ遷移等でコンポーネントが破棄された後、runGaugeLoopの再帰が復活するのを防ぐ
 	let destroyed = false;
 	// finish()自体の再入防止(フェードアウト完了までの間はまだ進行中のtweenが残っているため)

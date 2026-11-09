@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 
-	export let link: string;
-	export let logo: string;
-	export let alt: string;
-	export let className: string = "";
+	interface Props {
+		link: string;
+		logo: string;
+		alt: string;
+		className?: string;
+	}
+
+	let { link, logo, alt, className = "" }: Props = $props();
 </script>
 
 <a

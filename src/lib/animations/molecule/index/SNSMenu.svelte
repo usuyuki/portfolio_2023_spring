@@ -14,7 +14,7 @@
 
 	// オープニング完了前はアイコンをscale(0)のまま隠しておき、完了後にクラス付与でアニメーションを開始する
 	// (以前はCSSのanimation-delayにapp.cssの--opening-timeを直接埋め込んでおり、実際の完了とズレていた)
-	let started = false;
+	let started = $state(false);
 	const unsubscribe = onOpeningFinished(() => {
 		started = true;
 	});

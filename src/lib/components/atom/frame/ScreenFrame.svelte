@@ -18,12 +18,13 @@
 		{ name: "EVENTS", path: "/events" },
 	];
 
+	// bind:thisで受け取りonMount以降のサイズ計測にだけ使うため、リアクティブにする必要はない
 	let headerEl: HTMLElement;
 	let titleEl: HTMLElement;
 	let navEl: HTMLElement;
 	// タイトルとナビが1行に収まらず折り返された(2段組みになった)かどうか。
 	// flex-wrapの折り返し発生はCSSだけでは検知できないため、実際の高さを見て判定する
-	let wrapped = false;
+	let wrapped = $state(false);
 
 	const checkWrapped = () => {
 		if (!headerEl || !titleEl || !navEl) return;

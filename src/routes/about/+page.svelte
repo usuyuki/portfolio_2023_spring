@@ -4,7 +4,11 @@
 	import QaList from "#lib/components/molecule/qaWindow/QaList.svelte";
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <NormalHead title="あばうと" description="うすゆきについて" />

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from "svelte";
+	import { onDestroy, untrack } from "svelte";
 	import AccessCounter from "#lib/animations/molecule/index/AccessCounter.svelte";
 	import MisskeyRecentNotes from "#lib/animations/molecule/index/MisskeyRecentNotes.svelte";
 	import Opening from "#lib/animations/molecule/index/Opening.svelte";
@@ -14,14 +14,19 @@
 	import { tuyotuyoConsole } from "#lib/utils/console/tuyotuyoConsole.ts";
 	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 	portfolioVersionLogger();
-	tuyotuyoConsole(data.info.log);
+	// コンソールへの演出は初回表示時に1回だけ出せばよいので、dataの変化には追従させない
+	tuyotuyoConsole(untrack(() => data.info.log));
 	snsLinkProvider();
 
 	// アイコンのフェードインをWelcomeGreetingと同じタイミングで発火させる
 	// (以前はCSSのanimation-delayにapp.cssの--after-access-counter-timeを直接埋め込んでおり、実際の完了とズレていた)
-	let iconStarted = false;
+	let iconStarted = $state(false);
 	const unsubscribeIconStart = onOpeningFinished(() => {
 		iconStarted = true;
 	});
