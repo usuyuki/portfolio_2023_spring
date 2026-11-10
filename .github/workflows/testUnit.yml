@@ -42,5 +42,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
         
+      # SvelteKit 3はsrc/env.tsで宣言した環境変数が未設定だと起動時にenv_invalidで落ちる。
+      # 単体テストは外部APIを呼ばないため、実際の値ではなくダミー値で検証を通す
       - name: Unit test
         run: pnpm test:u
+        env:
+          GHOST_API_URL: https://example.com
+          GHOST_CONTENT_KEY: dummy
+          NOTION_API_KEY: dummy
