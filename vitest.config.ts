@@ -2,7 +2,7 @@ import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-	// $lib等のパスエイリアス解決のためsveltekitプラグインを使う
+	// $app/*等のSvelteKitの仮想モジュールと.svelteの変換を解決するためsveltekitプラグインを使う
 	plugins: [sveltekit()],
 	test: {
 		include: ["tests/unit/**/*.{test,spec}.{js,ts}"],

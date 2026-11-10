@@ -3,13 +3,19 @@
 	"compilerOptions": {
 		"sourceMap": true,
 		"strict": true,
-		"types": ["$app/types", "node", "vitest/globals"]
+		"types": ["$app/types", "vitest/globals"]
 	},
-	// worker-configuration.d.ts は `pnpm wrangler types` で生成する cloudflare:workers と env.KV の型定義
+	// includeは継承元(.svelte-kit/tsconfig.json)を丸ごと上書きするため、SvelteKitの生成型も明示的に含める。
+	// worker-configuration.d.ts は `pnpm wrangler types` で生成する cloudflare:workers のランタイム型定義
 	"include": [
+		".svelte-kit/ambient.d.ts",
+		".svelte-kit/env.d.ts",
+		".svelte-kit/non-ambient.d.ts",
+		".svelte-kit/types/**/$types.d.ts",
 		"src",
 		"vite.config.ts",
 		"playwright.config.ts",
+		"vitest.config.ts",
 		"tests",
 		"worker-configuration.d.ts"
 	]

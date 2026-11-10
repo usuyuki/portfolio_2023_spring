@@ -8,7 +8,8 @@ const config: PlaywrightTestConfig = {
 		// (adapter-cloudflare v8ではvite previewがNode上でcloudflare:workersを解決できず500になるため)
 		command: "pnpm preview",
 		port: 4173,
-		timeout: 120_000,
+		// wrangler devはサーバー起動前にpnpm buildも実行するため、ビルド時間込みで長めに待つ
+		timeout: 300_000,
 		reuseExistingServer: !process.env.CI,
 	},
 	testDir: "tests/integration",

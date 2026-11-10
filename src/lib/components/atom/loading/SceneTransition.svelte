@@ -95,7 +95,8 @@
 
 	// navigating.typeはnull⇄遷移種別で遷移の開始/終了を表す。前回値との比較で1回だけ反応させる
 	let wasNavigating = false;
-	$effect(() => {
+	// 旧$:と同じくDOM更新前に走らせる。$effectだとDOM更新後になり、新ページが帯より先に一瞬描画される
+	$effect.pre(() => {
 		const isNavigating = navigating.type !== null;
 		// startCover/startRevealの中で読み書きする$stateをこのeffectの依存に含めると、
 		// 自分の書き込みで再実行されてしまうため、遷移状態だけを依存として追跡する
