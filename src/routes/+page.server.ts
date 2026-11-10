@@ -36,7 +36,8 @@ export const load = (async ({ fetch }): Promise<dataType> => {
 			/**
 			 * cloudflare workers kv からアクセスカウンタの値を引っ張る
 			 */
-			env.KV !== undefined ? env.KV.get("counter") : Promise.resolve("7777"), //ローカルでは使えないのでこの値を出す
+			// ローカル(vite dev / wrangler dev)でもエミュレートされたKVがあるため、常にKVから読む。未設定ならnullになる
+			env.KV.get("counter"),
 
 			/**
 			 * トップ用のデータ取得
