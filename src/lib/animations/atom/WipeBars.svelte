@@ -1,10 +1,20 @@
 <script lang="ts">
 	// オープニング退場・ページ遷移(シーンチェンジ)で共通利用する斜め帯。
-	// PC/モバイルともpink/blue/yellowの3枚で揃える
-	export let backdrop: HTMLElement | undefined = undefined;
-	export let bar1: HTMLElement | undefined = undefined;
-	export let bar2: HTMLElement | undefined = undefined;
-	export let bar3: HTMLElement | undefined = undefined;
+
+	interface Props {
+		// PC/モバイルともpink/blue/yellowの3枚で揃える
+		backdrop?: HTMLElement | undefined;
+		bar1?: HTMLElement | undefined;
+		bar2?: HTMLElement | undefined;
+		bar3?: HTMLElement | undefined;
+	}
+
+	let {
+		backdrop = $bindable(undefined),
+		bar1 = $bindable(undefined),
+		bar2 = $bindable(undefined),
+		bar3 = $bindable(undefined),
+	}: Props = $props();
 </script>
 
 <div class="wipe-bars" aria-hidden="true">

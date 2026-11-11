@@ -2,12 +2,16 @@
 	import { onDestroy } from "svelte";
 	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
 
-	export let greeting: string;
+	interface Props {
+		greeting: string;
+	}
+
+	let { greeting }: Props = $props();
 	export const className = "";
 
 	// オープニング完了前はscaleAnimationを止めておき、完了後にクラス付与でアニメーションを開始する
 	// (以前はCSSのanimation-delayにapp.cssの--after-access-counter-timeを直接埋め込んでおり、実際の完了とズレていた)
-	let started = false;
+	let started = $state(false);
 	const unsubscribe = onOpeningFinished(() => {
 		started = true;
 	});

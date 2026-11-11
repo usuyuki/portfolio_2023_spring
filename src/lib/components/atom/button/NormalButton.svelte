@@ -1,11 +1,21 @@
 <script lang="ts">
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 
-	export let bgColorVariable: "pink" | "black" | "yellow" | "blue" = "pink";
-	export let textColorVariable: "black" | "blue" = "black";
-	export let title: string = "ボタン名";
-	export let url: string = "/link";
-	export let className: string = "";
+	interface Props {
+		bgColorVariable?: "pink" | "black" | "yellow" | "blue";
+		textColorVariable?: "black" | "blue";
+		title?: string;
+		url?: string;
+		className?: string;
+	}
+
+	let {
+		bgColorVariable = "pink",
+		textColorVariable = "black",
+		title = "ボタン名",
+		url = "/link",
+		className = "",
+	}: Props = $props();
 </script>
 
 <!-- bg-変数名 のように指定すると、Tailwindのバンドル時に対象外になってしまう危険があるが、他で絶対使うのでこの指定を許している -->

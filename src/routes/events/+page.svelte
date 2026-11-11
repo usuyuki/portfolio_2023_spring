@@ -5,10 +5,14 @@
 	import { bgClasses } from "#lib/utils/bgClasses.ts";
 	import { formatEventPeriod } from "#lib/utils/formatEventPeriod.ts";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	// 再計算するとSSR時と結果がずれうるので+page.server.tsの結果をそのまま使う
-	const { hero, upcoming, past } = data;
+	const { hero, upcoming, past } = $derived(data);
 </script>
 
 <NormalHead title="イベント" description="うすゆきが参加するコミケ・技術書典などのイベント情報" />

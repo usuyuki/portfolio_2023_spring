@@ -6,15 +6,19 @@
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
 
-	export let notes: misskeyContentType[] = [];
+	interface Props {
+		notes?: misskeyContentType[];
+	}
+
+	let { notes = [] }: Props = $props();
 
 	// 何件目を表示しているか。数秒おきに切り替える
-	let currentIndex = 0;
+	let currentIndex = $state(0);
 	// フリップアニメーション中かどうか(trueの間だけCSSアニメーションを再生させる)
-	let flipping = false;
+	let flipping = $state(false);
 	// オープニング完了前はカードをopacity:0のまま隠しておき、完了後にクラス付与でアニメーションを開始する
 	// (他の演出と同じ待ち時間だと埋もれるため、SNSMenu等より少し遅らせて最後に登場させる程度に留める)
-	let started = false;
+	let started = $state(false);
 
 	const SWITCH_INTERVAL_MS = 5000;
 	const FLIP_DURATION_MS = 500;
@@ -59,7 +63,7 @@
 		clearTimeout(flipEndTimeoutId);
 	});
 
-	$: currentNote = notes[currentIndex];
+	let currentNote = $derived(notes[currentIndex]);
 </script>
 
 {#if notes.length > 0}

@@ -6,19 +6,25 @@
 	import { mediaCardVariants } from "#lib/utils/mediaCardVariants.ts";
 	import { speakerDeckThumbnail } from "#lib/utils/speakerDeckThumbnail.ts";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	// ジャンルをまたいでも色のローテーションが途切れないよう、全ジャンル通しの連番を先に振っておく
-	let cardIndex = 0;
-	const cardIndexByGenre = Object.fromEntries(
-		Object.entries(data.data).map(([genre, slides]) => [
-			genre,
-			slides.map(() => cardIndex++),
-		]),
-	);
+	const cardIndexByGenre = $derived.by(() => {
+		let cardIndex = 0;
+		return Object.fromEntries(
+			Object.entries(data.data).map(([genre, slides]) => [
+				genre,
+				slides.map(() => cardIndex++),
+			]),
+		);
+	});
 
 	// iframeの中身が検索結果に出ないよう、クリックされるまではサムネイルにしておく(クローラーはクリックしない)
-	let loadedSlides = new Set<string>();
+	let loadedSlides = $state(new Set<string>());
 	// 押したボタンはiframeに置き換わって消えるので、キーボード操作が途切れないようフォーカスを移す
 	const loadSlide = async (url: string, card: HTMLElement | null) => {
 		if (card) pressPulse(card);
@@ -52,7 +58,7 @@
 						type="button"
 						class="frame slide-placeholder"
 						aria-label="{slide.name}のスライドを表示"
-						on:click={(event) =>
+						onclick={(event) =>
 							loadSlide(slide.slideIframe, event.currentTarget.closest(".vcard"))}
 					>
 						{#if thumbnail}

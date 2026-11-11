@@ -2,7 +2,11 @@
 	import NormalHead from "#lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <NormalHead title="技術スタック" description="シェフのきまぐれ技術スタック" />

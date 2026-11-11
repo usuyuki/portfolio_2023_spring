@@ -1,10 +1,20 @@
 <script lang="ts">
-	export let animationDuration: string = "1s";
-	export let animationDelay: string = "0";
-	export let color: "blue" | "pink" | "yellow" = "blue";
-	export let className: string = "";
-	// trueの間はCSSアニメーションを0%の状態で止めておく(親コンポーネント側で表示タイミングを制御したい場合に使う)
-	export let paused: boolean = false;
+	interface Props {
+		animationDuration?: string;
+		animationDelay?: string;
+		color?: "blue" | "pink" | "yellow";
+		className?: string;
+		// trueの間はCSSアニメーションを0%の状態で止めておく(親コンポーネント側で表示タイミングを制御したい場合に使う)
+		paused?: boolean;
+	}
+
+	let {
+		animationDuration = "1s",
+		animationDelay = "0",
+		color = "blue",
+		className = "",
+		paused = false,
+	}: Props = $props();
 </script>
 
 <div

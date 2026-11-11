@@ -7,7 +7,11 @@
 	type dataType = {
 		[key: string]: worksProgrammingShortType;
 	};
-	export let works: dataType;
+	interface Props {
+		works: dataType;
+	}
+
+	let { works }: Props = $props();
 </script>
 
 <aside

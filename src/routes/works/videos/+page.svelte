@@ -3,7 +3,11 @@
 	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import { mediaCardVariants } from "#lib/utils/mediaCardVariants.ts";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <NormalHead title="映像作品" description="映像作品のページです" />

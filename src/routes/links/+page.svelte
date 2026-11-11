@@ -4,7 +4,11 @@
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 	import { bgClasses } from "#lib/utils/bgClasses.ts";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <NormalHead title="リンク集" description="リンク集ページ" />

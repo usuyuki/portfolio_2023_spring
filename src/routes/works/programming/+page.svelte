@@ -4,10 +4,14 @@
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 	import { mediaCardVariants } from "#lib/utils/mediaCardVariants.ts";
 	import type { PageData } from "./$types";
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	// Notion側の並び順(公開日降順)をそのまま一覧の並び順として使う
-	const works = Object.entries(data.allWorks);
+	const works = $derived(Object.entries(data.allWorks));
 </script>
 
 <NormalHead title="プログラミング作品" description="プログラミングで作ったもの" />

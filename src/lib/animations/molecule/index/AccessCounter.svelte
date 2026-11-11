@@ -3,11 +3,16 @@
 	import { fly } from "svelte/transition";
 	import Burst from "#lib/animations/atom/Burst.svelte";
 	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
-	export let count: string;
-	let visible = false;
-	const countInt = parseInt(count, 10);
+	interface Props {
+		count: string;
+	}
 
-	$: nowValue = 0;
+	let { count }: Props = $props();
+	let visible = $state(false);
+	const countInt = $derived(parseInt(count, 10));
+
+	let nowValue = $state(0);
+
 	// SNSアイコンの登場演出(app.cssの--after-sns-time相当)がオープニング完了から700ms後に終わるため、
 	// カウンターはそのぶん遅らせて表示する
 	const SHOW_DELAY_MS = 700;
