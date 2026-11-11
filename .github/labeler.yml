@@ -24,20 +24,20 @@
   - changed-files:
       - any-glob-to-any-file:
         - .env.example
-        - .eslintignore
-        - .eslintrc.cjs
         - .gitattributes
         - .gitignore
         - .npmrc
         - .prettierignore
-        - .prettierrc
-        - playwright-ct.config.ts
+        - biome.json
         - playwright.config.ts
         - postcss.config.cjs
-        - svelte.config.js
-        - tailwind.config.cjs
+        - src/app.d.ts
+        - src/env.ts
         - tsconfig.json
         - vite.config.ts
+        - vitest.config.ts
+        - worker-configuration.d.ts
+        - wrangler.toml.example
 🎁package:
   - changed-files:
       - any-glob-to-any-file:

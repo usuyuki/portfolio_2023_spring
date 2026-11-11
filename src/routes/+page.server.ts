@@ -8,9 +8,10 @@ import type {
 } from "#lib/types/notion.ts";
 import type { worksProgrammingTopPageType } from "#lib/types/works/worksProgramming.ts";
 import {
-	queryDataSourceCached,
 	CACHE_TTL,
+	queryDataSourceCached,
 } from "#lib/utils/adapter/notionAdapter.ts";
+import { readAccessCounter } from "#lib/utils/usecase/accessCounter.ts";
 import { getRecentArticle } from "#lib/utils/usecase/getRecentArticle.ts";
 import { getRecentMisskeyNotes } from "#lib/utils/usecase/getRecentMisskeyNotes.ts";
 import type { PageServerLoad } from "./$types";
@@ -35,9 +36,9 @@ export const load = (async ({ fetch }): Promise<dataType> => {
 		await Promise.all([
 			/**
 			 * cloudflare workers kv からアクセスカウンタの値を引っ張る
+			 * KVが無い・読み取りに失敗した場合も、Promise.allごとページを落とさないよう代替値が返る
 			 */
-			// ローカル(vite dev / wrangler dev)でもエミュレートされたKVがあるため、常にKVから読む。未設定ならnullになる
-			env.KV.get("counter"),
+			readAccessCounter(env.KV),
 
 			/**
 			 * トップ用のデータ取得
@@ -116,8 +117,7 @@ export const load = (async ({ fetch }): Promise<dataType> => {
 		info: dataInfo,
 		blogs: blogContent,
 		works: worksContent,
-		// KVにcounterキーが未作成の場合はnullが返るため0扱いにする
-		accessCounterValue: nOfVisitorValue ?? "0",
+		accessCounterValue: nOfVisitorValue,
 		misskeyNotes,
 	};
 }) satisfies PageServerLoad;

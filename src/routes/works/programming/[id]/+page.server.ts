@@ -1,8 +1,8 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
 
+import { env } from "cloudflare:workers";
 import { APIErrorCode } from "@notionhq/client";
 import { error } from "@sveltejs/kit";
-import { env } from "cloudflare:workers";
 import type { WorksProgrammingRow } from "#lib/types/notion.ts";
 import type { worksProgrammingType } from "#lib/types/works/worksProgramming.ts";
 import {
@@ -23,13 +23,13 @@ export const load = (async ({ params, fetch, parent }) => {
 	// そこにヒットすればNotionへの追加リクエスト(pages.retrieve)を省略できる
 	// parent()はlayout側のNotionクエリ完了を待つため、KVキャッシュ読み取りと並列に走らせて待ち時間を短縮する
 	const cacheKey = `notion:page:${params.id}`;
-	const cachedPromise =
-		env.KV != null
-			? env.KV.get(cacheKey, { type: "json" }).catch((cacheError: unknown) => {
-					console.warn(`KV cache read failed for ${cacheKey}:`, cacheError);
-					return null;
-				})
-			: Promise.resolve(null);
+	// KVが無い環境(Env.KVは任意)ではキャッシュ無しとして扱う
+	const cachedPromise = (
+		env.KV?.get(cacheKey, { type: "json" }) ?? Promise.resolve(null)
+	).catch((cacheError: unknown) => {
+		console.warn(`KV cache read failed for ${cacheKey}:`, cacheError);
+		return null;
+	});
 
 	const [{ allWorks }, cached] = await Promise.all([parent(), cachedPromise]);
 	const fromLayout = allWorks[params.id];

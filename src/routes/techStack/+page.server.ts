@@ -1,12 +1,12 @@
+import { env } from "cloudflare:workers";
 import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
 } from "#lib/types/notion.ts";
 import type { techStackType } from "#lib/types/techStack.ts";
-import { env } from "cloudflare:workers";
 import {
-	queryDataSourceCached,
 	CACHE_TTL,
+	queryDataSourceCached,
 } from "#lib/utils/adapter/notionAdapter.ts";
 import type { PageServerLoad } from "./$types";
 

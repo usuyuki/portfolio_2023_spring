@@ -78,6 +78,8 @@ This is a **SvelteKit portfolio application** deployed on **Cloudflare Workers**
 | `src/lib` imports | Use `#lib/...` (`package.json` `imports`) with an explicit extension, e.g. `#lib/utils/foo.ts`, `#lib/components/Bar.svelte`. `$lib` no longer exists |
 | App state | Use `$app/state` (`page`, `navigating`). `$app/stores` is removed |
 | Cloudflare bindings | `event.platform` is NOT populated by adapter-cloudflare v8. Read bindings via `import { env } from "cloudflare:workers"` (e.g. `env.KV`) |
+| KV is optional | `Env.KV` is typed `KV?: KVNamespace` (missing without a local `wrangler.toml`). KV only backs caches and the access counter, so pages must render without it: pass `env.KV` to helpers that accept `kv?` and never call `env.KV.get` unguarded. Counter access goes through `#lib/utils/usecase/accessCounter.ts` |
+| Unit test env | `vitest.config.ts` fills dummy values for the `src/env.ts` variables when unset, so `pnpm test:u` runs without `.env` (CI included) |
 | Binding types | `Cloudflare.Env` is hand-written in `src/app.d.ts`. `worker-configuration.d.ts` holds runtime types only; regenerate with `pnpm wrangler types --include-env=false` (including Env makes it import the build output and breaks `pnpm check`) |
 | Preview / E2E | `pnpm preview` runs `wrangler dev` (builds via `[build]` in `wrangler.toml`, then serves on workerd at :4173). `vite preview` cannot resolve `cloudflare:workers` on Node and returns 500 |
 

@@ -85,7 +85,12 @@
 	}
 </script>
 
-<NormalHead title={data.data.name} description={data.data.summary} />
+<!-- galleryの1枚目を作品ごとのOG画像にする(画像が無い作品はサイト共通の画像になる) -->
+<NormalHead
+	title={data.data.name}
+	description={data.data.summary}
+	ogImage={data.data.gallery[0]}
+/>
 
 <section class="work-hero">
 	{#if data.data.logo !== false}

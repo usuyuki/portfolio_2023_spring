@@ -6,8 +6,17 @@
 	const SITE_AUTHOR = "うすゆき";
 	const TWITTER_ID = "@usuyuki26";
 
-	let { title, description }: { title: string; description: string } = $props();
-	const ogImage = $derived(`${page.url.origin}/img/ogp/ogp.png`);
+	let {
+		title,
+		description,
+		ogImage: customOgImage,
+	}: {
+		title: string;
+		description: string;
+		// ページ固有のOG画像(絶対URL)。省略するとサイト共通の画像を使う
+		ogImage?: string;
+	} = $props();
+	const ogImage = $derived(customOgImage ?? `${page.url.origin}/img/ogp/ogp.png`);
 	const pageTitle = $derived(`${title} | ${SITE_TITLE}`);
 </script>
 

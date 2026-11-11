@@ -14,7 +14,9 @@ declare global {
 	// ビルド後にsvelte-checkが成果物まで検査してしまうため、Envだけはここで手書きする
 	namespace Cloudflare {
 		interface Env {
-			KV: KVNamespace;
+			// wrangler.tomlが無いローカル環境やバインディング名の設定ミスでは存在しないため任意にする。
+			// KVはキャッシュとアクセスカウンタにしか使っておらず、無くてもページは表示できる
+			KV?: KVNamespace;
 		}
 	}
 }
