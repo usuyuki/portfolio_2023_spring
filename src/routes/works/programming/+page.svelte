@@ -3,12 +3,8 @@
 	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 	import { mediaCardVariants } from "#lib/utils/mediaCardVariants.ts";
-	import type { PageData } from "./$types";
-	interface Props {
-		data: PageData;
-	}
-
-	let { data }: Props = $props();
+	import type { PageProps } from "./$types";
+	let { data }: PageProps = $props();
 
 	// Notion側の並び順(公開日降順)をそのまま一覧の並び順として使う
 	const works = $derived(Object.entries(data.allWorks));

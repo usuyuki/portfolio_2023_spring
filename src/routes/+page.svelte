@@ -13,12 +13,8 @@
 	import { snsLinkProvider } from "#lib/utils/console/snsLinkProvider.ts";
 	import { tuyotuyoConsole } from "#lib/utils/console/tuyotuyoConsole.ts";
 	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
-	import type { PageData } from "./$types";
-	interface Props {
-		data: PageData;
-	}
-
-	let { data }: Props = $props();
+	import type { PageProps } from "./$types";
+	let { data }: PageProps = $props();
 	portfolioVersionLogger();
 	// コンソールへの演出は初回表示時に1回だけ出せばよいので、dataの変化には追従させない
 	tuyotuyoConsole(untrack(() => data.info.log));

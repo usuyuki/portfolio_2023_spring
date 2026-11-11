@@ -3,12 +3,8 @@
 	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import QaList from "#lib/components/molecule/qaWindow/QaList.svelte";
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
-	import type { PageData } from "./$types";
-	interface Props {
-		data: PageData;
-	}
-
-	let { data }: Props = $props();
+	import type { PageProps } from "./$types";
+	let { data }: PageProps = $props();
 </script>
 
 <NormalHead title="あばうと" description="うすゆきについて" />

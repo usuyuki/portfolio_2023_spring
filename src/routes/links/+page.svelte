@@ -3,12 +3,8 @@
 	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 	import { bgClasses } from "#lib/utils/bgClasses.ts";
-	import type { PageData } from "./$types";
-	interface Props {
-		data: PageData;
-	}
-
-	let { data }: Props = $props();
+	import type { PageProps } from "./$types";
+	let { data }: PageProps = $props();
 </script>
 
 <NormalHead title="リンク集" description="リンク集ページ" />

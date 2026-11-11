@@ -4,11 +4,13 @@
 		tag?: string;
 	}
 
-	let { title, tag = title }: Props = $props();
+	let { title, tag }: Props = $props();
+	// tag未指定時はtitleを表示する。分割代入の既定値だと初期値しか拾わないため$derivedでtitleの変化に追従させる
+	const displayTag = $derived(tag ?? title);
 </script>
 
 <div class="page-title">
-	<span class="box-tag">{tag}</span>
+	<span class="box-tag">{displayTag}</span>
 	<h1 class="hero-title-page">{title}</h1>
 </div>
 
