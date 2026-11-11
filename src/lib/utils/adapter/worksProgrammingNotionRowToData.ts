@@ -1,5 +1,5 @@
-import type { WorksProgrammingRow } from "$lib/types/notion";
-import type { worksProgrammingType } from "$lib/types/works/worksProgramming";
+import type { WorksProgrammingRow } from "#lib/types/notion.ts";
+import type { worksProgrammingType } from "#lib/types/works/worksProgramming.ts";
 
 // Notionのpages.retrieveレスポンスをworksProgrammingType形式に変換する
 export const notionRowToData = (

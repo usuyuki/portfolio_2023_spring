@@ -1,12 +1,13 @@
+import { env } from "cloudflare:workers";
 import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
-} from "$lib/types/notion";
-import type { worksSlideType } from "$lib/types/works/worksSlides";
+} from "#lib/types/notion.ts";
+import type { worksSlideType } from "#lib/types/works/worksSlides.ts";
 import {
-	queryDataSourceCached,
 	CACHE_TTL,
-} from "$lib/utils/adapter/notionAdapter";
+	queryDataSourceCached,
+} from "#lib/utils/adapter/notionAdapter.ts";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -15,7 +16,7 @@ type dataType = {
 	};
 };
 
-export const load = (async ({ platform, fetch }) => {
+export const load = (async ({ fetch }) => {
 	const response = (await queryDataSourceCached(
 		"d5b6c2e74260462e97e24ed898399337",
 		{
@@ -37,8 +38,8 @@ export const load = (async ({ platform, fetch }) => {
 			],
 		},
 		{
-			fetch: platform?.fetch || fetch,
-			kv: platform?.env?.KV,
+			fetch,
+			kv: env.KV,
 			cacheTtl: CACHE_TTL.SLIDES_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;

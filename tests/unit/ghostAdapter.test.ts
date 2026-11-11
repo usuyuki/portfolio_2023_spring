@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { type GhostPost, toBlogContent } from "$lib/utils/adapter/ghostAdapter";
+import {
+	type GhostPost,
+	toBlogContent,
+} from "#lib/utils/adapter/ghostAdapter.ts";
 
 const basePost: GhostPost = {
 	title: "テスト記事",

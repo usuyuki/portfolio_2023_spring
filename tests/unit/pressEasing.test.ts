@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { describe, expect, it } from "vitest";
-import { pressEasing, pressPulse } from "$lib/utils/actions/pressEasing";
+import { pressEasing, pressPulse } from "#lib/utils/actions/pressEasing.ts";
 
 // pointerType未指定のEventだとpressEasing側のisHoverCapable判定に引っかからないため、マウス操作を模したPointerEventを都度生成する
 const mousePointerEvent = (type: string) =>

@@ -1,5 +1,5 @@
-import type { eventSection, eventType } from "$lib/types/event";
-import { isUpcoming, parseEventDate } from "$lib/utils/eventDate";
+import type { eventSection, eventType } from "#lib/types/event.ts";
+import { isUpcoming, parseEventDate } from "#lib/utils/eventDate.ts";
 
 // heroは未来を優先し、無ければ直近の過去を充てる(/events/nowの「前後問わず最も近い」とは別基準)
 export function classifyEvents(events: eventType[], now: Date): eventSection {

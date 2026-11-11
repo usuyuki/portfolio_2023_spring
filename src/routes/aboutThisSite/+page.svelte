@@ -1,8 +1,8 @@
 <script lang="ts">
-	import AboutThisSiteFrame from "$lib/components/atom/frame/AboutThisSiteFrame.svelte";
-	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
-	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
-	import { pressEasing } from "$lib/utils/actions/pressEasing";
+	import AboutThisSiteFrame from "#lib/components/atom/frame/AboutThisSiteFrame.svelte";
+	import NormalHead from "#lib/components/atom/head/NormalHead.svelte";
+	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
+	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 </script>
 
 <NormalHead title="このサイトについて" description="このサイトについて" />

@@ -1,5 +1,9 @@
-import type { eventType } from "$lib/types/event";
-import { endOfEvent, isUpcoming, parseEventDate } from "$lib/utils/eventDate";
+import type { eventType } from "#lib/types/event.ts";
+import {
+	endOfEvent,
+	isUpcoming,
+	parseEventDate,
+} from "#lib/utils/eventDate.ts";
 
 // 今日からの距離(ミリ秒)。会期中は0
 function distanceFromNow(event: eventType, now: Date): number {

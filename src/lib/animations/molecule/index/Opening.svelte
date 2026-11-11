@@ -1,11 +1,11 @@
 <script lang="ts">
 	import gsap from "gsap";
 	import { onDestroy, onMount } from "svelte";
-	import { prefersReducedMotion } from "$lib/utils/motion";
+	import { prefersReducedMotion } from "#lib/utils/motion.ts";
 	import {
 		OPENING_FINISHED_EVENT,
 		OPENING_SESSION_KEY,
-	} from "$lib/utils/openingEvent";
+	} from "#lib/utils/openingEvent.ts";
 
 	let overlayEl: HTMLElement;
 	let logoBoxEl: HTMLElement;

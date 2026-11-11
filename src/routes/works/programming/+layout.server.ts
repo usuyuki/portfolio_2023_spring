@@ -1,14 +1,15 @@
 // 個別のページでも全体のデータ使いたいので+layout.server.tsで取得
 
+import { env } from "cloudflare:workers";
 import type {
 	NotionDatabaseResponse,
 	WorksProgrammingRow,
-} from "$lib/types/notion";
-import type { worksProgrammingFullType } from "$lib/types/works/worksProgramming";
+} from "#lib/types/notion.ts";
+import type { worksProgrammingFullType } from "#lib/types/works/worksProgramming.ts";
 import {
-	queryDataSourceCached,
 	CACHE_TTL,
-} from "$lib/utils/adapter/notionAdapter";
+	queryDataSourceCached,
+} from "#lib/utils/adapter/notionAdapter.ts";
 import type { LayoutServerLoad } from "./$types";
 
 // id:データになっている
@@ -19,7 +20,7 @@ type allWorksDataType = {
 		[key: string]: worksProgrammingFullType;
 	};
 };
-export const load = (async ({ platform, fetch }) => {
+export const load = (async ({ fetch }) => {
 	const response = (await queryDataSourceCached(
 		"a448d280a2e840d6a4baa3a34fb853b4",
 		{
@@ -41,8 +42,8 @@ export const load = (async ({ platform, fetch }) => {
 			],
 		},
 		{
-			fetch: platform?.fetch || fetch,
-			kv: platform?.env?.KV,
+			fetch,
+			kv: env.KV,
 			cacheTtl: CACHE_TTL.PROGRAMMING_WORKS_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<WorksProgrammingRow>;

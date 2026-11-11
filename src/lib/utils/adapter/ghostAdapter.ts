@@ -1,6 +1,6 @@
-import { GHOST_API_URL, GHOST_CONTENT_KEY } from "$env/static/private";
-import type { blogContentType } from "$lib/types/blogContent";
-import { optimizeGhostImageUrl } from "$lib/utils/optimizeGhostImages";
+import { GHOST_API_URL, GHOST_CONTENT_KEY } from "$app/env/private";
+import type { blogContentType } from "#lib/types/blogContent.ts";
+import { optimizeGhostImageUrl } from "#lib/utils/optimizeGhostImages.ts";
 
 export type GhostPost = {
 	title?: string;

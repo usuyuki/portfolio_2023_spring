@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	generateCacheKey,
 	isValidDataSourceId,
-} from "$lib/utils/adapter/notionAdapter";
+} from "#lib/utils/adapter/notionAdapter.ts";
 
 // 実在のIDは使わない。判定はdatabaseIdとの一致のみなので値自体に意味はない
 const DATABASE_ID = "aaaaaaaabbbbccccddddeeeeeeeeeeee";

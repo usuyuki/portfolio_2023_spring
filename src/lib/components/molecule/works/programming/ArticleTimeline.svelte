@@ -1,8 +1,8 @@
 <script lang="ts">
 	import * as autoplay from "embla-carousel-autoplay";
 	import emblaCarouselSvelte from "embla-carousel-svelte";
-	import type { worksProgrammingShortType } from "$lib/types/works/worksProgramming";
-	import { pressEasing } from "$lib/utils/actions/pressEasing";
+	import type { worksProgrammingShortType } from "#lib/types/works/worksProgramming.ts";
+	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 
 	type dataType = {
 		[key: string]: worksProgrammingShortType;

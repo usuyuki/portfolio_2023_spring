@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 	import { fly } from "svelte/transition";
-	import Burst from "$lib/animations/atom/Burst.svelte";
-	import { onOpeningFinished } from "$lib/utils/openingEvent";
+	import Burst from "#lib/animations/atom/Burst.svelte";
+	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
 	export let count: string;
 	let visible = false;
 	const countInt = parseInt(count, 10);

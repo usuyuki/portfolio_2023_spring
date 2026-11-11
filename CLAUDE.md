@@ -64,12 +64,24 @@ The access counter (`counter`) is outside the `notion:` prefix and is never dele
 This is a **SvelteKit portfolio application** deployed on **Cloudflare Workers** with SSR. The site showcases personal work and integrates with external content sources.
 
 ### Key Technologies
-- **SvelteKit 2.x** with Svelte 5 for the framework
+- **SvelteKit 3.x** with Svelte 5 for the framework
 - **TypeScript** for type safety
 - **TailwindCSS** for styling
 - **Cloudflare** adapter for SSR deployment
 - **Vite** for build tooling
 - **pnpm** as package manager
+
+### SvelteKit 3 Conventions
+| Topic | Rule |
+| --- | --- |
+| Config | There is no `svelte.config.js`. Kit options (adapter, preprocess, ...) are passed to `sveltekit({...})` in `vite.config.ts` |
+| `src/lib` imports | Use `#lib/...` (`package.json` `imports`) with an explicit extension, e.g. `#lib/utils/foo.ts`, `#lib/components/Bar.svelte`. `$lib` no longer exists |
+| App state | Use `$app/state` (`page`, `navigating`). `$app/stores` is removed |
+| Cloudflare bindings | `event.platform` is NOT populated by adapter-cloudflare v8. Read bindings via `import { env } from "cloudflare:workers"` (e.g. `env.KV`) |
+| KV is optional | `Env.KV` is typed `KV?: KVNamespace` (missing without a local `wrangler.toml`). KV only backs caches and the access counter, so pages must render without it: pass `env.KV` to helpers that accept `kv?` and never call `env.KV.get` unguarded. Counter access goes through `#lib/utils/usecase/accessCounter.ts` |
+| Unit test env | `vitest.config.ts` fills dummy values for the `src/env.ts` variables when unset, so `pnpm test:u` runs without `.env` (CI included) |
+| Binding types | `Cloudflare.Env` is hand-written in `src/app.d.ts`. `worker-configuration.d.ts` holds runtime types only; regenerate with `pnpm wrangler types --include-env=false` (including Env makes it import the build output and breaks `pnpm check`) |
+| Preview / E2E | `pnpm preview` runs `wrangler dev` (builds via `[build]` in `wrangler.toml`, then serves on workerd at :4173). `vite preview` cannot resolve `cloudflare:workers` on Node and returns 500 |
 
 ### Content Integration
 - **Ghost CMS** integration via the Content API, called with native `fetch` for blog content
@@ -135,7 +147,7 @@ sync in either direction. Thumbnails go in `static/img/events/`; `thumbnail: nul
 placeholder. `now` is a reserved slug and cannot be used for an event.
 
 ### State Management
-- Uses SvelteKit's built-in stores
+- Uses SvelteKit's `$app/state`
 - Custom stores in `src/lib/stores/` for menu state
 - Server-side data loading via `+page.server.ts` files
 
@@ -144,4 +156,4 @@ Required environment variables for content APIs:
 - `GHOST_API_URL` and `GHOST_CONTENT_KEY` for Ghost CMS
 - `NOTION_API_KEY` for Notion integration
 
-Both are accessed via `$env/static/private` in adapter files.
+They are declared in `src/env.ts` (`defineEnvVars`) and accessed via `$app/env/private` in adapter files.

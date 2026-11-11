@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import { prefersReducedMotion } from "$lib/utils/motion";
+import { prefersReducedMotion } from "#lib/utils/motion.ts";
 
 // skewX(-12deg)の帯は縦位置によって左右にずれた平行四辺形になるため、
 // 矩形換算の幅(100vw)だけでなく高さ×tan(12deg)相当の余裕を上乗せした待避距離にしておく

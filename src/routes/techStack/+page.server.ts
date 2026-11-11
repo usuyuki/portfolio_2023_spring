@@ -1,12 +1,13 @@
+import { env } from "cloudflare:workers";
 import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
-} from "$lib/types/notion";
-import type { techStackType } from "$lib/types/techStack";
+} from "#lib/types/notion.ts";
+import type { techStackType } from "#lib/types/techStack.ts";
 import {
-	queryDataSourceCached,
 	CACHE_TTL,
-} from "$lib/utils/adapter/notionAdapter";
+	queryDataSourceCached,
+} from "#lib/utils/adapter/notionAdapter.ts";
 import type { PageServerLoad } from "./$types";
 
 // ジャンルごとに ジャンル:データ となるようにしている
@@ -16,7 +17,7 @@ type dataType = {
 	};
 };
 
-export const load = (async ({ platform, fetch }) => {
+export const load = (async ({ fetch }) => {
 	const response = (await queryDataSourceCached(
 		"b0f7969c8fc245928e4c2abaa8a2f578",
 		{
@@ -38,8 +39,8 @@ export const load = (async ({ platform, fetch }) => {
 			],
 		},
 		{
-			fetch: platform?.fetch || fetch,
-			kv: platform?.env?.KV,
+			fetch,
+			kv: env.KV,
 			cacheTtl: CACHE_TTL.TECH_STACK_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;

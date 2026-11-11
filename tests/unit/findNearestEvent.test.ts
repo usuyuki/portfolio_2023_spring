@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { eventType } from "$lib/types/event";
-import { findNearestEvent } from "$lib/utils/usecase/findNearestEvent";
+import type { eventType } from "#lib/types/event.ts";
+import { findNearestEvent } from "#lib/utils/usecase/findNearestEvent.ts";
 
 // 検証に関係ないフィールドは固定値でよい
 const makeEvent = (

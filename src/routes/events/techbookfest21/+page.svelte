@@ -1,9 +1,9 @@
 <script lang="ts">
 	// 中身は自由に書いてよい。一覧に出す情報は src/lib/data/events.ts 側
-	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
-	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
-	import { pressEasing } from "$lib/utils/actions/pressEasing";
-	import { bgClasses } from "$lib/utils/bgClasses";
+	import NormalHead from "#lib/components/atom/head/NormalHead.svelte";
+	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
+	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
+	import { bgClasses } from "#lib/utils/bgClasses.ts";
 
 	const info = [
 		{ emoji: "📅", label: "会期", value: "2026/11/21 〜 2026/12/06" },

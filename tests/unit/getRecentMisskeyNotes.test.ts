@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { MisskeyNote } from "$lib/utils/adapter/misskeyAdapter";
-import { toMisskeyContent } from "$lib/utils/usecase/getRecentMisskeyNotes";
+import type { MisskeyNote } from "#lib/utils/adapter/misskeyAdapter.ts";
+import { toMisskeyContent } from "#lib/utils/usecase/getRecentMisskeyNotes.ts";
 
 describe("toMisskeyContent", () => {
 	it("正常系: MisskeyのNoteを渡すと、表示用の形式(id/text/date/link)に整形される", () => {

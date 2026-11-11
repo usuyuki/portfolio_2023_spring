@@ -1,8 +1,8 @@
-import type { blogContentType } from "$lib/types/blogContent";
+import type { blogContentType } from "#lib/types/blogContent.ts";
 import {
 	fetchRecentPosts,
 	toBlogContent,
-} from "$lib/utils/adapter/ghostAdapter";
+} from "#lib/utils/adapter/ghostAdapter.ts";
 
 export const getRecentArticle = async (
 	fetchFn?: typeof globalThis.fetch,

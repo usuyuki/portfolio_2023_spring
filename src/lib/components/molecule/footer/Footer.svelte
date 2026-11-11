@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pressEasing } from "$lib/utils/actions/pressEasing";
+	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 </script>
 
 <footer>

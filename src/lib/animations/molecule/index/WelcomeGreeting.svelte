@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
-	import { onOpeningFinished } from "$lib/utils/openingEvent";
+	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
 
 	export let greeting: string;
 	export const className = "";

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { WorksProgrammingRow } from "$lib/types/notion";
+import type { WorksProgrammingRow } from "#lib/types/notion.ts";
 import { notionRowToData } from "../../src/lib/utils/adapter/worksProgrammingNotionRowToData";
 
 // テストで使い回す最小限のNotionレスポンス。各テストケースでpropertiesを部分的に上書きする

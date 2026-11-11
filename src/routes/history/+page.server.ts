@@ -1,12 +1,13 @@
-import type { historyType } from "$lib/types/history";
+import { env } from "cloudflare:workers";
+import type { historyType } from "#lib/types/history.ts";
 import type {
 	GenericDatabaseRow,
 	NotionDatabaseResponse,
-} from "$lib/types/notion";
+} from "#lib/types/notion.ts";
 import {
-	queryDataSourceCached,
 	CACHE_TTL,
-} from "$lib/utils/adapter/notionAdapter";
+	queryDataSourceCached,
+} from "#lib/utils/adapter/notionAdapter.ts";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
@@ -15,7 +16,7 @@ type dataType = {
 	};
 };
 
-export const load = (async ({ platform, fetch }) => {
+export const load = (async ({ fetch }) => {
 	const response = (await queryDataSourceCached(
 		"a0a905a075ae4a83868984c5b53705e8",
 		{
@@ -37,8 +38,8 @@ export const load = (async ({ platform, fetch }) => {
 			],
 		},
 		{
-			fetch: platform?.fetch || fetch,
-			kv: platform?.env?.KV,
+			fetch,
+			kv: env.KV,
 			cacheTtl: CACHE_TTL.HISTORY_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<GenericDatabaseRow>;

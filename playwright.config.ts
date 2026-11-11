@@ -3,10 +3,13 @@ import { devices } from "@playwright/test";
 
 const config: PlaywrightTestConfig = {
 	webServer: {
-		// CIではワークフロー側でbuild済みなのでpreviewのみ起動する(二重ビルド防止)
-		command: process.env.CI ? "pnpm preview" : "pnpm build && pnpm preview",
+		// previewはwrangler devでビルド済みWorkerをworkerd上で動かす。
+		// wrangler.tomlの[build]でpnpm buildが自動実行されるため、ここでは別途ビルドしない。
+		// (adapter-cloudflare v8ではvite previewがNode上でcloudflare:workersを解決できず500になるため)
+		command: "pnpm preview",
 		port: 4173,
-		timeout: 120_000,
+		// wrangler devはサーバー起動前にpnpm buildも実行するため、ビルド時間込みで長めに待つ
+		timeout: 300_000,
 		reuseExistingServer: !process.env.CI,
 	},
 	testDir: "tests/integration",

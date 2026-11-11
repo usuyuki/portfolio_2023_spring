@@ -3,7 +3,7 @@ import {
 	filterPublicNotes,
 	misskeyNoteUrl,
 	type MisskeyNote,
-} from "$lib/utils/adapter/misskeyAdapter";
+} from "#lib/utils/adapter/misskeyAdapter.ts";
 
 const baseNote: MisskeyNote = {
 	id: "note1",

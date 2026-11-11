@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { speakerDeckThumbnail } from "$lib/utils/speakerDeckThumbnail";
+import { speakerDeckThumbnail } from "#lib/utils/speakerDeckThumbnail.ts";
 
 describe("speakerDeckThumbnail", () => {
 	it("正常系: Speaker DeckのプレイヤーURLを渡すと、表紙のサムネイル画像URLになる", () => {

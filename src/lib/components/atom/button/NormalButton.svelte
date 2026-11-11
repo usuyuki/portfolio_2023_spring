@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pressEasing } from "$lib/utils/actions/pressEasing";
+	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 
 	export let bgColorVariable: "pink" | "black" | "yellow" | "blue" = "pink";
 	export let textColorVariable: "black" | "blue" = "black";

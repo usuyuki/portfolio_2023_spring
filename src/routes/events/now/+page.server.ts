@@ -1,6 +1,6 @@
 import { error, redirect } from "@sveltejs/kit";
-import { events } from "$lib/data/events";
-import { findNearestEvent } from "$lib/utils/usecase/findNearestEvent";
+import { events } from "#lib/data/events.ts";
+import { findNearestEvent } from "#lib/utils/usecase/findNearestEvent.ts";
 import type { PageServerLoad } from "./$types";
 
 // イベントごとにURLを貼り替えずに済む「今のイベント」への固定リンク

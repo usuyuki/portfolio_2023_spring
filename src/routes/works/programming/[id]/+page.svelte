@@ -1,8 +1,8 @@
 <script lang="ts">
-	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
-	import ArticleTimeline from "$lib/components/molecule/works/programming/ArticleTimeline.svelte";
-	import { pressEasing } from "$lib/utils/actions/pressEasing";
-	import { bgClasses } from "$lib/utils/bgClasses";
+	import NormalHead from "#lib/components/atom/head/NormalHead.svelte";
+	import ArticleTimeline from "#lib/components/molecule/works/programming/ArticleTimeline.svelte";
+	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
+	import { bgClasses } from "#lib/utils/bgClasses.ts";
 	import { fade, scale } from "svelte/transition";
 	import type { PageData } from "./$types";
 	let { data }: { data: PageData } = $props();
@@ -85,7 +85,12 @@
 	}
 </script>
 
-<NormalHead title={data.data.name} description={data.data.summary} ogImage={data.data.gallery[0]} />
+<!-- galleryの1枚目を作品ごとのOG画像にする(画像が無い作品はサイト共通の画像になる) -->
+<NormalHead
+	title={data.data.name}
+	description={data.data.summary}
+	ogImage={data.data.gallery[0]}
+/>
 
 <section class="work-hero">
 	{#if data.data.logo !== false}

@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import { prefersReducedMotion } from "$lib/utils/motion";
+import { prefersReducedMotion } from "#lib/utils/motion.ts";
 
 const HOVER_SCALE = 1.06;
 const PRESS_SCALE = 0.86;

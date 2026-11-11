@@ -1,19 +1,20 @@
+import { env } from "cloudflare:workers";
 import type {
 	NotionDatabaseResponse,
 	VideoDatabaseRow,
-} from "$lib/types/notion";
-import type { worksVideoType } from "$lib/types/works/worksVideos";
+} from "#lib/types/notion.ts";
+import type { worksVideoType } from "#lib/types/works/worksVideos.ts";
 import {
-	queryDataSourceCached,
 	CACHE_TTL,
-} from "$lib/utils/adapter/notionAdapter";
+	queryDataSourceCached,
+} from "#lib/utils/adapter/notionAdapter.ts";
 import type { PageServerLoad } from "./$types";
 
 type dataType = {
 	data: worksVideoType[];
 };
 
-export const load = (async ({ platform, fetch }) => {
+export const load = (async ({ fetch }) => {
 	const response = (await queryDataSourceCached(
 		"dcbb3d52369d4da688bc5be120fc5db6",
 		{
@@ -35,8 +36,8 @@ export const load = (async ({ platform, fetch }) => {
 			],
 		},
 		{
-			fetch: platform?.fetch || fetch,
-			kv: platform?.env?.KV,
+			fetch,
+			kv: env.KV,
 			cacheTtl: CACHE_TTL.VIDEOS_DB,
 		},
 	)) as unknown as NotionDatabaseResponse<VideoDatabaseRow>;

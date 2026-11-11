@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { tick } from "svelte";
-	import NormalHead from "$lib/components/atom/head/NormalHead.svelte";
-	import NormalPageTitle from "$lib/components/atom/text/sentence/NormalPageTitle.svelte";
-	import { pressPulse } from "$lib/utils/actions/pressEasing";
-	import { mediaCardVariants } from "$lib/utils/mediaCardVariants";
-	import { speakerDeckThumbnail } from "$lib/utils/speakerDeckThumbnail";
+	import NormalHead from "#lib/components/atom/head/NormalHead.svelte";
+	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
+	import { pressPulse } from "#lib/utils/actions/pressEasing.ts";
+	import { mediaCardVariants } from "#lib/utils/mediaCardVariants.ts";
+	import { speakerDeckThumbnail } from "#lib/utils/speakerDeckThumbnail.ts";
 	import type { PageData } from "./$types";
 	export let data: PageData;
 
