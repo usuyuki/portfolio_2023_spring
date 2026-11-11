@@ -4,12 +4,8 @@
 	import { pressEasing } from "#lib/utils/actions/pressEasing.ts";
 	import { bgClasses } from "#lib/utils/bgClasses.ts";
 	import { formatEventPeriod } from "#lib/utils/formatEventPeriod.ts";
-	import type { PageData } from "./$types";
-	interface Props {
-		data: PageData;
-	}
-
-	let { data }: Props = $props();
+	import type { PageProps } from "./$types";
+	let { data }: PageProps = $props();
 
 	// 再計算するとSSR時と結果がずれうるので+page.server.tsの結果をそのまま使う
 	const { hero, upcoming, past } = $derived(data);

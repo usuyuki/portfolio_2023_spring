@@ -1,16 +1,13 @@
 <script lang="ts">
 	import { tick } from "svelte";
+	import { SvelteSet } from "svelte/reactivity";
 	import NormalHead from "#lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import { pressPulse } from "#lib/utils/actions/pressEasing.ts";
 	import { mediaCardVariants } from "#lib/utils/mediaCardVariants.ts";
 	import { speakerDeckThumbnail } from "#lib/utils/speakerDeckThumbnail.ts";
-	import type { PageData } from "./$types";
-	interface Props {
-		data: PageData;
-	}
-
-	let { data }: Props = $props();
+	import type { PageProps } from "./$types";
+	let { data }: PageProps = $props();
 
 	// ジャンルをまたいでも色のローテーションが途切れないよう、全ジャンル通しの連番を先に振っておく
 	const cardIndexByGenre = $derived.by(() => {
@@ -24,11 +21,11 @@
 	});
 
 	// iframeの中身が検索結果に出ないよう、クリックされるまではサムネイルにしておく(クローラーはクリックしない)
-	let loadedSlides = $state(new Set<string>());
+	const loadedSlides = new SvelteSet<string>();
 	// 押したボタンはiframeに置き換わって消えるので、キーボード操作が途切れないようフォーカスを移す
 	const loadSlide = async (url: string, card: HTMLElement | null) => {
 		if (card) pressPulse(card);
-		loadedSlides = new Set(loadedSlides).add(url);
+		loadedSlides.add(url);
 		await tick();
 		card?.querySelector("iframe")?.focus();
 	};

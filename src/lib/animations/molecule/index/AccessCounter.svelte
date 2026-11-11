@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
+	import { Tween } from "svelte/motion";
 	import { fly } from "svelte/transition";
 	import Burst from "#lib/animations/atom/Burst.svelte";
 	import { onOpeningFinished } from "#lib/utils/openingEvent.ts";
@@ -9,40 +10,30 @@
 
 	let { count }: Props = $props();
 	let visible = $state(false);
-	const countInt = $derived(parseInt(count, 10));
+	// 数値として読めないcountは0扱いにする(NaNをそのまま表示しないため)
+	const countInt = $derived(parseInt(count, 10) || 0);
 
-	let nowValue = $state(0);
+	// 0からcountInt値まで2秒掛けて線形にカウントアップさせる。
+	// 1ずつsetTimeoutを積むと訪問者数ぶんのタイマーと再描画が発生するため、フレーム単位で補間するTweenを使う
+	const counter = new Tween(0, { duration: 2000 });
+	const nowValue = $derived(Math.round(counter.current));
 
 	// SNSアイコンの登場演出(app.cssの--after-sns-time相当)がオープニング完了から700ms後に終わるため、
 	// カウンターはそのぶん遅らせて表示する
 	const SHOW_DELAY_MS = 700;
-	// setTimeoutのIDを保持し、コンポーネント破棄時にまとめてクリアする
+	// setTimeoutのIDを保持し、コンポーネント破棄時にクリアする
 	let showTimeoutId: ReturnType<typeof setTimeout>;
-	const countUpTimeoutIds: ReturnType<typeof setTimeout>[] = [];
 
 	// オープニング演出が完了(またはスキップ/再訪問で不要)になったのを待ってから表示する
 	const unsubscribe = onOpeningFinished(() => {
 		showTimeoutId = setTimeout(() => {
 			visible = true;
-			//2秒掛けてnowValueの値をcountの値にする
-			for (let i = 0; i <= countInt; i++) {
-				countUpTimeoutIds.push(
-					setTimeout(
-						() => {
-							nowValue = i;
-						},
-						(2000 / countInt) * i,
-					),
-				);
-			}
+			counter.target = countInt;
 		}, SHOW_DELAY_MS);
 	});
 	onDestroy(() => {
 		unsubscribe();
 		clearTimeout(showTimeoutId);
-		for (const id of countUpTimeoutIds) {
-			clearTimeout(id);
-		}
 	});
 </script>
 

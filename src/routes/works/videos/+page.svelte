@@ -2,12 +2,8 @@
 	import NormalHead from "#lib/components/atom/head/NormalHead.svelte";
 	import NormalPageTitle from "#lib/components/atom/text/sentence/NormalPageTitle.svelte";
 	import { mediaCardVariants } from "#lib/utils/mediaCardVariants.ts";
-	import type { PageData } from "./$types";
-	interface Props {
-		data: PageData;
-	}
-
-	let { data }: Props = $props();
+	import type { PageProps } from "./$types";
+	let { data }: PageProps = $props();
 </script>
 
 <NormalHead title="映像作品" description="映像作品のページです" />

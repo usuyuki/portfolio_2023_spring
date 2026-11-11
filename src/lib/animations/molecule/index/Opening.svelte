@@ -7,7 +7,7 @@
 		OPENING_SESSION_KEY,
 	} from "#lib/utils/openingEvent.ts";
 
-	// {#if visible}内の要素なので$stateで受け取る。GSAPはnullを渡しても何もしないため初期値はnullにする
+	// {#if visible}内の要素なので$stateで受け取る。visible=false後はnullに戻るため、GSAPへ渡す前にtargets()でnullを除く
 	let overlayEl = $state<HTMLElement | null>(null);
 	let logoBoxEl = $state<HTMLElement | null>(null);
 	let loadingEl = $state<HTMLElement | null>(null);
@@ -20,6 +20,10 @@
 	// finish()自体の再入防止(フェードアウト完了までの間はまだ進行中のtweenが残っているため)
 	let finishing = false;
 
+	// GSAPはnullのターゲットに警告を出すため、DOMから外れた(null)要素を除いた配列を返す
+	const targets = (...els: (HTMLElement | null)[]) =>
+		els.filter((el): el is HTMLElement => !!el);
+
 	// ページの実読み込み(画像・フォント等を含む)が完了しているか。完了前にゲージが満タンになった場合はゲージを繰り返す
 	const isPageLoaded = () =>
 		typeof document !== "undefined" && document.readyState === "complete";
@@ -29,7 +33,7 @@
 	const finish = (delay = 0.2) => {
 		if (finishing) return;
 		finishing = true;
-		gsap.to(overlayEl, {
+		gsap.to(targets(overlayEl), {
 			opacity: 0,
 			duration: 0.5,
 			delay,
@@ -53,7 +57,7 @@
 	// 逆に読み込みが先に終わっていても、再生中の1周は最後まで走らせてから次へ進む(演出が唐突に途切れるのを防ぐ)
 	const runGaugeLoop = (onceComplete: () => void, loopCount = 0) => {
 		gsap.fromTo(
-			gaugeFillEl,
+			targets(gaugeFillEl),
 			{ scaleX: 0 },
 			{
 				scaleX: 1,
@@ -67,7 +71,7 @@
 						onceComplete();
 						return;
 					}
-					gsap.set(gaugeFillEl, { scaleX: 0 });
+					gsap.set(targets(gaugeFillEl), { scaleX: 0 });
 					runGaugeLoop(onceComplete, loopCount + 1);
 				},
 			},
@@ -77,15 +81,15 @@
 	const playOpening = () => {
 		if (prefersReducedMotion()) {
 			// スケール/波紋演出を省略し、フェードのみで即座に表示する
-			gsap.set(logoBoxEl, { scale: 1, opacity: 1 });
-			gsap.set(loadingEl, { opacity: 1 });
-			gsap.set(gaugeFillEl, { scaleX: 1 });
+			gsap.set(targets(logoBoxEl), { scale: 1, opacity: 1 });
+			gsap.set(targets(loadingEl), { opacity: 1 });
+			gsap.set(targets(gaugeFillEl), { scaleX: 1 });
 			finish(0);
 			return;
 		}
 		// 複数要素にまたがるgsap.timeline()の絶対位置指定は環境によってcall()コールバックの発火が安定しないため、
 		// 要素ごとのtween → onCompleteでの逐次実行に分けて確実性を優先する
-		gsap.to(logoBoxEl, {
+		gsap.to(targets(logoBoxEl), {
 			scale: 1,
 			opacity: 1,
 			duration: 0.5,
@@ -94,7 +98,7 @@
 			onComplete: () => {
 				// onDestroy側でkillTweensOfされた後にこのコールバックが呼ばれ、破棄済みコンポーネントで新規tweenが走るのを防ぐ
 				if (destroyed) return;
-				gsap.to(loadingEl, {
+				gsap.to(targets(loadingEl), {
 					opacity: 1,
 					duration: 0.3,
 					onComplete: () => {
@@ -120,7 +124,7 @@
 	onDestroy(() => {
 		destroyed = true;
 		if (typeof window === "undefined") return;
-		gsap.killTweensOf([logoBoxEl, loadingEl, gaugeFillEl, overlayEl]);
+		gsap.killTweensOf(targets(logoBoxEl, loadingEl, gaugeFillEl, overlayEl));
 	});
 </script>
 

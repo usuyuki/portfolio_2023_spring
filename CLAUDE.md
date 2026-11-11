@@ -81,6 +81,7 @@ This is a **SvelteKit portfolio application** deployed on **Cloudflare Workers**
 | Binding types | `Cloudflare.Env` is hand-written in `src/app.d.ts`. `worker-configuration.d.ts` holds runtime types only; regenerate with `pnpm wrangler types --include-env=false` (including Env makes it import the build output and breaks `pnpm check`) |
 | Preview / E2E | `pnpm preview` runs `wrangler dev` (builds via `[build]` in `wrangler.toml`, then serves on workerd at :4173). `vite preview` cannot resolve `cloudflare:workers` on Node and returns 500 |
 | Components | All components use Svelte 5 runes: `$props()` (not `export let`), `$state` / `$derived` / `$effect` (not `$:`), `children` + `{@render}` (not `<slot>`), `onclick` (not `on:click`). Values computed from props must be `$derived`, otherwise they only capture the initial value |
+| Route props | Type route component props with the generated `PageProps` from `./$types` (`let { data }: PageProps = $props();`) instead of a hand-written `interface Props` |
 
 ### Content Integration
 - **Ghost CMS** integration via the Content API, called with native `fetch` for blog content

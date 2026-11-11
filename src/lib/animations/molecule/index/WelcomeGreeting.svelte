@@ -4,10 +4,10 @@
 
 	interface Props {
 		greeting: string;
+		className?: string;
 	}
 
-	let { greeting }: Props = $props();
-	export const className = "";
+	let { greeting, className = "" }: Props = $props();
 
 	// オープニング完了前はscaleAnimationを止めておき、完了後にクラス付与でアニメーションを開始する
 	// (以前はCSSのanimation-delayにapp.cssの--after-access-counter-timeを直接埋め込んでおり、実際の完了とズレていた)

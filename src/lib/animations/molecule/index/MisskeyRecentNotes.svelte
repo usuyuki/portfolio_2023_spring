@@ -36,24 +36,21 @@
 
 	// オープニング演出が完了(またはスキップ/再訪問で不要)になったのを待ってから表示する
 	const unsubscribe = onOpeningFinished(() => {
-		if (notes.length > 1) {
-			showTimeoutId = setTimeout(() => {
-				started = true;
-				switchIntervalId = setInterval(() => {
-					flipping = true;
-					flipMidTimeoutId = setTimeout(() => {
-						currentIndex = (currentIndex + 1) % notes.length;
-					}, FLIP_MIDPOINT_MS);
-					flipEndTimeoutId = setTimeout(() => {
-						flipping = false;
-					}, FLIP_DURATION_MS);
-				}, SWITCH_INTERVAL_MS);
-			}, SHOW_DELAY_MS);
-		} else if (notes.length === 1) {
-			showTimeoutId = setTimeout(() => {
-				started = true;
-			}, SHOW_DELAY_MS);
-		}
+		// notesは再読み込み等で件数が変わりうるため、件数による分岐は登録時ではなくインターバルの各回で判定する
+		showTimeoutId = setTimeout(() => {
+			started = true;
+			switchIntervalId = setInterval(() => {
+				// 切り替える対象がない(0〜1件)ときはフリップさせない
+				if (notes.length <= 1) return;
+				flipping = true;
+				flipMidTimeoutId = setTimeout(() => {
+					currentIndex = (currentIndex + 1) % notes.length;
+				}, FLIP_MIDPOINT_MS);
+				flipEndTimeoutId = setTimeout(() => {
+					flipping = false;
+				}, FLIP_DURATION_MS);
+			}, SWITCH_INTERVAL_MS);
+		}, SHOW_DELAY_MS);
 	});
 	onDestroy(() => {
 		unsubscribe();
@@ -63,7 +60,9 @@
 		clearTimeout(flipEndTimeoutId);
 	});
 
-	let currentNote = $derived(notes[currentIndex]);
+	// notesの件数が減ってcurrentIndexが範囲外になっても必ず存在する投稿を指すよう、件数で剰余を取る
+	// (0件のときはundefinedになるが、テンプレート側の{#if notes.length > 0}で描画されない)
+	let currentNote = $derived(notes[currentIndex % notes.length]);
 </script>
 
 {#if notes.length > 0}
