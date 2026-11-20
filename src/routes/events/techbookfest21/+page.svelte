@@ -40,7 +40,7 @@
 			price: "500円",
 			description:
 				"スマートホームを導入しているお宅が、もっとスマートホームを活用できるようになる本です",
-			cover: "/img/events/techbookfest21/ISDN278-4-861446-01-3.png",
+			cover: "/img/events/techbookfest21/ISDN278-4-861446-01-3.webp",
 			isdn: "278-4-861446-01-3",
 			link: "https://techbookfest.org/product/9Ks265L0HvQ9y3tVBLTZM5" as
 				| string
