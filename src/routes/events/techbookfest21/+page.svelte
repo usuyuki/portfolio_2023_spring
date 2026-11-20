@@ -40,9 +40,11 @@
 			price: "500円",
 			description:
 				"スマートホームを導入しているお宅が、もっとスマートホームを活用できるようになる本です",
-			cover: "/img/events/ISDN278-4-861446-01-3.png",
+			cover: "/img/events/techbookfest21/ISDN278-4-861446-01-3.webp",
 			isdn: "278-4-861446-01-3",
-			link: null as string | null,
+			link: "https://techbookfest.org/product/9Ks265L0HvQ9y3tVBLTZM5" as
+				| string
+				| null,
 		},
 	];
 </script>
@@ -100,10 +102,10 @@
 								target="_blank"
 								rel="noopener noreferrer"
 								use:pressEasing
-								class="btn-rpg small bg-yellow">販売ページへ</a
+								class="btn-rpg buy-btn bg-yellow">販売ページ</a
 							>
 						{:else}
-							<span class="btn-rpg small buy-pending">販売ページ準備中</span>
+							<span class="btn-rpg buy-btn buy-pending">販売ページ準備中</span>
 						{/if}
 					</div>
 					{#if item.isdn !== null}
@@ -250,6 +252,11 @@
 		align-items: center;
 		gap: 16px;
 		margin-top: 28px;
+	}
+	/* 買ってもらう導線なので、共通の.btn-rpg.small(12px)の倍の文字サイズにして目立たせる */
+	.buy-btn {
+		font-size: 24px;
+		padding: 24px 44px;
 	}
 	/* 押せないことが分かるよう、影を消して薄くする */
 	.buy-pending {
