@@ -145,7 +145,7 @@ timezone-dependent tests fail locally too.
 
 **To add an event**: append an entry to `src/lib/data/events.ts` AND create
 `src/routes/events/{slug}/+page.svelte`. `tests/unit/events.test.ts` fails if the two get out of
-sync in either direction. Thumbnails go in `static/img/events/`; `thumbnail: null` renders a
+sync in either direction. Images go in `static/img/events/{slug}/`; thumbnails are shown in portrait A3 ratio (297:420, the usual doujinshi promo size); `thumbnail: null` renders a
 placeholder. `now` is a reserved slug and cannot be used for an event.
 
 ### State Management

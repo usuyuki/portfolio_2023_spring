@@ -8,6 +8,6 @@ export const events: eventType[] = [
 		// オンライン会期全体。11/23がオフライン開催日
 		startDate: "2026/11/21",
 		endDate: "2026/12/06",
-		thumbnail: null,
+		thumbnail: "/img/events/techbookfest21/menu.png",
 	},
 ];

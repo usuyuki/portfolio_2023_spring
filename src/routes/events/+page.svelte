@@ -102,10 +102,12 @@
 		overflow: hidden;
 		border-radius: 22px;
 	}
+	/* 縦長の表紙を縦に積むので、カード自体も幅を絞って縦長にする */
 	.hero-link {
-		max-width: 900px;
+		max-width: 420px;
 		margin: 0 auto;
 	}
+	/* サムネイルは同人誌の宣伝でよく使う縦長のA3(297:420) */
 	.hero-card {
 		display: flex;
 		flex-direction: column;
@@ -113,9 +115,7 @@
 	}
 	.hero-thumb {
 		width: 100%;
-		aspect-ratio: 16 / 9;
-		/* 16:9のままだと画像だけで1画面を占め、タイトルが折り返し位置より下に隠れる */
-		max-height: 45vh;
+		aspect-ratio: 297 / 420;
 		object-fit: cover;
 		display: block;
 		border-bottom: var(--box-border) solid var(--black);
@@ -156,6 +156,10 @@
 	.events-grid {
 		margin: 0 auto;
 		grid-template-columns: repeat(3, 1fr);
+	}
+	/* app.cssの.media-gridは16:9なので、ヒーローと同じA3縦長に上書きする */
+	.events-grid .frame {
+		aspect-ratio: 297 / 420;
 	}
 	.events-grid .vcard {
 		height: 100%;
